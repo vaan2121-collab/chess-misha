@@ -1,0 +1,197 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, user-scalable=no">
+  <meta name="theme-color" content="#5b8c32">
+  <title>Шахматы Миши</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <!-- Верхняя панель: назад + звук -->
+  <header class="topbar">
+    <button id="btn-back" class="block-btn icon-btn stone" aria-label="Назад" hidden>⬅</button>
+    <div class="spacer"></div>
+    <div class="wallet" aria-label="Мои звёзды"><span class="wallet-star"></span><span id="wallet-count">0</span></div>
+    <button id="btn-music" class="block-btn icon-btn stone" aria-label="Музыка">🎵</button>
+    <button id="btn-sfx" class="block-btn icon-btn stone" aria-label="Звуки">🔊</button>
+  </header>
+
+  <main>
+    <!-- Главное меню -->
+    <section id="screen-menu" class="screen">
+      <h1 class="logo">Шахматы<br><span>Миши</span></h1>
+      <nav class="menu">
+        <button class="block-btn menu-btn grass" data-go="learn">
+          <span class="menu-icon">♞</span><span class="menu-label">Учим фигуры</span>
+        </button>
+        <button class="block-btn menu-btn lapis" data-go="puzzles">
+          <span class="menu-icon">🧩</span><span class="menu-label">Задачки</span>
+        </button>
+        <button class="block-btn menu-btn redstone" data-go="play">
+          <span class="menu-icon">🤖</span><span class="menu-label">Игра с роботом</span>
+        </button>
+        <button class="block-btn menu-btn gold" data-go="gifts">
+          <span class="menu-icon">🎁</span><span class="menu-label">Мои подарки</span>
+        </button>
+      </nav>
+    </section>
+
+    <!-- Игра -->
+    <section id="screen-play" class="screen" hidden>
+      <div id="opp-list" class="opp-grid"></div>
+
+      <div id="play-view" class="play-layout" hidden>
+        <!-- соперник — со своей (чёрной) стороны доски -->
+        <div id="opp-panel" class="opp-panel">
+          <div class="opp-face-wrap">
+            <div id="opp-face" class="opp-face"></div>
+            <div id="opp-bubble" class="opp-bubble"></div>
+          </div>
+          <div class="opp-info">
+            <div id="opp-name" class="opp-title"></div>
+            <div id="opp-level" class="opp-level"></div>
+            <div id="turn" class="turn w"><span class="turn-dot"></span><span class="turn-text">Твой ход</span></div>
+          </div>
+        </div>
+        <div class="board-wrap"><div id="board"></div></div>
+        <div class="controls">
+          <button id="btn-undo" class="block-btn ctrl-btn stone"><span>↩</span>Отменить</button>
+          <button id="btn-hint" class="block-btn ctrl-btn gold"><span>💡</span>Подсказка</button>
+          <button id="btn-new" class="block-btn ctrl-btn grass"><span>⟳</span>Заново</button>
+        </div>
+      </div>
+
+      <div id="game-over" class="overlay" hidden>
+        <div class="panel">
+          <div class="go-icon">🏆</div>
+          <div class="go-title"></div>
+          <div id="go-medal"></div>
+          <div class="panel-buttons">
+            <button id="btn-opponents" class="block-btn ctrl-btn stone"><span>👥</span>Соперники</button>
+            <button id="btn-again" class="block-btn ctrl-btn grass"><span>⟳</span>Ещё раз</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Заглушки модулей следующих этапов -->
+    <!-- Учим фигуры -->
+    <section id="screen-learn" class="screen" hidden>
+      <div id="learn-list" class="piece-grid"></div>
+
+      <div id="learn-lesson" class="play-layout" hidden>
+        <div class="lesson-head learn-head">
+          <div class="lesson-top">
+            <img id="lesson-img" alt="">
+            <div class="lesson-title">
+              <div id="lesson-name"></div>
+              <div id="lesson-value" class="value-strip"></div>
+              <div id="lesson-stars" class="star-bar" hidden></div>
+            </div>
+          </div>
+          <div id="lesson-steps" class="step-tabs"></div>
+        </div>
+        <div class="board-wrap"><div id="learn-board"></div></div>
+        <div class="controls">
+          <button id="btn-moves" class="block-btn ctrl-btn lapis" data-for-step="info"><span>👣</span>Ходы</button>
+          <button id="btn-power" class="block-btn ctrl-btn redstone" data-for-step="info"><span>💪</span>Сила</button>
+          <button id="btn-value" class="block-btn ctrl-btn gold" data-for-step="info"><span>🪙</span>Цена</button>
+          <button id="btn-listen" class="block-btn ctrl-btn lapis" data-for-step="stars eat check"><span>🔊</span>Слушать</button>
+          <button id="btn-restart" class="block-btn ctrl-btn stone" data-for-step="stars eat check"><span>⟳</span>Заново</button>
+        </div>
+      </div>
+
+      <div id="learn-win" class="overlay" hidden>
+        <div class="panel">
+          <div class="go-icon">🏆</div>
+          <div id="learn-win-title" class="go-title">Молодец!</div>
+          <div id="learn-win-reward" class="reward">+1 <span class="star-icon"></span> в копилку</div>
+          <div class="panel-buttons">
+            <button id="btn-learn-again" class="block-btn ctrl-btn stone"><span>⟳</span>Ещё</button>
+            <button id="btn-learn-next" class="block-btn ctrl-btn grass"><span>➜</span>Дальше</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Задачки -->
+    <section id="screen-puzzles" class="screen" hidden>
+      <div id="puzzle-list" class="world-grid"></div>
+
+      <div id="puzzle-view" class="play-layout" hidden>
+        <div id="puzzle-head" class="lesson-head">
+          <div class="lesson-title">
+            <span id="puzzle-goal" class="goal-text"></span>
+            <div id="puzzle-chest" class="chest-bar"></div>
+          </div>
+          <span id="puzzle-icons" class="puzzle-icons"></span>
+        </div>
+        <div class="board-wrap"><div id="puzzle-board"></div></div>
+        <div class="controls">
+          <button id="btn-puzzle-listen" class="block-btn ctrl-btn lapis"><span>🔊</span>Слушать</button>
+          <button id="btn-puzzle-hint" class="block-btn ctrl-btn gold"><span>💡</span>Подсказка</button>
+        </div>
+      </div>
+
+      <div id="puzzle-win" class="overlay" hidden>
+        <div class="panel">
+          <div class="go-icon">🏆</div>
+          <div id="puzzle-win-title" class="go-title">Молодец!</div>
+          <div id="win-chest" class="chest-bar big"></div>
+          <div id="puzzle-win-reward" class="reward">Сундучок полный! +1 <span class="star-icon"></span></div>
+          <div class="panel-buttons">
+            <button id="btn-puzzle-list" class="block-btn ctrl-btn stone"><span>▦</span>Разделы</button>
+            <button id="btn-puzzle-next" class="block-btn ctrl-btn grass"><span>➜</span>Дальше</button>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Мои подарки -->
+    <section id="screen-gifts" class="screen" hidden>
+      <div class="gifts">
+        <div class="gift-tabs">
+          <button class="gift-tab block-btn gold active" data-tab="stickers"><span>🎨</span>Наклейки <small id="sticker-count"></small></button>
+          <button class="gift-tab block-btn stone" data-tab="medals"><span>🏅</span>Медали <small id="medal-count"></small></button>
+        </div>
+        <div id="sticker-grid" class="sticker-grid"></div>
+        <div id="medal-shelf" class="medal-shelf" hidden></div>
+      </div>
+
+      <div id="sticker-modal" class="overlay" hidden>
+        <div class="panel sticker-panel">
+          <img id="sm-img" alt="">
+          <div id="sm-name" class="go-title"></div>
+          <button id="sm-buy" class="block-btn ctrl-btn gold"><span>🎁</span>Открыть за <span class="star-icon"></span><b id="sm-price"></b></button>
+          <div id="sm-need" class="sm-note">Нужно ещё <span class="star-icon"></span><b id="sm-need-n"></b><br>Собирай звёзды в задачках и уроках!</div>
+          <div id="sm-secret" class="sm-note"><span id="sm-opp" class="opp-avatar"></span>Победи соперника<br><b id="sm-opp-name"></b></div>
+          <div id="sm-owned" class="panel-buttons">
+            <button id="sm-share" class="block-btn ctrl-btn lapis"><span>📤</span>Отправить</button>
+            <button id="sm-save" class="block-btn ctrl-btn stone"><span>💾</span>Сохранить</button>
+          </div>
+          <button id="sm-close" class="block-btn icon-btn stone sm-close" aria-label="Закрыть">✖</button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="vendor/chess.min.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/storage.js"></script>
+  <script src="js/audio.js"></script>
+  <script src="js/capture-fx.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/solo.js"></script>
+  <script src="js/fx.js"></script>
+  <script src="js/learn.js"></script>
+  <script src="js/puzzle-gen.js"></script>
+  <script src="js/puzzles-data.js"></script>
+  <script src="js/puzzles.js"></script>
+  <script src="js/ai.js"></script>
+  <script src="js/opponents.js"></script>
+  <script src="js/play.js"></script>
+  <script src="js/stickers.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
