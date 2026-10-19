@@ -276,7 +276,7 @@ main {
     gap: 2px;
     font-size: 14px;
     padding: 6px 10px;
-    min-width: 92px;
+    min-width: 0;
   }
 }
 
@@ -1029,3 +1029,59 @@ main {
 }
 .soon-icon { font-size: 120px; }
 .soon p { margin: 0; }
+
+/* ===== Компактный режим: телефон или невысокий экран =====
+   Всё вокруг доски ужимаем, чтобы сама доска была как можно крупнее. */
+@media (max-width: 500px), (max-height: 720px) {
+  :root { --topbar-h: 54px; }
+  .topbar { gap: 8px; padding: 6px 8px 0; padding-top: max(6px, env(safe-area-inset-top)); }
+  .icon-btn { width: 46px; height: 40px; font-size: 20px; }
+  .wallet { height: 40px; padding: 0 10px; font-size: 20px; border-width: 3px; }
+  .wallet-star { width: 22px; height: 22px; }
+
+  .screen { padding: 8px; padding-bottom: max(8px, env(safe-area-inset-bottom)); }
+  .play-layout { gap: 8px; }
+
+  /* доска: тоньше рамка и меньше запас под неё */
+  .board {
+    --board-room: 12px;
+    border-width: 4px;
+    box-shadow: 0 0 0 3px var(--dirt), 0 0 0 5px var(--outline);
+  }
+
+  /* шапки заданий — ниже и плотнее */
+  .lesson-head, .opp-panel { padding: 4px 8px; gap: 8px; border-width: 3px; }
+  .lesson-head img, #lesson-img { width: 44px; height: 44px; }
+  #lesson-name { font-size: 22px; }
+  .lesson-head .star-slot { width: 22px; height: 22px; }
+  .learn-head { gap: 4px; }
+  .step-tab { width: 44px; height: 36px; font-size: 18px; border-width: 3px; }
+  .goal-text { font-size: 20px; }
+  .puzzle-icons img { width: 40px; height: 40px; }
+  .chest-bar { margin-top: 2px; gap: 3px; }
+  .chest-slot { width: 16px; height: 16px; border-width: 2px; }
+  .opp-face { width: 60px; height: 60px; border-width: 3px; }
+  .opp-title { font-size: 18px; }
+  .opp-level i { width: 11px; height: 11px; }
+  .opp-panel .turn { font-size: 14px; padding: 2px 8px; }
+  .opp-panel .turn-dot { width: 16px; height: 16px; }
+  .opp-bubble { font-size: 24px; right: -10px; top: -10px; }
+  .turn { padding: 4px 12px; font-size: 18px; border-width: 3px; }
+  .turn-dot { width: 24px; height: 24px; }
+
+  /* кнопки под доской: в одну строку на всю ширину, значок над подписью */
+  .controls { width: 100%; gap: 6px; justify-content: center; }
+  .controls .ctrl-btn {
+    flex: 1 1 0;
+    max-width: 170px;
+    min-width: 0;
+    min-height: 50px;
+    padding: 4px 6px;
+    gap: 0;
+    flex-direction: column;
+    font-size: 14px;
+    border-width: 3px;
+    white-space: nowrap;
+  }
+  .controls .ctrl-btn span { font-size: 1.35em; }
+}

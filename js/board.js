@@ -231,7 +231,9 @@ window.ChessBoard = (function () {
     // Доска всегда квадратная и вписана в родителя (с запасом под рамку).
     function fit() {
       const box = el.parentElement.getBoundingClientRect();
-      const size = Math.floor(Math.min(box.width, box.height) - 24);
+      // запас под рамку и «тень» доски задаётся в CSS (--board-room), на телефоне он меньше
+      const room = parseFloat(getComputedStyle(el).getPropertyValue('--board-room')) || 24;
+      const size = Math.floor(Math.min(box.width, box.height) - room);
       if (size > 0) {
         el.style.width = size + 'px';
         el.style.height = size + 'px';
