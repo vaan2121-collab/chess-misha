@@ -1084,4 +1084,38 @@ main {
     white-space: nowrap;
   }
   .controls .ctrl-btn span { font-size: 1.35em; }
+
+  /* цена фигуры в уроке — маленькие пешки в одну строку */
+  .value-strip { flex-wrap: nowrap; max-width: none; }
+  .value-strip img { width: 15px; height: 15px; margin-right: -3px; }
+  .value-strip .crown { font-size: 18px; }
+  .lesson-top { gap: 8px; }
+
+  /* соперник — маленький портрет, всё в одну плотную строку */
+  .opp-face { width: 46px; height: 46px; }
+  .opp-info { gap: 2px; }
+  .opp-title { font-size: 16px; }
+  .opp-level i { width: 9px; height: 9px; border-width: 1.5px; }
+
+  /* главное меню */
+  #screen-menu { gap: 12px; justify-content: flex-start; padding-top: 12px; }
+  .logo { font-size: clamp(26px, 9vw, 40px); }
+  .menu { gap: 10px; width: min(100%, 420px); }
+  .menu-btn { aspect-ratio: 1.05; padding: 8px 4px; gap: 4px; }
+  .menu-icon { font-size: clamp(30px, 11vw, 48px); margin-top: 10%; }
+  .menu-label { font-size: clamp(13px, 4.2vw, 18px); text-align: center; }
+}
+
+/* Совсем узкий экран (маленький телефон с увеличенным масштабом) */
+@media (max-width: 340px) {
+  :root { --topbar-h: 48px; }
+  .icon-btn { width: 40px; height: 36px; font-size: 18px; }
+  .wallet { height: 36px; font-size: 18px; }
+  .wallet-star { width: 20px; height: 20px; }
+  .screen { padding: 6px 4px; }
+  .board { --board-room: 9px; }
+  .controls .ctrl-btn { min-height: 46px; font-size: 13px; }
+  .lesson-head, .opp-panel { padding: 3px 6px; }
+  #lesson-name { font-size: 19px; }
+  .step-tab { width: 40px; height: 32px; font-size: 16px; }
 }
