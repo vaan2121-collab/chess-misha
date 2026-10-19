@@ -290,6 +290,7 @@ window.LearnScreen = (function () {
     board.setInteractive(false);
     const first = Progress.markStep(piece.type, step);
     if (first) Progress.addStars(1);
+    Progress.addXP(first ? 20 : 5);
     const done = Progress.lessonSteps(piece.type);
     const allDone = stepsFor(piece).every((s) => done[s.id]);
 

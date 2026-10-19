@@ -60,7 +60,8 @@ window.PuzzleGen = (function () {
 
   // Проверка правил: короли не рядом, пешки не на крайних линиях,
   // тот, кто не ходит, не под шахом; ходящий тоже не под шахом (так проще детям).
-  function makeGame(pl, turn) {
+  // allowCheck — ходящему можно стоять под шахом (задания «спаси короля»).
+  function makeGame(pl, turn, allowCheck) {
     let wk, bk;
     for (const s in pl) {
       if (pl[s] === 'wK') wk = s;
@@ -71,7 +72,7 @@ window.PuzzleGen = (function () {
     const other = new Chess();
     if (!other.load(toFen(pl, turn === 'w' ? 'b' : 'w')) || other.in_check()) return null;
     const g = new Chess();
-    if (!g.load(toFen(pl, turn)) || g.in_check()) return null;
+    if (!g.load(toFen(pl, turn)) || (g.in_check() && !allowCheck)) return null;
     if (g.in_checkmate() || g.in_stalemate()) return null;
     return g;
   }
@@ -386,6 +387,8 @@ window.PuzzleGen = (function () {
 
   return {
     capture, whoCaptures, check, check2, fork, mate,
-    fromCurated, isSolved, solutions, check2Plans, blackReply, attacks, mirror
+    fromCurated, isSolved, solutions, check2Plans, blackReply, attacks, mirror,
+    // общие помощники для других генераторов (js/train-gen.js)
+    util: { toFen, makeGame, place, freeSquares, ALL, dist, xy, sq, onBoard, pick, rnd, notEdgeRanks }
   };
 })();

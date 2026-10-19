@@ -2,7 +2,7 @@
 // Экраны переключаются через адрес (#menu, #play ...), поэтому кнопка
 // «Назад» на телефоне/планшете возвращает в меню, а не закрывает приложение.
 (function () {
-  const SCREENS = ['menu', 'learn', 'puzzles', 'play', 'gifts', 'parents'];
+  const SCREENS = ['menu', 'learn', 'puzzles', 'play', 'gifts', 'parents', 'train'];
   const $ = (sel) => document.querySelector(sel);
 
   // --- Навигация ---
@@ -31,6 +31,8 @@
     if (name === 'puzzles') PuzzlesScreen.enter(current.param);
     if (name === 'gifts') GiftsScreen.enter();
     if (name === 'parents') ParentsScreen.enter();
+    if (name === 'train') TrainScreen.enter(current.param);
+    if (name === 'menu') paintMenuBars();
   }
 
   window.addEventListener('hashchange', () => show(location.hash.slice(1)));
@@ -45,8 +47,60 @@
   // «Назад» поднимается на уровень выше: из урока — к списку фигур, оттуда — в меню.
   $('#btn-back').addEventListener('click', () => {
     Sound.play('click');
+    // из уровня тренировки — на его остров
+    if (current.name === 'train' && current.param) {
+      const m = TRAIN.modules.find((x) => (x.levels || []).some((l) => l.id === current.param));
+      location.hash = m ? 'train/' + m.id : 'train';
+      return;
+    }
     location.hash = current.param ? current.name : 'menu';
   });
+
+  // --- Звание и цель от родителей в меню ---
+  function rankBadge(r) {
+    return '<img src="' + CONFIG.pieces.path + r.piece + '.' + CONFIG.pieces.ext + '" alt="">' + (r.crown ? '<span class="rank-crown">👑</span>' : '');
+  }
+
+  function paintMenuBars() {
+    const r = Progress.rank, next = Progress.nextRank;
+    const pct = next ? Math.round((Progress.xp - r.xp) / (next.xp - r.xp) * 100) : 100;
+    $('#rank-bar').innerHTML =
+      '<span class="rank-badge">' + rankBadge(r) + '</span>' +
+      '<span class="rank-info"><b>' + r.name + '</b>' +
+      '<span class="xp-bar"><i style="width:' + pct + '%"></i></span>' +
+      '<small>' + (next ? 'до звания «' + next.name + '»: ' + (next.xp - Progress.xp) : 'высшее звание!') + '</small></span>';
+    const g = Progress.goal;
+    const gb = $('#goal-bar');
+    gb.hidden = !g;
+    if (g) {
+      const p = Progress.goalProgress();
+      gb.classList.toggle('reached', p >= g.target);
+      gb.innerHTML = '<span class="goal-icon">🎁</span><span class="rank-info"><b>' + g.text + '</b>' +
+        '<span class="xp-bar gold"><i style="width:' + Math.round(p / g.target * 100) + '%"></i></span>' +
+        '<small>' + (p >= g.target ? 'Готово! Покажи родителям!' : p + ' / ' + g.target + ' ⭐') + '</small></span>';
+      // цель достигнута — празднуем один раз
+      if (p >= g.target && !g.reached) {
+        Store.set('goal', Object.assign({}, g, { reached: true }));
+        FX.confetti(160);
+        Sound.play('win');
+        Sound.voice([['assets/voice/train/system/goal_done']]);
+      }
+    }
+  }
+  Progress.onChange(() => { if (current.name === 'menu') paintMenuBars(); });
+
+  // --- Новое звание: торжественное окно поверх любого экрана ---
+  Progress.onRankUp((r) => {
+    $('#rank-up-badge').innerHTML = rankBadge(r);
+    $('#rank-up-name').textContent = r.name;
+    setTimeout(() => {
+      $('#rank-up').hidden = false;
+      FX.confetti(160);
+      Sound.play('win');
+      Sound.voice([['assets/voice/train/system/rank_up']]);
+    }, 1600); // после празднования победы, которое принесло опыт
+  });
+  $('#btn-rank-ok').addEventListener('click', () => { Sound.play('click'); $('#rank-up').hidden = true; });
 
   // --- Копилка звёзд в верхней панели ---
   const walletEl = $('#wallet-count');

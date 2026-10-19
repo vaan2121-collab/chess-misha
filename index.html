@@ -7,7 +7,7 @@
   <title>Шахматы Миши</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=202610192207">
+  <link rel="stylesheet" href="css/style.css?v=202610192251">
 </head>
 <body>
   <!-- Верхняя панель: назад + звук -->
@@ -23,7 +23,13 @@
     <!-- Главное меню -->
     <section id="screen-menu" class="screen">
       <h1 class="logo">Шахматы<br><span>Миши</span></h1>
+      <!-- звание и цель от родителей -->
+      <div id="rank-bar" class="rank-bar"></div>
+      <div id="goal-bar" class="goal-bar" hidden></div>
       <nav class="menu">
+        <button class="block-btn menu-btn diamond menu-wide" data-go="train">
+          <span class="menu-icon">🎯</span><span class="menu-label">Тренировка</span>
+        </button>
         <button class="block-btn menu-btn grass" data-go="learn">
           <span class="menu-icon">♞</span><span class="menu-label">Учим фигуры</span>
         </button>
@@ -37,6 +43,62 @@
           <span class="menu-icon">🎁</span><span class="menu-label">Мои подарки</span>
         </button>
       </nav>
+    </section>
+
+    <!-- Тренировка -->
+    <section id="screen-train" class="screen" hidden>
+      <!-- карта островов -->
+      <div id="train-map-wrap">
+        <div id="map-coach" class="coach-panel">
+          <div class="coach-face"></div><div class="coach-text"></div>
+        </div>
+        <div id="train-map" class="island-grid"></div>
+      </div>
+
+      <!-- остров: список уровней -->
+      <div id="train-island" class="island-view" hidden>
+        <h2 id="island-title" class="island-title"></h2>
+        <div id="island-coach" class="coach-panel">
+          <div class="coach-face"></div><div class="coach-text"></div>
+        </div>
+        <div id="island-levels" class="level-list"></div>
+      </div>
+
+      <!-- уровень -->
+      <div id="train-view" class="play-layout" hidden>
+        <div class="train-head">
+          <div id="train-coach" class="coach-panel">
+            <div class="coach-face"></div><div class="coach-text"></div>
+          </div>
+          <div class="train-sub"><b id="train-level-name"></b><span id="train-progress" class="chest-bar"></span></div>
+        </div>
+        <div class="board-wrap">
+          <div id="train-board"></div>
+          <div id="train-letter" class="train-letter" hidden></div>
+        </div>
+        <div class="controls">
+          <button id="btn-train-ok" class="block-btn ctrl-btn grass"><span>➜</span>Понятно</button>
+          <button id="btn-train-explain" class="block-btn ctrl-btn lapis"><span>📖</span>Объясни</button>
+          <button id="btn-train-hint" class="block-btn ctrl-btn gold"><span>💡</span>Подсказка</button>
+        </div>
+      </div>
+
+      <div id="train-done" class="overlay" hidden>
+        <div class="panel">
+          <div class="go-title">Уровень пройден!</div>
+          <div class="rule-card">
+            <div id="td-letter" class="rule-letter"></div>
+            <div id="td-rule"></div>
+          </div>
+          <div id="td-result" class="sm-note"></div>
+          <div id="td-reward" class="reward"></div>
+          <div class="panel-buttons">
+            <button id="btn-td-island" class="block-btn ctrl-btn stone"><span>🗺️</span>Остров</button>
+            <button id="btn-td-again" class="block-btn ctrl-btn stone"><span>⟳</span>Ещё раз</button>
+            <button id="btn-td-next" class="block-btn ctrl-btn grass"><span>➜</span>Дальше</button>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Игра -->
@@ -158,6 +220,18 @@
         </div>
 
         <div class="parents-card">
+          <h3>🎁 Цель-приз</h3>
+          <p>Придумайте настоящий приз — Миша увидит в меню, сколько звёзд осталось собрать. Считаются звёзды, заработанные после того, как вы поставили цель.</p>
+          <div id="goal-now" class="parents-now"></div>
+          <input id="goal-text" type="text" maxlength="40" placeholder="Например: поход в кино">
+          <input id="goal-target" type="number" min="5" max="1000" step="5" value="50">
+          <div class="panel-buttons">
+            <button id="btn-goal-set" class="block-btn ctrl-btn gold"><span>🎯</span>Поставить цель</button>
+            <button id="btn-goal-clear" class="block-btn ctrl-btn stone"><span>✔</span>Приз выдан</button>
+          </div>
+        </div>
+
+        <div class="parents-card">
           <h3>💾 Сохранить прогресс</h3>
           <p>Получите код и откройте его на другом телефоне или планшете — звёзды, наклейки, медали и уроки перенесутся.</p>
           <button id="btn-show-code" class="block-btn ctrl-btn lapis"><span>🔑</span>Получить код</button>
@@ -185,10 +259,12 @@
     <section id="screen-gifts" class="screen" hidden>
       <div class="gifts">
         <div class="gift-tabs">
-          <button class="gift-tab block-btn gold active" data-tab="stickers"><span>🎨</span>Наклейки <small id="sticker-count"></small></button>
+          <button class="gift-tab block-btn gold active" data-tab="stickers"><span>🖼️</span>Наклейки <small id="sticker-count"></small></button>
           <button class="gift-tab block-btn stone" data-tab="medals"><span>🏅</span>Медали <small id="medal-count"></small></button>
+          <button class="gift-tab block-btn stone" data-tab="themes"><span>🎨</span>Доски</button>
         </div>
         <div id="sticker-grid" class="sticker-grid"></div>
+        <div id="theme-grid" class="theme-grid" hidden></div>
         <div id="medal-shelf" class="medal-shelf" hidden></div>
       </div>
 
@@ -209,6 +285,16 @@
     </section>
   </main>
 
+  <!-- Новое звание (поверх любого экрана) -->
+  <div id="rank-up" class="overlay" hidden>
+    <div class="panel">
+      <div class="go-title">Новое звание!</div>
+      <div id="rank-up-badge" class="rank-badge big"></div>
+      <div id="rank-up-name" class="rank-up-name"></div>
+      <button id="btn-rank-ok" class="block-btn ctrl-btn grass"><span>🎉</span>Ура!</button>
+    </div>
+  </div>
+
   <!-- Перенос прогресса (вопрос показывается поверх любого экрана) -->
   <div id="restore-confirm" class="overlay" hidden>
     <div class="panel restore-panel">
@@ -223,25 +309,29 @@
     </div>
   </div>
 
-  <script src="vendor/chess.min.js?v=202610192207"></script>
-  <script src="js/config.js?v=202610192207"></script>
-  <script src="js/storage.js?v=202610192207"></script>
-  <script src="js/audio.js?v=202610192207"></script>
-  <script src="js/capture-fx.js?v=202610192207"></script>
-  <script src="js/board.js?v=202610192207"></script>
-  <script src="js/solo.js?v=202610192207"></script>
-  <script src="js/fx.js?v=202610192207"></script>
-  <script src="js/learn.js?v=202610192207"></script>
-  <script src="js/puzzle-gen.js?v=202610192207"></script>
-  <script src="js/puzzles-data.js?v=202610192207"></script>
-  <script src="js/puzzles.js?v=202610192207"></script>
-  <script src="js/ai.js?v=202610192207"></script>
-  <script src="js/opponents.js?v=202610192207"></script>
-  <script src="js/play.js?v=202610192207"></script>
-  <script src="js/stickers.js?v=202610192207"></script>
-  <script src="vendor/lz-string.min.js?v=202610192207"></script>
-  <script src="vendor/qrcode.min.js?v=202610192207"></script>
-  <script src="js/sync.js?v=202610192207"></script>
-  <script src="js/app.js?v=202610192207"></script>
+  <script src="vendor/chess.min.js?v=202610192251"></script>
+  <script src="js/config.js?v=202610192251"></script>
+  <script src="js/storage.js?v=202610192251"></script>
+  <script src="js/themes.js?v=202610192251"></script>
+  <script src="js/audio.js?v=202610192251"></script>
+  <script src="js/capture-fx.js?v=202610192251"></script>
+  <script src="js/board.js?v=202610192251"></script>
+  <script src="js/solo.js?v=202610192251"></script>
+  <script src="js/fx.js?v=202610192251"></script>
+  <script src="js/learn.js?v=202610192251"></script>
+  <script src="js/puzzle-gen.js?v=202610192251"></script>
+  <script src="js/puzzles-data.js?v=202610192251"></script>
+  <script src="js/puzzles.js?v=202610192251"></script>
+  <script src="js/ai.js?v=202610192251"></script>
+  <script src="js/opponents.js?v=202610192251"></script>
+  <script src="js/play.js?v=202610192251"></script>
+  <script src="js/stickers.js?v=202610192251"></script>
+  <script src="js/train-gen.js?v=202610192251"></script>
+  <script src="js/train-data.js?v=202610192251"></script>
+  <script src="js/train.js?v=202610192251"></script>
+  <script src="vendor/lz-string.min.js?v=202610192251"></script>
+  <script src="vendor/qrcode.min.js?v=202610192251"></script>
+  <script src="js/sync.js?v=202610192251"></script>
+  <script src="js/app.js?v=202610192251"></script>
 </body>
 </html>

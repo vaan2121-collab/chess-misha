@@ -288,7 +288,7 @@ main {
   grid-template-columns: repeat(8, 1fr);
   grid-template-rows: repeat(8, 1fr);
   border: 6px solid var(--outline);
-  box-shadow: 0 0 0 6px var(--dirt), 0 0 0 10px var(--outline), 0 14px 0 10px rgba(0,0,0,.25);
+  box-shadow: 0 0 0 6px var(--board-frame, var(--dirt)), 0 0 0 10px var(--outline), 0 14px 0 10px rgba(0,0,0,.25);
   container-type: size;
 }
 /* запасной вариант для старых браузеров без container queries */
@@ -946,6 +946,200 @@ main {
 .secret-won { display: flex; align-items: center; gap: 10px; font-size: 18px; text-shadow: 2px 2px 0 rgba(0,0,0,.45); }
 .secret-won img { width: 90px; height: 90px; object-fit: contain; animation: medal-in 0.9s cubic-bezier(.2,1.4,.4,1); }
 
+/* ===== Меню: тренировка, звание, цель ===== */
+.block-btn.diamond { --c: #2fb9c4; --c-dark: #1b7f87; }
+.menu-btn.menu-wide { grid-column: 1 / -1; aspect-ratio: auto; flex-direction: row; gap: 14px; min-height: 76px; }
+.menu-btn.menu-wide .menu-icon { margin-top: 0; font-size: clamp(30px, 8vw, 46px); }
+
+.rank-bar, .goal-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: min(100%, 420px);
+  padding: 6px 12px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 4px solid var(--outline);
+  text-shadow: 2px 2px 0 rgba(0,0,0,.45);
+}
+.rank-info { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; font-size: 18px; }
+.rank-info small { font-size: 13px; opacity: 0.95; }
+.rank-badge { position: relative; width: 44px; height: 44px; flex: none; }
+.rank-badge img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0 3px 0 rgba(0,0,0,.35)); }
+.rank-crown { position: absolute; top: -12px; right: -8px; font-size: 20px; }
+.rank-badge.big { width: 130px; height: 130px; animation: medal-in 0.9s cubic-bezier(.2,1.4,.4,1); }
+.rank-badge.big .rank-crown { font-size: 44px; top: -26px; right: -18px; }
+.rank-up-name { font-size: 34px; font-weight: 800; text-shadow: 3px 3px 0 rgba(0,0,0,.45); color: #fff6c4; }
+.xp-bar { height: 12px; background: rgba(0,0,0,.4); border: 2px solid var(--outline); }
+.xp-bar i { display: block; height: 100%; background: var(--grass); box-shadow: inset 0 2px 0 rgba(255,255,255,.4); }
+.xp-bar.gold i { background: var(--gold); }
+.goal-icon { font-size: 34px; }
+.goal-bar.reached { animation: pulse 0.8s infinite alternate; border-color: var(--gold); }
+
+/* ===== Тренировка ===== */
+.coach-panel {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 10px 6px 6px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 4px solid var(--outline);
+  width: min(100%, 560px);
+  margin: 0 auto;
+}
+.coach-face {
+  width: 64px;
+  height: 64px;
+  flex: none;
+  border: 3px solid var(--outline);
+  background: #fff;
+  overflow: hidden;
+  display: flex;
+}
+.coach-face img { width: 100%; height: 100%; object-fit: cover; }
+.coach-face .avatar-stub { font-size: 36px; }
+.coach-face.react { animation: face-pop 0.45s ease-out; }
+.coach-text { font-size: 16px; font-weight: 700; line-height: 1.3; text-shadow: 1px 1px 0 rgba(0,0,0,.5); }
+.coach-text.pop { animation: land 0.3s ease-out; }
+
+.island-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  width: min(100%, 640px);
+  margin: 12px auto 20px;
+}
+@media (orientation: landscape) and (min-width: 700px) { .island-grid { grid-template-columns: repeat(4, 1fr); } }
+.island { display: flex; flex-direction: column; align-items: center; gap: 4px; padding: 10px 6px; min-height: 120px; }
+.island.soon { filter: grayscale(0.85) brightness(0.8); }
+.island-num {
+  position: absolute !important;
+  top: 6px; left: 8px;
+  font-size: 15px;
+  padding: 0 7px;
+  background: rgba(0,0,0,.35);
+  border: 2px solid var(--outline);
+}
+.island-icon { font-size: 40px; line-height: 1; }
+.island-name { font-size: clamp(15px, 3.6vw, 19px); text-align: center; line-height: 1.1; }
+.island-prog, .island-soon { font-size: 14px; opacity: 0.95; }
+
+.island-view { width: min(100%, 560px); margin: 0 auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px; }
+.island-title { margin: 0; text-align: center; font-size: 26px; text-shadow: 3px 3px 0 rgba(0,0,0,.4); }
+.level-list { display: flex; flex-direction: column; gap: 10px; }
+.level-btn { display: flex; align-items: center; gap: 12px; padding: 12px 16px; font-size: 20px; text-align: left; }
+.level-btn.locked { filter: grayscale(1) brightness(0.7); }
+.level-mark { font-size: 24px; width: 30px; text-align: center; }
+
+.train-head { grid-area: turn; display: flex; flex-direction: column; gap: 4px; width: min(100%, 560px); }
+.train-head .coach-panel { width: 100%; }
+.train-sub { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 16px; text-shadow: 2px 2px 0 rgba(0,0,0,.45); }
+.train-sub .chest-bar { margin: 0; }
+#train-view .board-wrap { position: relative; }
+/* большая буква С / З / У поверх доски */
+.train-letter {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: min(40vw, 220px);
+  font-weight: 800;
+  color: #fff6c4;
+  text-shadow: 6px 6px 0 var(--redstone), -3px -3px 0 var(--outline), 3px -3px 0 var(--outline), -3px 3px 0 var(--outline), 3px 3px 0 var(--outline);
+  pointer-events: none;
+}
+.train-letter.pop { animation: medal-in 0.7s cubic-bezier(.2,1.4,.4,1); }
+.rule-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: #fff6c4;
+  color: #3a2a10;
+  border: 4px solid var(--outline);
+  font-size: 18px;
+  font-weight: 700;
+  text-align: left;
+  max-width: 380px;
+}
+.rule-letter { font-size: 52px; font-weight: 800; color: var(--redstone); line-height: 1; }
+
+/* подсветка для объяснений: безопасно / опасно / цена фигуры */
+.mark.safe { inset: 0; background: rgba(76, 200, 80, 0.55); }
+.mark.danger { inset: 0; background: rgba(230, 50, 40, 0.5); }
+.mark.value::after {
+  position: absolute;
+  top: -2%;
+  right: 0;
+  padding: 0 4px;
+  font-size: 4.2cqw;
+  font-weight: 800;
+  color: #fff;
+  background: var(--lapis);
+  border: 2px solid var(--outline);
+  z-index: 3;
+}
+.mark.value { inset: 0; z-index: 3; }
+.mark.v1::after { content: '1'; }
+.mark.v3::after { content: '3'; }
+.mark.v5::after { content: '5'; }
+.mark.v9::after { content: '9'; }
+
+/* стрелки поверх доски */
+.board { position: relative; }
+.board svg.arrows { position: absolute; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 4; }
+.arrows line { stroke-width: 16; stroke-linecap: round; opacity: 0.85; }
+.arrow-green { stroke: #3fbf3f; } .ah-green { fill: #3fbf3f; }
+.arrow-red { stroke: #e53935; } .ah-red { fill: #e53935; }
+.arrow-yellow { stroke: #ffd400; } .ah-yellow { fill: #ffd400; }
+
+/* ===== Темы доски ===== */
+.theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+@media (min-width: 640px) { .theme-grid { grid-template-columns: repeat(3, 1fr); } }
+.theme-grid[hidden] { display: none; }
+.theme-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 6px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 4px solid var(--outline);
+  color: #fff;
+  font-family: inherit;
+  cursor: pointer;
+}
+.theme-card.current { border-color: var(--gold); box-shadow: 0 0 0 3px var(--gold); }
+.theme-card.shake { animation: shake 0.15s linear 3; }
+.theme-preview {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  width: 96px;
+  height: 96px;
+  border: 6px solid;
+  box-shadow: 0 0 0 3px var(--outline);
+}
+.theme-card.locked .theme-preview { filter: saturate(0.6) brightness(0.85); }
+.theme-name { font-size: 17px; font-weight: 800; text-shadow: 2px 2px 0 rgba(0,0,0,.45); }
+.theme-btn {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  font-size: 15px;
+  font-weight: 800;
+  background: var(--dirt);
+  border: 3px solid var(--outline);
+}
+.theme-card.current .theme-btn { background: var(--grass-dark); }
+.theme-btn .star-icon { width: 17px; height: 17px; }
+.parents-card input {
+  width: 100%;
+  padding: 8px;
+  font: 16px var(--font);
+  border: 3px solid var(--outline);
+}
+
 /* ===== Для родителей ===== */
 .wallet { cursor: pointer; -webkit-touch-callout: none; }
 .parents { width: min(100%, 560px); margin: 0 auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px; }
@@ -1080,7 +1274,7 @@ main {
   .board {
     --board-room: 12px;
     border-width: 4px;
-    box-shadow: 0 0 0 3px var(--dirt), 0 0 0 5px var(--outline);
+    box-shadow: 0 0 0 3px var(--board-frame, var(--dirt)), 0 0 0 5px var(--outline);
   }
 
   /* шапки заданий — ниже и плотнее */
@@ -1138,6 +1332,29 @@ main {
   .menu-btn { aspect-ratio: 1.05; padding: 8px 4px; gap: 4px; }
   .menu-icon { font-size: clamp(30px, 11vw, 48px); margin-top: 10%; }
   .menu-label { font-size: clamp(13px, 4.2vw, 18px); text-align: center; }
+  .menu-btn.menu-wide { min-height: 54px; padding: 4px 8px; }
+  /* заголовок в одну строку, кнопки ниже — всё меню помещается на экран */
+  .logo { font-size: clamp(22px, 7.5vw, 34px); }
+  .logo br { display: none; }
+  .logo span { margin-left: 0.3em; }
+  .menu-btn { aspect-ratio: 1.35; }
+  .rank-bar, .goal-bar { padding: 4px 8px; gap: 8px; border-width: 3px; }
+  .rank-badge { width: 34px; height: 34px; }
+  .rank-info { font-size: 15px; gap: 2px; }
+  .rank-info small { font-size: 12px; }
+  .xp-bar { height: 9px; }
+  .goal-icon { font-size: 26px; }
+
+  /* тренировка: Тренер компактнее, доска крупнее */
+  .coach-panel { padding: 3px 6px 3px 3px; gap: 8px; border-width: 3px; }
+  .coach-face { width: 44px; height: 44px; border-width: 2px; }
+  .coach-face .avatar-stub { font-size: 26px; }
+  .coach-text { font-size: 13px; line-height: 1.25; }
+  .train-head { gap: 2px; }
+  .train-sub { font-size: 13px; }
+  .island { min-height: 96px; padding: 8px 4px; }
+  .island-icon { font-size: 32px; }
+  .level-btn { padding: 10px 12px; font-size: 17px; }
 }
 
 /* Совсем узкий экран (маленький телефон с увеличенным масштабом) */
@@ -1151,5 +1368,11 @@ main {
   .controls .ctrl-btn { min-height: 46px; font-size: 13px; }
   .lesson-head, .opp-panel { padding: 3px 6px; }
   #lesson-name { font-size: 19px; }
+  #screen-menu { gap: 8px; padding-top: 6px; }
+  .menu-btn { aspect-ratio: 1.6; }
+  .menu-btn.menu-wide { min-height: 46px; }
+  .menu-icon { font-size: 26px; }
+  .rank-bar, .goal-bar { padding: 2px 6px; }
+  .rank-badge { width: 28px; height: 28px; }
   .step-tab { width: 40px; height: 32px; font-size: 16px; }
 }

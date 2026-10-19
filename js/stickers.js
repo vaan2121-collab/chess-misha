@@ -177,7 +177,38 @@ window.GiftsScreen = (function () {
     });
     grid.hidden = t !== 'stickers';
     shelf.hidden = t !== 'medals';
-    if (t === 'stickers') renderStickers(); else renderMedals();
+    $('#theme-grid').hidden = t !== 'themes';
+    if (t === 'stickers') renderStickers();
+    else if (t === 'medals') renderMedals();
+    else renderThemes();
+  }
+
+  // ---------- Темы доски ----------
+  function renderThemes() {
+    const box = $('#theme-grid');
+    box.innerHTML = '';
+    const owned = Themes.owned(), cur = Themes.current();
+    for (const t of THEMES) {
+      const card = document.createElement('button');
+      card.className = 'theme-card' + (t.id === cur ? ' current' : '') + (owned[t.id] ? '' : ' locked');
+      // мини-доска 4×4 в цветах темы
+      let cells = '';
+      for (let i = 0; i < 16; i++) cells += '<i style="background:' + ((i + Math.floor(i / 4)) % 2 ? t.dark : t.light) + '"></i>';
+      const label = t.id === cur ? '✔ Выбрана' : owned[t.id] ? 'Выбрать'
+        : '<span class="star-icon"></span>' + t.price;
+      card.innerHTML =
+        '<span class="theme-preview" style="border-color:' + t.frame + '">' + cells + '</span>' +
+        '<span class="theme-name">' + t.icon + ' ' + t.name + '</span>' +
+        '<span class="theme-btn">' + label + '</span>';
+      card.addEventListener('click', () => {
+        if (t.id === cur) return;
+        if (owned[t.id]) { Sound.play('click'); Themes.choose(t.id); }
+        else if (Themes.buy(t.id)) { Sound.play('win'); FX.confetti(100); }
+        else { Sound.play('error'); card.classList.add('shake'); setTimeout(() => card.classList.remove('shake'), 500); return; }
+        renderThemes();
+      });
+      box.appendChild(card);
+    }
   }
 
   document.querySelectorAll('.gift-tab').forEach((b) =>

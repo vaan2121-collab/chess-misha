@@ -32,6 +32,17 @@ window.Store = (function () {
   return { get, set, all };
 })();
 
+// Звания: опыт копится за всё — уроки, задачки, тренировку, победы над соперниками.
+window.RANKS = [
+  { name: 'Пешка',        xp: 0,    piece: 'wP' },
+  { name: 'Конь',         xp: 150,  piece: 'wN' },
+  { name: 'Слон',         xp: 400,  piece: 'wB' },
+  { name: 'Ладья',        xp: 800,  piece: 'wR' },
+  { name: 'Ферзь',        xp: 1500, piece: 'wQ' },
+  { name: 'Король',       xp: 2500, piece: 'wK' },
+  { name: 'Гроссмейстер', xp: 4000, piece: 'wK', crown: true }
+];
+
 // Прогресс ребёнка: копилка звёзд и пройденные уроки.
 window.Progress = (function () {
   const listeners = [];
@@ -45,10 +56,47 @@ window.Progress = (function () {
   let spent = Store.get('stars:spent', 0);
   let learned = Store.get('learned', {}); // { r: true, b: true, ... }
 
+  // Опыт для званий. Первый раз считаем его из уже накопленного прогресса — старания не пропадут.
+  if (Store.get('xp') === undefined) {
+    const all = Store.all();
+    let xp = 0;
+    Object.values(learned).forEach((v) => { xp += (v === true ? 1 : Object.keys(v).length) * 20; });
+    Object.keys(all).forEach((k) => {
+      if (k.startsWith('pw:')) xp += all[k] * 5;
+      if (k.startsWith('wins:')) xp += all[k] * 40;
+    });
+    Store.set('xp', xp);
+  }
+  let xp = Store.get('xp', 0);
+  const rankListeners = [];
+  const rankOf = (n) => RANKS.filter((r) => n >= r.xp).pop();
+
   function notify() { listeners.forEach((fn) => fn()); }
 
   return {
     get stars() { return earned - spent; },
+    get earned() { return earned; },
+    // ---- звания ----
+    get xp() { return xp; },
+    get rank() { return rankOf(xp); },
+    get nextRank() { return RANKS.find((r) => r.xp > xp) || null; },
+    addXP(n) {
+      const before = rankOf(xp);
+      xp += n;
+      Store.set('xp', xp);
+      const after = rankOf(xp);
+      notify();
+      if (after !== before) rankListeners.forEach((fn) => fn(after));
+    },
+    onRankUp(fn) { rankListeners.push(fn); },
+    // ---- цель от родителей: { text, target, start, reached } — считаем заработанные с момента постановки ----
+    get goal() { return Store.get('goal', null); },
+    setGoal(text, target) { Store.set('goal', { text, target, start: earned, reached: false }); notify(); },
+    clearGoal() { Store.set('goal', null); notify(); },
+    goalProgress() {
+      const g = this.goal;
+      return g ? Math.min(g.target, earned - g.start) : 0;
+    },
     // n > 0 — заработал, n < 0 — потратил (покупка наклейки)
     addStars(n) {
       if (n >= 0) { earned += n; Store.set('stars:earned', earned); }

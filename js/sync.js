@@ -32,7 +32,7 @@ window.Sync = (function () {
   function mergeValue(key, mine, theirs) {
     if (mine === undefined) return theirs;
     if (theirs === undefined) return mine;
-    if (key === 'stickers') return Object.assign({}, mine, theirs);
+    if (key === 'stickers' || key === 'themes' || key === 'trainDone') return Object.assign({}, mine, theirs);
     if (key === 'learned') {
       const out = {};
       new Set([...Object.keys(mine), ...Object.keys(theirs)]).forEach((p) => {
@@ -150,10 +150,34 @@ window.ParentsScreen = (function () {
   $('#btn-restore-yes').addEventListener('click', confirmRestore);
   $('#btn-restore-no').addEventListener('click', () => { pending = null; restoreBox.hidden = true; });
 
+  // ---- цель-приз ----
+  function paintGoal() {
+    const g = Progress.goal;
+    $('#goal-now').innerHTML = g
+      ? 'Сейчас: «' + g.text + '» — ' + Progress.goalProgress() + ' из ' + g.target + ' <span class="star-icon"></span>'
+      : 'Цель пока не задана.';
+    $('#btn-goal-clear').hidden = !g;
+  }
+
+  $('#btn-goal-set').addEventListener('click', () => {
+    const text = $('#goal-text').value.trim();
+    const target = Math.max(5, Math.min(1000, parseInt($('#goal-target').value, 10) || 50));
+    if (!text) { $('#goal-text').focus(); return; }
+    Progress.setGoal(text, target);
+    Sound.play('win');
+    paintGoal();
+  });
+  $('#btn-goal-clear').addEventListener('click', () => {
+    Progress.clearGoal();
+    Sound.play('click');
+    paintGoal();
+  });
+
   function enter() {
     $('#save-result').hidden = true;
     $('#load-code').value = '';
     $('#parents-now').innerHTML = Sync.summaryHtml(Sync.summary(Sync.snapshot()));
+    paintGoal();
   }
 
   return { enter, offerRestore };

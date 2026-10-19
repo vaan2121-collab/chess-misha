@@ -218,6 +218,7 @@ window.PuzzlesScreen = (function () {
     busy = true;
     board.setInteractive(false);
     Progress.addSolved(world.id);
+    Progress.addXP(5);
 
     let chest = Progress.chest + 1;
     const chestFull = chest >= CHEST_SIZE;

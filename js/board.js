@@ -41,6 +41,9 @@ window.ChessBoard = (function () {
       isOver: opts.isOver || ((g) => g.game_over()),
       // звук шаха; в «Игре с роботом» его нет — там шах объявляет сам соперник
       checkSound: opts.checkSound !== false,
+      // подсвечивать ли, куда может пойти выбранная фигура (в части заданий ребёнок ищет сам)
+      showTargets: opts.showTargets !== false,
+      onIllegal: opts.onIllegal || null,
       interactive: opts.interactive !== false,
       selected: null,
       targets: [],
@@ -123,6 +126,8 @@ window.ChessBoard = (function () {
       }
 
       if (state.selected) {
+        // в режиме без подсказок ребёнок может ткнуть в «невозможную» клетку — скажем почему
+        if (!state.showTargets && state.onIllegal) state.onIllegal(state.selected, square);
         Sound.play('error');
         clearSelection();
       }
@@ -194,8 +199,9 @@ window.ChessBoard = (function () {
         const target = state.targets.find((m) => m.to === name);
 
         cell.classList.toggle('selected', state.selected === name);
-        cell.classList.toggle('target', !!target && !target.captured);
-        cell.classList.toggle('target-capture', !!target && !!target.captured);
+        const showT = state.showTargets && !!target;
+        cell.classList.toggle('target', showT && !target.captured);
+        cell.classList.toggle('target-capture', showT && !!target.captured);
         cell.classList.toggle('last', !!state.lastMove &&
           (state.lastMove.from === name || state.lastMove.to === name));
         cell.classList.toggle('in-check', checkSquare === name);
@@ -267,6 +273,37 @@ window.ChessBoard = (function () {
       flip() { this.setOrientation(state.orientation === 'w' ? 'b' : 'w'); },
       setInteractive(v) { state.interactive = v; if (!v) clearSelection(); },
       setPlayerColor(color) { state.playerColor = color; },
+      setShowTargets(v) { state.showTargets = v; render(); },
+      // Стрелки поверх доски: [{ from: 'b1', to: 'f1', color: 'green' | 'red' | 'yellow' }]
+      setArrows(list) {
+        let svg = el.querySelector('svg.arrows');
+        if (!svg) {
+          svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+          svg.setAttribute('class', 'arrows');
+          svg.setAttribute('viewBox', '0 0 800 800');
+          // у каждой доски свои id наконечников: маркер из скрытой доски не рисуется
+          svg.dataset.uid = 'a' + Math.random().toString(36).slice(2, 8);
+          svg.innerHTML = ['green', 'red', 'yellow'].map((c) =>
+            '<marker id="' + svg.dataset.uid + c + '" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="3.2" markerHeight="3.2" orient="auto-start-reverse">' +
+            '<path d="M0,0 L10,5 L0,10 z" class="ah-' + c + '"/></marker>').join('');
+          svg.innerHTML = '<defs>' + svg.innerHTML + '</defs><g></g>';
+          el.appendChild(svg);
+        }
+        // центр клетки в координатах 800×800 с учётом ориентации доски
+        const center = (s) => {
+          const f = FILES.indexOf(s[0]), r = +s[1] - 1;
+          const col = state.orientation === 'w' ? f : 7 - f;
+          const row = state.orientation === 'w' ? 7 - r : r;
+          return [col * 100 + 50, row * 100 + 50];
+        };
+        svg.querySelector('g').innerHTML = (list || []).map((a) => {
+          const [x1, y1] = center(a.from), [x2, y2] = center(a.to);
+          const len = Math.hypot(x2 - x1, y2 - y1) || 1;
+          // не доводим стрелку до центра клетки — наконечник не закрывает фигуру
+          const ex = x2 - (x2 - x1) / len * 30, ey = y2 - (y2 - y1) / len * 30;
+          return '<line x1="' + x1 + '" y1="' + y1 + '" x2="' + ex + '" y2="' + ey + '" class="arrow-' + (a.color || 'green') + '" marker-end="url(#' + svg.dataset.uid + (a.color || 'green') + ')"/>';
+        }).join('');
+      },
       isBusy() { return !!state.animating; }, // идёт анимация взятия
       setLastMove(move) { state.lastMove = move; render(move && move.to); }
     };

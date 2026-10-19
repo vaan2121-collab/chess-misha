@@ -197,6 +197,7 @@ window.PlayScreen = (function () {
       bubble('😭');
       const before = medalFor(Progress.winsOver(opp.id));
       Progress.addWin(opp.id);
+      Progress.addXP(20 * opp.level); // Лёня — 20, Человек-паук — 100
       const wins = Progress.winsOver(opp.id);
       const now = medalFor(wins);
       const isNew = now && (!before || before.tier !== now.tier);
