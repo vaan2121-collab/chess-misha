@@ -2,7 +2,7 @@
 // Экраны переключаются через адрес (#menu, #play ...), поэтому кнопка
 // «Назад» на телефоне/планшете возвращает в меню, а не закрывает приложение.
 (function () {
-  const SCREENS = ['menu', 'learn', 'puzzles', 'play', 'gifts'];
+  const SCREENS = ['menu', 'learn', 'puzzles', 'play', 'gifts', 'parents'];
   const $ = (sel) => document.querySelector(sel);
 
   // --- Навигация ---
@@ -10,6 +10,14 @@
   let current = { name: 'menu', param: '' };
 
   function show(hash) {
+    // ссылка из QR-кода «перенести прогресс»: #restore=<код>
+    if (hash && hash.startsWith('restore=')) {
+      const code = hash.slice('restore='.length);
+      history.replaceState(null, '', location.pathname + '#menu');
+      show('menu');
+      ParentsScreen.offerRestore(code);
+      return;
+    }
     let [name, param] = (hash || '').split('/');
     if (!SCREENS.includes(name)) { name = 'menu'; param = ''; }
     current = { name, param: param || '' };
@@ -22,6 +30,7 @@
     if (name === 'learn') LearnScreen.enter(current.param);
     if (name === 'puzzles') PuzzlesScreen.enter(current.param);
     if (name === 'gifts') GiftsScreen.enter();
+    if (name === 'parents') ParentsScreen.enter();
   }
 
   window.addEventListener('hashchange', () => show(location.hash.slice(1)));
@@ -44,6 +53,16 @@
   function paintWallet() { walletEl.textContent = Progress.stars; }
   Progress.onChange(paintWallet);
   paintWallet();
+
+  // Вход для родителей — долгое нажатие на копилку (ребёнок случайно не попадёт).
+  const wallet = $('.wallet');
+  let pressTimer = null;
+  wallet.addEventListener('pointerdown', () => {
+    pressTimer = setTimeout(() => { Sound.play('click'); location.hash = 'parents'; }, 1200);
+  });
+  ['pointerup', 'pointerleave', 'pointercancel'].forEach((ev) =>
+    wallet.addEventListener(ev, () => clearTimeout(pressTimer)));
+  wallet.addEventListener('contextmenu', (e) => e.preventDefault());
 
   // --- Звук ---
   // Первое касание где угодно «разблокирует» звук в браузере.

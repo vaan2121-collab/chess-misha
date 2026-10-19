@@ -946,6 +946,40 @@ main {
 .secret-won { display: flex; align-items: center; gap: 10px; font-size: 18px; text-shadow: 2px 2px 0 rgba(0,0,0,.45); }
 .secret-won img { width: 90px; height: 90px; object-fit: contain; animation: medal-in 0.9s cubic-bezier(.2,1.4,.4,1); }
 
+/* ===== Для родителей ===== */
+.wallet { cursor: pointer; -webkit-touch-callout: none; }
+.parents { width: min(100%, 560px); margin: 0 auto; display: flex; flex-direction: column; gap: 12px; padding-bottom: 20px; }
+.parents h2 { margin: 0; text-align: center; font-size: 28px; text-shadow: 3px 3px 0 rgba(0,0,0,.4); }
+.parents-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(0, 0, 0, 0.4);
+  border: 4px solid var(--outline);
+  font-size: 16px;
+  line-height: 1.35;
+}
+.parents-card h3 { margin: 0; font-size: 20px; }
+.parents-card p { margin: 0; opacity: 0.95; }
+.parents-card .ctrl-btn { align-self: center; }
+.parents-card textarea {
+  width: 100%;
+  font: 13px/1.3 monospace;
+  padding: 8px;
+  border: 3px solid var(--outline);
+  resize: vertical;
+  word-break: break-all;
+}
+.parents-now, .restore-row { font-size: 18px; font-weight: 700; }
+.parents-now .star-icon, .restore-row .star-icon { width: 20px; height: 20px; }
+.save-qr { display: flex; justify-content: center; }
+.save-qr img { width: min(100%, 260px); image-rendering: pixelated; background: #fff; border: 4px solid var(--outline); }
+#btn-copy-code.done, #btn-send-code.done { filter: hue-rotate(90deg) brightness(1.1); }
+.restore-panel { max-width: 460px; text-align: center; }
+.restore-panel p { margin: 0; font-size: 16px; }
+.restore-row { display: flex; flex-direction: column; gap: 2px; font-size: 16px; }
+
 /* ===== Анимация взятия ===== */
 .fx-layer {
   position: fixed;

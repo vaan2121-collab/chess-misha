@@ -17,22 +17,42 @@ window.Store = (function () {
     } catch (e) { /* хранилище недоступно — работаем без сохранения */ }
   }
 
-  return { get, set };
+  // Все сохранённые значения игры: { 'stars:earned': 73, 'wins:lenya': 3, ... } — для кода сохранения.
+  function all() {
+    const out = {};
+    try {
+      for (let i = 0; i < localStorage.length; i++) {
+        const k = localStorage.key(i);
+        if (k && k.startsWith(PREFIX)) out[k.slice(PREFIX.length)] = get(k.slice(PREFIX.length));
+      }
+    } catch (e) { /* хранилище недоступно */ }
+    return out;
+  }
+
+  return { get, set, all };
 })();
 
 // Прогресс ребёнка: копилка звёзд и пройденные уроки.
 window.Progress = (function () {
   const listeners = [];
-  let stars = Store.get('stars', 0);
+  // Звёзды храним как «заработано» и «потрачено» (баланс = разница): так прогресс
+  // с двух устройств можно объединить, не теряя трат и не удваивая звёзды.
+  if (Store.get('stars:earned') === undefined) {
+    Store.set('stars:earned', Store.get('stars', 0)); // переносим старый баланс
+    Store.set('stars:spent', 0);
+  }
+  let earned = Store.get('stars:earned', 0);
+  let spent = Store.get('stars:spent', 0);
   let learned = Store.get('learned', {}); // { r: true, b: true, ... }
 
   function notify() { listeners.forEach((fn) => fn()); }
 
   return {
-    get stars() { return stars; },
+    get stars() { return earned - spent; },
+    // n > 0 — заработал, n < 0 — потратил (покупка наклейки)
     addStars(n) {
-      stars += n;
-      Store.set('stars', stars);
+      if (n >= 0) { earned += n; Store.set('stars:earned', earned); }
+      else { spent += -n; Store.set('stars:spent', spent); }
       notify();
     },
     // Шаги урока по фигуре: { r: { info: true, stars: true, eat: true, check: true } }

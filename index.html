@@ -7,7 +7,7 @@
   <title>Шахматы Миши</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=202610192153">
+  <link rel="stylesheet" href="css/style.css?v=202610192207">
 </head>
 <body>
   <!-- Верхняя панель: назад + звук -->
@@ -148,6 +148,39 @@
         </div>
       </div>
     </section>
+    <!-- Для родителей: вход — долгое нажатие на копилку ⭐ -->
+    <section id="screen-parents" class="screen" hidden>
+      <div class="parents">
+        <h2>Для родителей</h2>
+        <div class="parents-card">
+          <div>Сейчас на этом устройстве:</div>
+          <div id="parents-now" class="parents-now"></div>
+        </div>
+
+        <div class="parents-card">
+          <h3>💾 Сохранить прогресс</h3>
+          <p>Получите код и откройте его на другом телефоне или планшете — звёзды, наклейки, медали и уроки перенесутся.</p>
+          <button id="btn-show-code" class="block-btn ctrl-btn lapis"><span>🔑</span>Получить код</button>
+          <div id="save-result" hidden>
+            <p>Наведите камеру другого устройства на QR-код — откроется игра и предложит перенести прогресс.</p>
+            <div id="save-qr" class="save-qr"></div>
+            <textarea id="save-code" readonly rows="3"></textarea>
+            <div class="panel-buttons">
+              <button id="btn-copy-code" class="block-btn ctrl-btn stone"><span>📋</span>Скопировать</button>
+              <button id="btn-send-code" class="block-btn ctrl-btn grass"><span>📤</span>Отправить</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="parents-card">
+          <h3>📥 Перенести с другого устройства</h3>
+          <p>Вставьте код. Прогресс объединится с текущим: ничего не сотрётся, берётся лучшее с обоих устройств.</p>
+          <textarea id="load-code" rows="3" placeholder="Вставьте код сюда"></textarea>
+          <button id="btn-load-code" class="block-btn ctrl-btn gold"><span>📥</span>Перенести</button>
+        </div>
+      </div>
+    </section>
+
     <!-- Мои подарки -->
     <section id="screen-gifts" class="screen" hidden>
       <div class="gifts">
@@ -176,22 +209,39 @@
     </section>
   </main>
 
-  <script src="vendor/chess.min.js?v=202610192153"></script>
-  <script src="js/config.js?v=202610192153"></script>
-  <script src="js/storage.js?v=202610192153"></script>
-  <script src="js/audio.js?v=202610192153"></script>
-  <script src="js/capture-fx.js?v=202610192153"></script>
-  <script src="js/board.js?v=202610192153"></script>
-  <script src="js/solo.js?v=202610192153"></script>
-  <script src="js/fx.js?v=202610192153"></script>
-  <script src="js/learn.js?v=202610192153"></script>
-  <script src="js/puzzle-gen.js?v=202610192153"></script>
-  <script src="js/puzzles-data.js?v=202610192153"></script>
-  <script src="js/puzzles.js?v=202610192153"></script>
-  <script src="js/ai.js?v=202610192153"></script>
-  <script src="js/opponents.js?v=202610192153"></script>
-  <script src="js/play.js?v=202610192153"></script>
-  <script src="js/stickers.js?v=202610192153"></script>
-  <script src="js/app.js?v=202610192153"></script>
+  <!-- Перенос прогресса (вопрос показывается поверх любого экрана) -->
+  <div id="restore-confirm" class="overlay" hidden>
+    <div class="panel restore-panel">
+      <div class="go-title">Перенести прогресс?</div>
+      <div class="restore-row"><b>Придёт:</b> <span id="restore-theirs"></span></div>
+      <div class="restore-row"><b>Сейчас здесь:</b> <span id="restore-mine"></span></div>
+      <p>Прогресс объединится: ничего не сотрётся, от каждого берётся лучшее.</p>
+      <div class="panel-buttons">
+        <button id="btn-restore-no" class="block-btn ctrl-btn stone"><span>✖</span>Нет</button>
+        <button id="btn-restore-yes" class="block-btn ctrl-btn grass"><span>✔</span>Перенести</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="vendor/chess.min.js?v=202610192207"></script>
+  <script src="js/config.js?v=202610192207"></script>
+  <script src="js/storage.js?v=202610192207"></script>
+  <script src="js/audio.js?v=202610192207"></script>
+  <script src="js/capture-fx.js?v=202610192207"></script>
+  <script src="js/board.js?v=202610192207"></script>
+  <script src="js/solo.js?v=202610192207"></script>
+  <script src="js/fx.js?v=202610192207"></script>
+  <script src="js/learn.js?v=202610192207"></script>
+  <script src="js/puzzle-gen.js?v=202610192207"></script>
+  <script src="js/puzzles-data.js?v=202610192207"></script>
+  <script src="js/puzzles.js?v=202610192207"></script>
+  <script src="js/ai.js?v=202610192207"></script>
+  <script src="js/opponents.js?v=202610192207"></script>
+  <script src="js/play.js?v=202610192207"></script>
+  <script src="js/stickers.js?v=202610192207"></script>
+  <script src="vendor/lz-string.min.js?v=202610192207"></script>
+  <script src="vendor/qrcode.min.js?v=202610192207"></script>
+  <script src="js/sync.js?v=202610192207"></script>
+  <script src="js/app.js?v=202610192207"></script>
 </body>
 </html>
