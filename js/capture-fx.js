@@ -533,6 +533,23 @@ window.CaptureFX = (function () {
         wK: [61, 40, 7], wQ: [50, 38, 8], wR: [42, 26, 0], wB: [59, 42, 7], wN: [56, 18, 0], wP: [49, 32, 8],
         bK: [53, 30, 6], bQ: [50, 33, 6], bR: [49, 42, 7], bB: [54, 37, 6], bN: [57, 24, 6], bP: [49, 35, 7]
       }
+    },
+    // без своих атак — бьют обычными (меч, молния, таран…)
+    dmc: {
+      words: { w: ['БАХ!', 'ВЖУХ!', 'ДЖЕКПОТ!', 'СТИЛЬНО!'], b: ['ГРРР!', 'ХА-ХА!', 'БУМ!', 'ТЬМА!'] },
+      dust: { w: ['#c62828', '#90caf9', '#eeeeee'], b: ['#b71c1c', '#212121', '#ff5252'] },
+      eyes: {
+        wK: [60, 17, 5], wQ: [60, 29, 5], wR: [53, 30, 5], wB: [52, 28, 6], wN: [61, 27, 5], wP: [56, 32, 5],
+        bK: [57, 23, 6], bQ: [54, 23, 5], bR: [57, 30, 6], bB: [52, 35, 6], bN: [55, 37, 5], bP: [51, 47, 6]
+      }
+    },
+    sonic: {
+      words: { w: ['ВЖУХ!', 'ХОП!', 'КЛАСС!', 'БАМ!'], b: ['ХА-ХА-ХА!', 'БУМ!', 'ТРАХ!', 'ПОПАЛСЯ!'] },
+      dust: { w: ['#1e63e9', '#ffd54a', '#e53935'], b: ['#212121', '#e53935', '#9e9e9e'] },
+      eyes: {
+        wK: [61, 26, 5], wQ: [50, 31, 7], wR: [57, 35, 6], wB: [58, 33, 6], wN: [50, 32, 5], wP: [55, 26, 6],
+        bK: [60, 18, 7], bQ: [56, 26, 0], bR: [49, 11, 6], bB: [57, 33, 7], bN: [58, 29, 5], bP: [45, 43, 8]
+      }
     }
   };
 
@@ -618,7 +635,7 @@ window.CaptureFX = (function () {
     // у набора фигур могут быть свои атаки; атакует цвет, противоположный жертве
     const set = SETS[window.PieceSets ? PieceSets.current() : ''];
     const atkColor = (o.victimCode || 'b')[0] === 'w' ? 'b' : 'w';
-    const attacks = set ? set.attacks[atkColor] : ATTACKS;
+    const attacks = set && set.attacks ? set.attacks[atkColor] : ATTACKS;
     const words = set ? set.words[atkColor] : WORDS;
     const c = {
       atk, dx, dy, dist, cell, aRect, vRect, boardEl: o.boardEl,
