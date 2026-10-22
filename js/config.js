@@ -83,7 +83,10 @@ window.CONFIG = {
     dmcCurse:  'assets/sfx/dmc/curse.mp3',   // жрец: магический круг
     dmcOrb:    'assets/sfx/dmc/orb.mp3',     // повелительница: сфера
     dmcFire:   'assets/sfx/dmc/fire.mp3',    // владыка: огненный дождь
-    dmcOrbs:   'assets/sfx/dmc/orbs.mp3'     // красные сферы разлетаются
+    dmcOrbs:   'assets/sfx/dmc/orbs.mp3',    // красные сферы разлетаются
+    // набор «Мама против Хлеба»
+    momCrunch: 'assets/sfx/bread/crunch.mp3', // мама откусывает: «хрум»
+    momChew:   'assets/sfx/bread/chew.mp3'    // мама доедает: «хрум-хрум»
   },
   // Пока своих файлов нет — играет похожий звук обычных фигур.
   sfxAlt: {

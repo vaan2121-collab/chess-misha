@@ -51,7 +51,10 @@ window.PIECE_SETS = [
   { id: 'dmc', name: 'Devil May Cry', icon: '😈', price: 50 },
   // белые — герои, чёрные — злодеи (лист: assets/pieces/source/sonic.png,
   // нарезка: tools/cut-piece-sheet.ps1 -Set sonic -SatMax 12 -Light)
-  { id: 'sonic', name: 'Соник', icon: '🦔', price: 50 }
+  { id: 'sonic', name: 'Соник', icon: '🦔', price: 50 },
+  // белые — мама, чёрные — хлеб (лист: assets/pieces/source/bread.png,
+  // нарезка: tools/cut-piece-sheet.ps1 -Set bread -SatMax 12 -Light)
+  { id: 'bread', name: 'Мама против Хлеба', icon: '🥖', price: 25 }
 ];
 
 window.PieceSets = (function () {

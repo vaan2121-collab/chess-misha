@@ -1132,6 +1132,64 @@ window.CaptureFX = (function () {
     }
   };
 
+  // ---------- «Мама против Хлеба»: мама съедает хлеб ----------
+  const CRUMBS = ['#d7a35c', '#8d5524', '#f3e0b5'];
+
+  // Путь к жертве шагами с подпрыгиванием: steps шагов, высота шага h клеток.
+  function stepsTo(c, s, steps, h, ms) {
+    const frames = [];
+    for (let i = 0; i <= steps * 2; i++) {
+      const t = i / (steps * 2);
+      frames.push({ transform: T(s.x * t, s.y * t - (i % 2) * c.cell * h) });
+    }
+    return anim(c.atk, frames, ms, { easing: 'linear' });
+  }
+
+  // Мама подходит (каждая фигура по-своему), дважды откусывает — «хрум», «хрум» —
+  // жертва с каждым укусом уменьшается, потом мама доедает её и жуёт: «хрум-хрум».
+  function momEats(approach) {
+    return async (c) => {
+      const s = c.stop(0.55);
+      await approach(c, s);
+      for (let i = 0; i < 2; i++) {
+        const bite = T(s.x + c.ux * c.cell * 0.18, s.y + c.uy * c.cell * 0.18, 'scale(1.12,0.92)');
+        await anim(c.atk, [{ transform: T(s.x, s.y) }, { transform: bite }], 110, { easing: 'ease-in' });
+        const from = 1 - 0.2 * i, to = from - 0.2;
+        anim(c.vic, [
+          { transform: 'scale(' + from + ')' },
+          { transform: 'scale(' + to + ') rotate(' + (i ? 6 : -6) + 'deg)', offset: 0.4 },
+          { transform: 'scale(' + to + ')' }
+        ], 180);
+        if (i === 0) c.hit('momCrunch'); else Sound.play('momCrunch');
+        particles(c.vRect, CRUMBS, 10, 0.8);
+        await anim(c.atk, [{ transform: bite }, { transform: T(s.x, s.y) }], 160);
+      }
+      c.eaten = true;
+      c.vicScale = 0.6;
+      c.gulpSound = 'momChew';
+      return s;
+    };
+  }
+
+  const MOM = {
+    // со скалкой — бодро шагает
+    p: momEats((c, s) => stepsTo(c, s, 3, 0.08, 420)),
+    // в башне — башня тяжело едет
+    r: momEats((c, s) => anim(c.atk, [{ transform: T(0, 0) }, { transform: T(s.x, s.y, 'scale(1.04,0.97)'), offset: 0.85 }, { transform: T(s.x, s.y) }], 380)),
+    // на коне — прыжок дугой
+    n: momEats((c, s) => anim(c.atk, [
+      { transform: T(0, 0) },
+      { transform: T(s.x * 0.5, Math.min(0, s.y * 0.5) - c.cell * 0.9, 'rotate(-10deg)'), offset: 0.5 },
+      { transform: T(s.x, s.y) }
+    ], 400, { easing: 'ease-out' })),
+    // с венчиком — плывёт, слегка приподнявшись
+    b: momEats((c, s) => anim(c.atk, [{ transform: T(0, 0) }, { transform: T(s.x * 0.5, s.y * 0.5 - c.cell * 0.2), offset: 0.5 }, { transform: T(s.x, s.y) }], 380)),
+    // королева — подходит, кружась
+    q: momEats((c, s) => anim(c.atk, [{ transform: T(0, 0, 'rotate(0deg)') }, { transform: T(s.x, s.y, 'rotate(360deg)') }], 420)),
+    // король — важно, медленными шагами
+    k: momEats((c, s) => stepsTo(c, s, 2, 0.05, 480))
+  };
+
   // Свои атаки, слова, глаза и пыль для наборов фигур (id из PIECE_SETS).
   const SETS = {
     pvz: {
@@ -1160,14 +1218,25 @@ window.CaptureFX = (function () {
         wK: [61, 26, 5], wQ: [50, 31, 7], wR: [57, 35, 6], wB: [58, 33, 6], wN: [50, 32, 5], wP: [55, 26, 6],
         bK: [60, 18, 7], bQ: [56, 26, 0], bR: [49, 11, 6], bB: [57, 33, 7], bN: [58, 29, 5], bP: [45, 43, 8]
       }
+    },
+    // мама съедает хлеб; хлеб бьёт обычными атаками и рассыпается крошками
+    bread: {
+      attacks: { w: MOM, b: ATTACKS },
+      words: { w: ['ХРУМ!', 'НЯМ-НЯМ!', 'ВКУСНО!', 'ХРУМ-ХРУМ!'], b: ['ХРУСТЬ!', 'БУЛК!', 'КРОШКИ!', 'ПЛЮХ!'] },
+      dust: { w: ['#c62828', '#f5f0e6', '#5d4037'], b: ['#d7a35c', '#8d5524', '#f3e0b5'] },
+      eyes: {
+        wK: [44, 25, 8], wQ: [50, 30, 7], wR: [50, 23, 7], wB: [55, 26, 7], wN: [48, 22, 7], wP: [51, 31, 7],
+        bK: [51, 33, 9], bQ: [50, 37, 8], bR: [49, 38, 9], bB: [48, 40, 7], bN: [57, 31, 6], bP: [54, 43, 8]
+      }
     }
   };
 
   // Проглатывание (кусачка): жертва уменьшается и улетает в рот, атакующий жуёт.
+  // Звук и начальный размер жертвы может задать атака (c.gulpSound, c.vicScale — если её уже надкусили).
   async function gulp(c, vic, end) {
-    Sound.play('pvzChomp');
+    Sound.play(c.gulpSound || 'pvzChomp');
     anim(vic, [
-      { transform: 'translate(0,0) scale(1)', opacity: 1 },
+      { transform: 'translate(0,0) scale(' + (c.vicScale || 1) + ')', opacity: 1 },
       { transform: T(end.x - c.dx, end.y - c.dy, 'scale(0.1)'), opacity: 0 }
     ], 260, { easing: 'ease-in' });
     await wait(200);
@@ -1281,16 +1350,18 @@ window.CaptureFX = (function () {
       const type = attacks[o.attackerType] ? o.attackerType : 'p';
       const end = await attacks[type](c);
 
-      // жертва: крестики в глазах, шатается…
-      addCrosses(vic, o.victimCode, set ? set.eyes : EYES);
-      Sound.play('dizzy');
-      await anim(vic, [
-        { transform: 'rotate(0)' }, { transform: 'rotate(-9deg)' }, { transform: 'rotate(8deg)' },
-        { transform: 'rotate(-6deg)' }, { transform: 'rotate(0)' }
-      ], 420);
+      // жертва: крестики в глазах, шатается… (кроме съеденной — её сразу доедают)
+      if (!c.eaten) {
+        addCrosses(vic, o.victimCode, set ? set.eyes : EYES);
+        Sound.play('dizzy');
+        await anim(vic, [
+          { transform: 'rotate(0)' }, { transform: 'rotate(-9deg)' }, { transform: 'rotate(8deg)' },
+          { transform: 'rotate(-6deg)' }, { transform: 'rotate(0)' }
+        ], 420);
+      }
 
       // …и рассыпается на кубики (или её проглатывают), а атакующий занимает клетку
-      if (c.gulp) await gulp(c, vic, end);
+      if (c.gulp || c.eaten) await gulp(c, vic, end);
       else {
         Sound.play('crumble');
         shatter(vic, src, vRect, (o.victimCode || 'b')[0], set ? set.dust : DUST);
