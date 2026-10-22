@@ -47,9 +47,7 @@ window.PIECE_SETS = [
   // белые — растения, чёрные — зомби (лист: assets/pieces/source/pvz.png, нарезка tools/cut-piece-sheet.ps1)
   { id: 'pvz', name: 'Растения и зомби', icon: '🌻', price: 50 },
   // белые — герои, чёрные — демоны (лист: assets/pieces/source/dmc.png,
-  // нарезка: tools/cut-piece-sheet.ps1 -Set dmc -DarkMax 34 -SatMax 30 -Close 7)
-  // (pvz резался старой версией скрипта; если перерезать — проверить зомби-ладью на букву из заголовка)
-  { id: 'dmc', name: 'Devil May Cry', icon: '😈', price: 50 },
+  // нарезка: tools/cut-piece-sheet.ps1 -Set dmc -DarkMax 34 -SatMax 30 -Close 7)  { id: 'dmc', name: 'Devil May Cry', icon: '😈', price: 50 },
   // белые — герои, чёрные — злодеи (лист: assets/pieces/source/sonic.png,
   // нарезка: tools/cut-piece-sheet.ps1 -Set sonic -SatMax 12 -Light)
   { id: 'sonic', name: 'Соник', icon: '🦔', price: 50 }

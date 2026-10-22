@@ -231,13 +231,14 @@ window.CaptureFX = (function () {
     }
   };
 
-  // Светящаяся дуга меча по жертве. start — с какого угла начинается взмах.
-  function slash(c, side, start) {
-    popAt('fx-slash', c.vRect, c.cell * 1.6, [
+  // Светящаяся дуга меча по жертве. start — с какого угла начинается взмах; color — цвет дуги.
+  function slash(c, side, start, color) {
+    const el = popAt('fx-slash', c.vRect, c.cell * 1.6, [
       { transform: 'rotate(' + start * side + 'deg) scale(0.5)', opacity: 0 },
       { transform: 'rotate(' + (start + 60) * side + 'deg) scale(1)', opacity: 1, offset: 0.45 },
       { transform: 'rotate(' + (start + 130) * side + 'deg) scale(1.15)', opacity: 0 }
     ], 300);
+    if (color) { el.style.borderTopColor = color; el.style.borderRightColor = color; }
   }
 
   // Ударная волна от щита.
@@ -273,10 +274,12 @@ window.CaptureFX = (function () {
   // ---------- Наборы фигур со своими атаками ----------
   // Снаряд летит от атакующего (точка from) к жертве (точка to; по умолчанию её центр).
   // Координаты — смещения от центра клетки атакующего. arc — высота дуги в клетках.
-  function shot(c, cls, sizeK, from, to, ms, arc, rot) {
+  // text — значок-эмодзи вместо нарисованного снаряда (гаечный ключ, ракета, бомба).
+  function shot(c, cls, sizeK, from, to, ms, arc, rot, text) {
     const el = document.createElement('div');
     el.className = cls;
     const s = c.cell * sizeK;
+    if (text) { el.textContent = text; el.style.fontSize = s * 0.85 + 'px'; }
     Object.assign(el.style, {
       left: c.aRect.left + c.aRect.width / 2 - s / 2 + 'px',
       top: c.aRect.top + c.aRect.height / 2 - s / 2 + 'px',
@@ -523,6 +526,612 @@ window.CaptureFX = (function () {
     }
   };
 
+  // Эмодзи, вспыхивающий над клеткой (молот, взрыв).
+  function emojiPop(rect, ch, sizeK, frames, ms) {
+    const el = popAt('fx-emoji', rect, rect.width * sizeK, frames, ms);
+    el.textContent = ch;
+    el.style.fontSize = rect.width * sizeK * 0.85 + 'px';
+    return el;
+  }
+
+  // Колечки вылетают из героя, когда его бьёт злодей (как в игре про Соника),
+  // красные сферы — из демона, которого победил герой (как в Devil May Cry).
+  const ringsOut = (rect, n) => spray(rect, n, 'fx-goldring', 'sonicRings');
+  const redOrbs = (rect, n) => spray(rect, n, 'fx-redorb', 'dmcOrbs');
+
+  function spray(rect, n, cls, sound) {
+    Sound.play(sound);
+    const cx = rect.left + rect.width / 2, cy = rect.top + rect.height / 2;
+    for (let i = 0; i < n; i++) {
+      const el = document.createElement('div');
+      el.className = cls;
+      const s = rect.width * 0.22;
+      Object.assign(el.style, { left: cx - s / 2 + 'px', top: cy - s / 2 + 'px', width: s + 'px', height: s + 'px', borderWidth: Math.max(2, s * 0.18) + 'px' });
+      getLayer().appendChild(el);
+      const a = -Math.PI / 2 + rand(-1.3, 1.3), d = rect.width * rand(0.6, 1.2);
+      anim(el, [
+        { transform: 'translate(0,0) scale(0.5)', opacity: 1 },
+        { transform: T(Math.cos(a) * d, Math.sin(a) * d, 'scale(1)'), opacity: 1, offset: 0.45 },
+        { transform: T(Math.cos(a) * d * 1.3, Math.sin(a) * d + rect.height * 0.9, 'scale(0.9)'), opacity: 0 }
+      ], rand(700, 950), { easing: 'ease-out' }).then(() => el.remove());
+    }
+  }
+
+  // Призрачный след атакующего в точке p (рывок Метал Соника, пике демона).
+  function ghost(c, p, color) {
+    const g = c.atk.cloneNode(true);
+    g.getAnimations && g.getAnimations().forEach((a) => a.cancel());
+    Object.assign(g.style, { transform: T(p.x, p.y), opacity: 0.5, filter: 'drop-shadow(0 0 6px ' + (color || '#448aff') + ')' });
+    getLayer().appendChild(g);
+    anim(g, [{ opacity: 0.5 }, { opacity: 0 }], 260).then(() => g.remove());
+  }
+
+  const SONIC_HEROES = {
+    // Соник — раскручивается в шар на месте (спин-дэш) и врезается.
+    p: async (c) => {
+      const side = c.ux >= 0 ? 1 : -1;
+      const ball = 'drop-shadow(0 0 10px #4fc3f7) brightness(1.15)';
+      const b = { x: -c.ux * c.cell * 0.1, y: -c.uy * c.cell * 0.1 };
+      const rev = [{ transform: T(0, 0, 'rotate(0deg) scale(1)'), filter: 'none' }];
+      for (let i = 1; i <= 6; i++) rev.push({ transform: T(b.x, b.y, 'rotate(' + side * i * 180 + 'deg) scale(0.8)'), filter: ball });
+      Sound.play('sonicSpin');
+      const dust = setInterval(() => particles(c.aRect, ['#e0e0e0', '#bdbdbd', '#ffffff'], 3, 0.6), 90 / speed());
+      await anim(c.atk, rev, 450, { easing: 'linear' });
+      clearInterval(dust);
+      const s = c.stop(0.3), spin = side * 1080;
+      await anim(c.atk, [
+        { transform: T(b.x, b.y, 'rotate(0deg) scale(0.8)'), filter: ball },
+        { transform: T(s.x, s.y, 'rotate(' + spin + 'deg) scale(0.8)'), filter: ball }
+      ], 120 + (c.dist / c.cell) * 35, { easing: 'ease-in' });
+      c.hit('sonicSpin');
+      c.knock(0.3);
+      particles(c.vRect, ['#1e63e9', '#4fc3f7', '#ffffff'], 18, 1.2);
+      const back = c.stop(0.7);
+      await anim(c.atk, [
+        { transform: T(s.x, s.y, 'rotate(' + spin + 'deg) scale(0.8)'), filter: ball },
+        { transform: T((s.x + back.x) / 2, (s.y + back.y) / 2 - c.cell * 0.4, 'rotate(' + (spin + side * 180) + 'deg) scale(0.9)'), filter: 'none', offset: 0.5 },
+        { transform: T(back.x, back.y), filter: 'none' }
+      ], 300, { easing: 'ease-out' });
+      return back;
+    },
+
+    // Тейлз — взлетает, крутя хвостами, и бросает гаечный ключ.
+    r: async (c) => {
+      const s = c.stand(1.5);
+      const hover = { x: s.x, y: s.y - c.cell * 0.4 };
+      const fly = [];
+      for (let i = 0; i <= 8; i++) {
+        const t = i / 8;
+        fly.push({ transform: T(hover.x * t, hover.y * t, 'rotate(' + (i % 2 ? 6 : -6) * (i < 8 ? 1 : 0) + 'deg)') });
+      }
+      Sound.play('whoosh');
+      await anim(c.atk, fly, 420, { easing: 'linear' });
+      await shot(c, 'fx-emoji', 0.45, hover, null, 380, Math.max(0.5, c.dist / c.cell * 0.25), 720, '🔧');
+      c.hit('sonicWrench');
+      c.knock(0.2);
+      particles(c.vRect, ['#9e9e9e', '#ffd54a', '#ffffff'], 14, 1);
+      await anim(c.atk, [{ transform: T(hover.x, hover.y) }, { transform: T(s.x, s.y) }], 200);
+      return s;
+    },
+
+    // Наклз — планирует к жертве и бьёт кулаками дважды.
+    n: async (c) => {
+      const side = c.ux >= 0 ? 1 : -1;
+      const s = c.stop(0.6);
+      const peak = T(s.x * 0.5, s.y * 0.5 - c.cell * 0.5, 'rotate(' + 10 * side + 'deg)');
+      await anim(c.atk, [{ transform: T(0, 0) }, { transform: peak, offset: 0.45 }, { transform: T(s.x, s.y) }], 380, { easing: 'ease-out' });
+      for (let i = 0; i < 2; i++) {
+        const jab = T(s.x + c.ux * c.cell * 0.25, s.y + c.uy * c.cell * 0.25, 'scale(1.1,0.95)');
+        await anim(c.atk, [{ transform: T(s.x, s.y) }, { transform: jab }], 80, { easing: 'ease-in' });
+        if (i === 0) c.hit('sonicPunch'); else Sound.play('sonicPunch');
+        c.knock(0.12 + i * 0.12);
+        ring(c, i ? '#ff5252' : '#ffffff');
+        await anim(c.atk, [{ transform: jab }, { transform: T(s.x, s.y) }], 100);
+      }
+      particles(c.vRect, ['#8d6e63', '#bdbdbd', '#e53935'], 16, 1.1);
+      return s;
+    },
+
+    // Сильвер — светится бирюзовым, поднимает жертву силой мысли и роняет.
+    b: async (c) => {
+      const s = c.stand(1.5);
+      await moveTo(c, s, 240);
+      const glow = 'drop-shadow(0 0 12px #4dd0e1) brightness(1.2)';
+      const psy = 'drop-shadow(0 0 10px #4dd0e1)';
+      const up = T(s.x, s.y - c.cell * 0.1, 'scale(1.08)');
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: 'none' }, { transform: up, filter: glow }], 260);
+      Sound.play('sonicPsy');
+      particles(c.vRect, ['#4dd0e1', '#b2ebf2', '#ffffff'], 10, 0.6);
+      await anim(c.vic, [
+        { transform: 'translate(0,0) rotate(0deg)', filter: 'none' },
+        { transform: T(0, -c.cell * 0.5, 'rotate(-8deg)'), filter: psy, offset: 0.6 },
+        { transform: T(0, -c.cell * 0.55, 'rotate(8deg)'), filter: psy }
+      ], 420);
+      await anim(c.vic, [{ transform: T(0, -c.cell * 0.55, 'rotate(8deg)'), filter: psy }, { transform: 'translate(0,0) rotate(0deg)', filter: 'none' }], 110, { easing: 'ease-in' });
+      c.hit('sonicPsy');
+      c.knock(0.1);
+      particles(c.vRect, ['#4dd0e1', '#b2ebf2', '#ffffff', '#9e9e9e'], 18, 1.1);
+      await anim(c.atk, [{ transform: up, filter: glow }, { transform: T(s.x, s.y), filter: 'none' }], 160);
+      return s;
+    },
+
+    // Эми — подпрыгивает и бьёт огромным молотом, летят сердечки.
+    q: async (c) => {
+      const side = c.ux >= 0 ? 1 : -1;
+      const s = c.stop(0.6);
+      const air = T(s.x, s.y - c.cell * 0.4, 'rotate(' + -15 * side + 'deg)');
+      await anim(c.atk, [{ transform: T(0, 0) }, { transform: T(s.x * 0.5, s.y * 0.5 - c.cell * 0.8), offset: 0.5 }, { transform: air }], 380, { easing: 'ease-out' });
+      const hammer = emojiPop(c.vRect, '🔨', 1, [
+        { transform: 'translate(0,-40%) rotate(' + 70 * side + 'deg) scale(0.6)', opacity: 1 },
+        { transform: 'translate(0,-15%) rotate(' + -35 * side + 'deg) scale(1.1)', opacity: 1, offset: 0.4 },
+        { transform: 'translate(0,-15%) rotate(' + -35 * side + 'deg) scale(1.1)', opacity: 0 }
+      ], 420);
+      hammer.style.transformOrigin = '80% 80%';
+      await wait(160);
+      anim(c.atk, [{ transform: air }, { transform: T(s.x, s.y) }], 100);
+      c.hit('sonicHammer');
+      c.knock(0.25);
+      for (let i = 0; i < 5; i++) {
+        const a = rand(-Math.PI, 0), d = c.cell * rand(0.5, 1);
+        emojiPop(c.vRect, '💗', 0.3, [
+          { transform: 'translate(0,0) scale(0.4)', opacity: 1 },
+          { transform: T(Math.cos(a) * d, Math.sin(a) * d, 'scale(1)'), opacity: 0 }
+        ], rand(500, 750));
+      }
+      particles(c.vRect, ['#f48fb1', '#ff4081', '#ffd54a'], 14, 1.1);
+      await wait(120);
+      return s;
+    },
+
+    // Шадоу — «Хаос-контроль»: исчезает во вспышке, появляется рядом и рубит мечом крест-накрест.
+    k: async (c) => {
+      const side = c.ux >= 0 ? 1 : -1;
+      const s = c.stop(0.65);
+      const bright = 'drop-shadow(0 0 14px #ffd54a) brightness(1.6)';
+      Sound.play('sonicChaos');
+      await anim(c.atk, [{ transform: T(0, 0), opacity: 1, filter: 'none' }, { transform: T(0, 0, 'scale(1.1)'), opacity: 0, filter: bright }], 220);
+      const flash = [{ transform: 'scale(0.2)', opacity: 1 }, { transform: 'scale(1.5)', opacity: 0 }];
+      popAt('fx-flash', c.aRect, c.cell * 1.2, flash, 300);
+      popAt('fx-flash', rectAt(c, s), c.cell * 1.2, flash, 300);
+      await wait(120);
+      await anim(c.atk, [{ transform: T(s.x, s.y, 'scale(1.1)'), opacity: 0, filter: bright }, { transform: T(s.x, s.y), opacity: 1, filter: 'none' }], 180);
+      slash(c, side, -60);
+      const cut1 = T(s.x + c.ux * c.cell * 0.25, s.y + c.uy * c.cell * 0.25, 'rotate(' + 20 * side + 'deg)');
+      await anim(c.atk, [{ transform: T(s.x, s.y) }, { transform: cut1 }], 90, { easing: 'ease-in' });
+      c.hit('sonicChaos');
+      c.knock(0.15);
+      slash(c, -side, 30);
+      await anim(c.atk, [{ transform: cut1 }, { transform: T(s.x, s.y, 'rotate(' + -10 * side + 'deg)') }], 110);
+      Sound.play('hitK');
+      c.knock(0.22);
+      particles(c.vRect, ['#ffd54a', '#e53935', '#212121'], 18, 1.2);
+      await anim(c.atk, [{ transform: T(s.x, s.y, 'rotate(' + -10 * side + 'deg)') }, { transform: T(s.x, s.y) }], 120);
+      return s;
+    }
+  };
+
+  const SONIC_VILLAINS = {
+    // Бадник — скачет тремя прыжками и бодается.
+    p: async (c) => {
+      const s = c.stop(0.5);
+      const hops = [];
+      for (let i = 0; i <= 24; i++) {
+        const u = i / 24;
+        hops.push({ transform: T(s.x * u, s.y * u - Math.abs(Math.sin(3 * Math.PI * u)) * c.cell * 0.3) });
+      }
+      Sound.play('sonicBonk');
+      await anim(c.atk, hops, 540, { easing: 'linear' });
+      const butt = T(s.x + c.ux * c.cell * 0.2, s.y + c.uy * c.cell * 0.2, 'scale(1.1,0.9)');
+      await anim(c.atk, [{ transform: T(s.x, s.y) }, { transform: butt }], 90, { easing: 'ease-in' });
+      c.hit('sonicBonk');
+      c.knock(0.2);
+      ringsOut(c.vRect, 5);
+      particles(c.vRect, ['#e53935', '#ffd54a', '#ffffff'], 12, 1);
+      await anim(c.atk, [{ transform: butt }, { transform: T(s.x, s.y) }], 120);
+      return s;
+    },
+
+    // Робот-страж — заряжает пушку и стреляет ракетой: взрыв.
+    r: async (c) => {
+      const s = c.stand(1.8);
+      await moveTo(c, s, 300);
+      const charge = T(s.x - c.ux * c.cell * 0.08, s.y - c.uy * c.cell * 0.08, 'scale(1.05)');
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: 'none' }, { transform: charge, filter: 'brightness(1.3)' }], 220);
+      const ang = Math.atan2(c.dy - s.y, c.dx - s.x) * 180 / Math.PI;
+      Sound.play('sonicCannon');
+      anim(c.atk, [{ transform: charge, filter: 'brightness(1.3)' }, { transform: T(s.x - c.ux * c.cell * 0.2, s.y - c.uy * c.cell * 0.2), filter: 'none', offset: 0.3 }, { transform: T(s.x, s.y), filter: 'none' }], 320);
+      await shot(c, 'fx-emoji', 0.4, { x: s.x + c.ux * c.cell * 0.25, y: s.y - c.cell * 0.05 }, null, 300, 0, ang + 45, '🚀');
+      c.hit('sonicBoom');
+      emojiPop(c.vRect, '💥', 1.3, [{ transform: 'scale(0.3)', opacity: 1 }, { transform: 'scale(1.2)', opacity: 0 }], 450);
+      c.knock(0.3);
+      shakeBoard(c.boardEl);
+      ringsOut(c.vRect, 6);
+      particles(c.vRect, ['#ff9800', '#ffd54a', '#e53935', '#616161'], 24, 1.4);
+      return s;
+    },
+
+    // Метал Соник — загорается красным и проносится рывком, оставляя призрачный след.
+    n: async (c) => {
+      const side = c.ux >= 0 ? 1 : -1;
+      const s = c.stop(0.35);
+      const red = 'drop-shadow(0 0 10px #ff1744)';
+      const lean = T(-c.ux * c.cell * 0.12, -c.uy * c.cell * 0.12, 'rotate(' + 15 * side + 'deg)');
+      await anim(c.atk, [{ transform: T(0, 0), filter: 'none' }, { transform: lean, filter: red }], 220);
+      Sound.play('sonicDash');
+      const ms = 150 + (c.dist / c.cell) * 30;
+      for (let i = 1; i <= 4; i++) setTimeout(() => ghost(c, { x: s.x * i / 5, y: s.y * i / 5 }), (ms * i / 5) / speed());
+      await anim(c.atk, [{ transform: lean, filter: red }, { transform: T(s.x, s.y, 'rotate(' + 15 * side + 'deg)'), filter: red }], ms, { easing: 'ease-in' });
+      c.hit('sonicDash');
+      c.knock(0.3);
+      ringsOut(c.vRect, 5);
+      particles(c.vRect, ['#1e63e9', '#ff1744', '#ffffff'], 16, 1.2);
+      await anim(c.atk, [{ transform: T(s.x, s.y, 'rotate(' + 15 * side + 'deg)'), filter: red }, { transform: T(s.x, s.y), filter: 'none' }], 160);
+      return s;
+    },
+
+    // Руж — взлетает, хлопая крыльями, и пикирует с ударом ногой в штопоре.
+    b: async (c) => {
+      const side = c.ux >= 0 ? 1 : -1;
+      const s = c.stop(0.5);
+      const up = { x: -c.ux * c.cell * 0.1, y: -c.cell * 0.6 };
+      const flap = [{ transform: T(0, 0) }];
+      for (let i = 1; i <= 6; i++) {
+        const t = i / 6;
+        flap.push({ transform: T(up.x * t, up.y * t, i % 2 ? 'scale(1.08,0.95)' : 'scale(0.95,1.04)') });
+      }
+      Sound.play('whoosh');
+      await anim(c.atk, flap, 360, { easing: 'linear' });
+      await anim(c.atk, [{ transform: T(up.x, up.y, 'rotate(0deg)') }, { transform: T(s.x, s.y, 'rotate(' + 360 * side + 'deg)') }], 200, { easing: 'ease-in' });
+      c.hit('sonicKick');
+      c.knock(0.25);
+      ringsOut(c.vRect, 5);
+      for (let i = 0; i < 3; i++) {
+        const a = rand(-Math.PI, 0), d = c.cell * rand(0.4, 0.9);
+        emojiPop(c.vRect, '💎', 0.28, [{ transform: 'translate(0,0) scale(0.4)', opacity: 1 }, { transform: T(Math.cos(a) * d, Math.sin(a) * d, 'rotate(180deg)'), opacity: 0 }], 600);
+      }
+      particles(c.vRect, ['#ce93d8', '#e040fb', '#ffffff'], 14, 1);
+      return s;
+    },
+
+    // Инфинит — силой Фантомного рубина стягивает к жертве красные кубики, и они взрываются.
+    q: async (c) => {
+      const s = c.stand(1.6);
+      await moveTo(c, s, 260);
+      const glitch = 'drop-shadow(0 0 10px #ff1744) hue-rotate(-20deg) brightness(1.2)';
+      const shake = [];
+      for (let i = 0; i <= 6; i++) shake.push({ transform: T(s.x + (i % 2 ? 4 : -4) * (i < 6 ? 1 : 0), s.y), filter: glitch });
+      Sound.play('sonicRuby');
+      anim(c.atk, shake, 320, { easing: 'linear' });
+      const cx = c.vRect.left + c.vRect.width / 2, cy = c.vRect.top + c.vRect.height / 2;
+      for (let i = 0; i < 12; i++) {
+        const cube = document.createElement('div');
+        cube.className = 'fx-bit';
+        const sz = c.cell * rand(0.1, 0.18), a = (i / 12) * Math.PI * 2, d = c.cell * rand(0.7, 1);
+        Object.assign(cube.style, { left: cx - sz / 2 + 'px', top: cy - sz / 2 + 'px', width: sz + 'px', height: sz + 'px', background: i % 3 ? '#e53935' : '#212121' });
+        getLayer().appendChild(cube);
+        anim(cube, [
+          { transform: T(Math.cos(a) * d, Math.sin(a) * d, 'rotate(0deg)'), opacity: 0 },
+          { transform: T(Math.cos(a) * d * 0.7, Math.sin(a) * d * 0.7, 'rotate(90deg)'), opacity: 1, offset: 0.3 },
+          { transform: 'translate(0,0) rotate(270deg)', opacity: 1 }
+        ], 340, { easing: 'ease-in' }).then(() => cube.remove());
+      }
+      await wait(340);
+      c.hit('sonicRuby');
+      c.knock(0.2);
+      ringsOut(c.vRect, 5);
+      particles(c.vRect, ['#e53935', '#212121', '#ff8a80'], 24, 1.4);
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: glitch }, { transform: T(s.x, s.y), filter: 'none' }], 160);
+      return s;
+    },
+
+    // Доктор Эггман — подлетает на своей капсуле и сбрасывает три бомбы.
+    k: async (c) => {
+      const p = { x: c.dx, y: c.dy - c.cell * 1.1 };
+      const float = [];
+      for (let i = 0; i <= 8; i++) {
+        const t = i / 8;
+        float.push({ transform: T(p.x * t, p.y * t + Math.sin(t * Math.PI * 2) * c.cell * 0.05) });
+      }
+      Sound.play('whoosh');
+      await anim(c.atk, float, 460, { easing: 'ease-in-out' });
+      for (let i = 0; i < 3; i++) {
+        await shot(c, 'fx-emoji', 0.35, { x: p.x + (i - 1) * c.cell * 0.2, y: p.y + c.cell * 0.3 }, { x: c.dx + (i - 1) * c.cell * 0.15, y: c.dy }, 200, 0, 0, '💣');
+        if (i === 0) c.hit('sonicBomb'); else Sound.play('sonicBomb');
+        popAt('fx-flash', c.vRect, c.cell * 1.2, [{ transform: 'scale(0.2)', opacity: 1 }, { transform: 'scale(1.5)', opacity: 0 }], 280);
+        c.knock(0.12 + i * 0.05);
+        particles(c.vRect, ['#ff9800', '#ffd54a', '#616161'], 10, 1.1);
+      }
+      ringsOut(c.vRect, 6);
+      return p;
+    }
+  };
+
+  // Столп света с неба на жертву (молитва Кирии).
+  function beam(c) {
+    const el = document.createElement('div');
+    el.className = 'fx-beam';
+    const w = c.cell * 0.9, bottom = c.vRect.top + c.vRect.height * 0.8;
+    Object.assign(el.style, { left: c.vRect.left + c.vRect.width / 2 - w / 2 + 'px', top: '0px', width: w + 'px', height: bottom + 'px' });
+    getLayer().appendChild(el);
+    return anim(el, [
+      { opacity: 0, transform: 'scaleX(0.3)' }, { opacity: 1, transform: 'scaleX(1)', offset: 0.3 },
+      { opacity: 0.6, transform: 'scaleX(1)', offset: 0.55 }, { opacity: 1, transform: 'scaleX(1.1)', offset: 0.75 },
+      { opacity: 0, transform: 'scaleX(1.3)' }
+    ], 480, { easing: 'linear' }).then(() => el.remove());
+  }
+
+  const DMC_HEROES = {
+    // Неро — два выстрела из револьвера, потом «Дьявольская рука» хватает демона и бьёт о землю.
+    p: async (c) => {
+      const s = c.stand(1.4);
+      await moveTo(c, s, 240);
+      const muzzle = { x: s.x + c.ux * c.cell * 0.3, y: s.y - c.cell * 0.1 };
+      for (let i = 0; i < 2; i++) {
+        Sound.play('dmcGun');
+        anim(c.atk, [{ transform: T(s.x, s.y) }, { transform: T(s.x - c.ux * c.cell * 0.06, s.y - c.uy * c.cell * 0.06), offset: 0.3 }, { transform: T(s.x, s.y) }], 140);
+        await shot(c, 'fx-bullet', 0.14, muzzle, null, 130);
+        c.knock(0.06);
+        particles(c.vRect, ['#ffd54a', '#ffffff'], 5, 0.6);
+      }
+      const arm = 'drop-shadow(0 0 12px #448aff) brightness(1.2)';
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: 'none' }, { transform: T(s.x, s.y, 'scale(1.1)'), filter: arm }], 200);
+      Sound.play('dmcBuster');
+      const held = T(-c.ux * c.cell * 0.35, -c.uy * c.cell * 0.35 - c.cell * 0.3, 'rotate(-10deg)');
+      await anim(c.vic, [{ transform: 'translate(0,0) rotate(0deg)', filter: 'none' }, { transform: held, filter: 'drop-shadow(0 0 8px #448aff)' }], 220, { easing: 'ease-out' });
+      await anim(c.vic, [{ transform: held, filter: 'drop-shadow(0 0 8px #448aff)' }, { transform: 'translate(0,0) rotate(0deg)', filter: 'none' }], 110, { easing: 'ease-in' });
+      c.hit('dmcBuster');
+      c.knock(0.15);
+      ring(c, '#64b5f6');
+      particles(c.vRect, ['#448aff', '#bbdefb', '#ffffff'], 16, 1.1);
+      redOrbs(c.vRect, 5);
+      await anim(c.atk, [{ transform: T(s.x, s.y, 'scale(1.1)'), filter: arm }, { transform: T(s.x, s.y), filter: 'none' }], 160);
+      return s;
+    },
+
+    // Леди — прицеливается и стреляет ракетой из базуки «Калина Энн».
+    r: async (c) => {
+      const s = c.stand(1.8);
+      await moveTo(c, s, 280);
+      const aim = T(s.x - c.ux * c.cell * 0.05, s.y - c.uy * c.cell * 0.05, 'scale(1.04)');
+      await anim(c.atk, [{ transform: T(s.x, s.y) }, { transform: aim }], 220);
+      const ang = Math.atan2(c.dy - s.y, c.dx - s.x) * 180 / Math.PI;
+      Sound.play('dmcRocket');
+      anim(c.atk, [{ transform: aim }, { transform: T(s.x - c.ux * c.cell * 0.25, s.y - c.uy * c.cell * 0.25), offset: 0.3 }, { transform: T(s.x, s.y) }], 340);
+      particles(rectAt(c, s), ['#bdbdbd', '#eeeeee', '#9e9e9e'], 8, 0.6);
+      await shot(c, 'fx-emoji', 0.4, { x: s.x + c.ux * c.cell * 0.3, y: s.y - c.cell * 0.15 }, null, 320, 0, ang + 45, '🚀');
+      c.hit('dmcBoom');
+      emojiPop(c.vRect, '💥', 1.4, [{ transform: 'scale(0.3)', opacity: 1 }, { transform: 'scale(1.2)', opacity: 0 }], 450);
+      c.knock(0.3);
+      shakeBoard(c.boardEl);
+      particles(c.vRect, ['#ff9800', '#ffd54a', '#e53935', '#616161'], 24, 1.4);
+      redOrbs(c.vRect, 5);
+      return s;
+    },
+
+    // Данте — подпрыгивает с разворотом и поливает демона градом пуль из двух пистолетов.
+    n: async (c) => {
+      const side = c.ux >= 0 ? 1 : -1;
+      const s = c.stand(1.3);
+      await moveTo(c, s, 240);
+      const up = T(s.x, s.y - c.cell * 0.6, 'rotate(' + 360 * side + 'deg)');
+      await anim(c.atk, [{ transform: T(s.x, s.y, 'rotate(0deg)') }, { transform: up }], 300, { easing: 'ease-out' });
+      const shots = [];
+      for (let i = 0; i < 6; i++) {
+        const from = { x: s.x + (i % 2 ? 0.2 : -0.2) * c.cell, y: s.y - c.cell * 0.6 };
+        const to = { x: c.dx + rand(-0.2, 0.2) * c.cell, y: c.dy + rand(-0.2, 0.2) * c.cell };
+        shots.push(wait(55 * i).then(() => { Sound.play('dmcGun'); return shot(c, 'fx-bullet', 0.13, from, to, 110); }));
+      }
+      await Promise.all(shots);
+      c.hit('dmcGun');
+      c.knock(0.2);
+      particles(c.vRect, ['#ffd54a', '#e53935', '#ffffff'], 18, 1.1);
+      redOrbs(c.vRect, 5);
+      await anim(c.atk, [{ transform: up }, { transform: T(s.x, s.y, 'scale(1.1,0.9)'), offset: 0.7 }, { transform: T(s.x, s.y) }], 200);
+      return s;
+    },
+
+    // Кирия — молится, сияя золотом, и на демона падает столп святого света.
+    b: async (c) => {
+      const s = c.stand(1.2);
+      await moveTo(c, s, 240);
+      const glow = 'drop-shadow(0 0 14px #ffe082) brightness(1.25)';
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: 'none' }, { transform: T(s.x, s.y, 'scale(1.05)'), filter: glow }], 300);
+      Sound.play('dmcHoly');
+      await beam(c);
+      c.hit('dmcHoly');
+      c.knock(0.15);
+      particles(c.vRect, ['#ffe082', '#ffffff', '#fff59d', '#ffd54a'], 22, 1.2);
+      redOrbs(c.vRect, 5);
+      await anim(c.atk, [{ transform: T(s.x, s.y, 'scale(1.05)'), filter: glow }, { transform: T(s.x, s.y), filter: 'none' }], 200);
+      return s;
+    },
+
+    // Вергилий — призрачные мечи со всех сторон, потом «Judgement Cut»: синие разрезы прямо в воздухе.
+    q: async (c) => {
+      const s = c.stand(1.6);
+      await moveTo(c, s, 260);
+      const aura = 'drop-shadow(0 0 12px #448aff)';
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: 'none' }, { transform: T(s.x, s.y), filter: aura }], 200);
+      Sound.play('dmcSwords');
+      const swords = [];
+      for (let i = 0; i < 4; i++) {
+        const a = -Math.PI / 2 + (i - 1.5) * 0.7;
+        const from = { x: c.dx + Math.cos(a) * c.cell * 1.1, y: c.dy + Math.sin(a) * c.cell * 1.1 };
+        const ang = Math.atan2(c.dy - from.y, c.dx - from.x) * 180 / Math.PI;
+        swords.push(wait(70 * i).then(() => shot(c, 'fx-sword', 0.5, from, null, 200, 0, ang)));
+      }
+      await Promise.all(swords);
+      c.knock(0.1);
+      // вложил катану в ножны — вспышка, и пространство разрезано
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: aura }, { transform: T(s.x, s.y), filter: aura + ' brightness(1.6)', offset: 0.5 }, { transform: T(s.x, s.y), filter: aura }], 160);
+      Sound.play('dmcJudge');
+      [-80, 10, 100].forEach((st, i) => setTimeout(() => slash(c, i % 2 ? -1 : 1, st, '#64b5f6'), (70 * i) / speed()));
+      await wait(220);
+      c.hit('dmcJudge');
+      c.knock(0.25);
+      particles(c.vRect, ['#448aff', '#bbdefb', '#ffffff'], 20, 1.2);
+      redOrbs(c.vRect, 6);
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: aura }, { transform: T(s.x, s.y), filter: 'none' }], 160);
+      return s;
+    },
+
+    // Спарда — с красной демонической аурой заносит огромный меч и рубит сверху.
+    k: async (c) => {
+      const side = c.ux >= 0 ? 1 : -1;
+      const s = c.stop(0.75);
+      const red = 'drop-shadow(0 0 14px #ff1744) brightness(1.2)';
+      await anim(c.atk, [{ transform: T(0, 0), filter: 'none' }, { transform: T(s.x, s.y), filter: red }], 260);
+      const wind = T(s.x - c.ux * c.cell * 0.15, s.y - c.cell * 0.35, 'rotate(' + -25 * side + 'deg) scale(1.15)');
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: red }, { transform: wind, filter: red }], 280, { easing: 'ease-out' });
+      slash(c, side, -90, '#ff5252');
+      setTimeout(() => slash(c, side, -70), 60 / speed());
+      const strike = T(s.x + c.ux * c.cell * 0.3, s.y + c.uy * c.cell * 0.3, 'rotate(' + 25 * side + 'deg) scale(1.1)');
+      await anim(c.atk, [{ transform: wind, filter: red }, { transform: strike, filter: red }], 100, { easing: 'ease-in' });
+      c.hit('dmcGreat');
+      c.knock(0.3);
+      shakeBoard(c.boardEl);
+      ring(c, '#ff1744');
+      setTimeout(() => ring(c, '#ffffff'), 120 / speed());
+      particles(c.vRect, ['#ff1744', '#ffd54a', '#212121'], 24, 1.4);
+      redOrbs(c.vRect, 7);
+      await anim(c.atk, [{ transform: strike, filter: red }, { transform: T(s.x, s.y), filter: 'none' }], 180);
+      return s;
+    }
+  };
+
+  const DMC_DEMONS = {
+    // Бес — подлетает, трепеща крылышками, и тычет трезубцем три раза.
+    p: async (c) => {
+      const s = c.stop(0.5);
+      const fly = [];
+      for (let i = 0; i <= 10; i++) {
+        const t = i / 10;
+        fly.push({ transform: T(s.x * t, s.y * t - Math.abs(Math.sin(t * Math.PI * 4)) * c.cell * 0.12) });
+      }
+      await anim(c.atk, fly, 420, { easing: 'linear' });
+      for (let i = 0; i < 3; i++) {
+        const jab = T(s.x + c.ux * c.cell * 0.15, s.y + c.uy * c.cell * 0.15, 'scale(1.05)');
+        await anim(c.atk, [{ transform: T(s.x, s.y) }, { transform: jab }], 60, { easing: 'ease-in' });
+        if (i === 0) c.hit('dmcStab'); else Sound.play('dmcStab');
+        c.knock(i === 2 ? 0.18 : 0.08);
+        particles(c.vRect, ['#ff1744', '#ff9800'], 6, 0.7);
+        await anim(c.atk, [{ transform: jab }, { transform: T(s.x, s.y) }], 70);
+      }
+      return s;
+    },
+
+    // Демонический страж — тяжёлые шаги (доска трясётся) и удар щитом.
+    r: async (c) => {
+      const s = c.stop(0.6);
+      const steps = [];
+      for (let i = 0; i <= 6; i++) {
+        const t = i / 6;
+        steps.push({ transform: T(s.x * t, s.y * t - (i % 2) * c.cell * 0.08) });
+      }
+      [1, 2, 3].forEach((i) => setTimeout(() => shakeBoard(c.boardEl), (520 * i / 3) / speed()));
+      await anim(c.atk, steps, 520, { easing: 'linear' });
+      const back = T(s.x - c.ux * c.cell * 0.15, s.y - c.uy * c.cell * 0.15, 'scale(0.95,1.05)');
+      await anim(c.atk, [{ transform: T(s.x, s.y) }, { transform: back }], 160);
+      const h = c.stop(0.3);
+      const bash = T(h.x, h.y, 'scale(1.08)');
+      await anim(c.atk, [{ transform: back }, { transform: bash }], 100, { easing: 'ease-in' });
+      c.hit('dmcShield');
+      c.knock(0.3);
+      ring(c, '#9e9e9e');
+      particles(c.vRect, ['#ff1744', '#424242', '#9e9e9e'], 18, 1.2);
+      await anim(c.atk, [{ transform: bash }, { transform: T(s.x, s.y) }], 160);
+      return s;
+    },
+
+    // Демонический рыцарь — взмывает на крыльях и пикирует с копьём, оставляя красный след.
+    n: async (c) => {
+      const side = c.ux >= 0 ? 1 : -1;
+      const s = c.stop(0.4);
+      const up = { x: -c.ux * c.cell * 0.3, y: -c.cell * 1.3 };
+      const flap = [{ transform: T(0, 0) }];
+      for (let i = 1; i <= 6; i++) {
+        const t = i / 6;
+        flap.push({ transform: T(up.x * t, up.y * t, i % 2 ? 'scale(1.08,0.95)' : 'scale(0.95,1.04)') });
+      }
+      Sound.play('whoosh');
+      await anim(c.atk, flap, 320, { easing: 'ease-out' });
+      const ms = 180;
+      for (let i = 1; i <= 3; i++) setTimeout(() => ghost(c, { x: up.x + (s.x - up.x) * i / 4, y: up.y + (s.y - up.y) * i / 4 }, '#ff1744'), (ms * i / 4) / speed());
+      const dive = T(s.x, s.y, 'rotate(' + 30 * side + 'deg)');
+      await anim(c.atk, [{ transform: T(up.x, up.y, 'rotate(0deg)') }, { transform: dive }], ms, { easing: 'ease-in' });
+      c.hit('dmcDive');
+      c.knock(0.28);
+      particles(c.vRect, ['#ff1744', '#212121', '#ff8a80'], 18, 1.2);
+      await anim(c.atk, [{ transform: dive }, { transform: T(s.x, s.y) }], 140);
+      return s;
+    },
+
+    // Демонический жрец — рисует под героем магический круг, и тот взрывается тьмой.
+    b: async (c) => {
+      const s = c.stand(1.6);
+      await moveTo(c, s, 260);
+      const cast = 'drop-shadow(0 0 12px #d500f9) brightness(1.15)';
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: 'none' }, { transform: T(s.x, s.y - c.cell * 0.08, 'scale(1.06)'), filter: cast }], 240);
+      Sound.play('dmcCurse');
+      popAt('fx-circle', c.vRect, c.cell * 1.3, [
+        { transform: 'scale(0.2) rotate(0deg)', opacity: 0 },
+        { transform: 'scale(1) rotate(180deg)', opacity: 1, offset: 0.5 },
+        { transform: 'scale(1.05) rotate(360deg)', opacity: 1, offset: 0.85 },
+        { transform: 'scale(1.3) rotate(420deg)', opacity: 0 }
+      ], 700);
+      await wait(520);
+      c.hit('dmcCurse');
+      c.knock(0.2);
+      particles(c.vRect, ['#6a1b9a', '#d500f9', '#212121', '#ff1744'], 24, 1.3);
+      await anim(c.atk, [{ transform: T(s.x, s.y - c.cell * 0.08, 'scale(1.06)'), filter: cast }, { transform: T(s.x, s.y), filter: 'none' }], 180);
+      return s;
+    },
+
+    // Повелительница демонов — пускает три красные сферы одну за другой.
+    q: async (c) => {
+      const s = c.stand(1.6);
+      await moveTo(c, s, 260);
+      const glow = 'drop-shadow(0 0 12px #ff1744)';
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: 'none' }, { transform: T(s.x, s.y, 'scale(1.05)'), filter: glow }], 200);
+      for (let i = 0; i < 3; i++) {
+        const a = -Math.PI / 2 + (i - 1) * 0.9;
+        const from = { x: s.x + Math.cos(a) * c.cell * 0.4, y: s.y + Math.sin(a) * c.cell * 0.4 };
+        Sound.play('dmcOrb');
+        await shot(c, 'fx-redorb', 0.3, from, null, 200);
+        if (i === 0) c.hit('dmcOrb');
+        c.knock(i === 2 ? 0.22 : 0.1);
+        particles(c.vRect, ['#ff1744', '#ff8a80', '#ffffff'], 8, 0.9);
+      }
+      await anim(c.atk, [{ transform: T(s.x, s.y, 'scale(1.05)'), filter: glow }, { transform: T(s.x, s.y), filter: 'none' }], 160);
+      return s;
+    },
+
+    // Владыка демонов — ревёт (доска трясётся) и обрушивает на героя огненный дождь.
+    k: async (c) => {
+      const s = c.stand(1.4);
+      await moveTo(c, s, 260);
+      const fire = 'drop-shadow(0 0 14px #ff6d00) brightness(1.2)';
+      await anim(c.atk, [{ transform: T(s.x, s.y), filter: 'none' }, { transform: T(s.x, s.y, 'scale(1.15)'), filter: fire }], 280);
+      shakeBoard(c.boardEl);
+      Sound.play('dmcFire');
+      const drops = [];
+      for (let i = 0; i < 5; i++) {
+        const from = { x: c.dx + rand(-0.4, 0.4) * c.cell, y: c.dy - c.cell * 1.8 };
+        const to = { x: c.dx + rand(-0.2, 0.2) * c.cell, y: c.dy };
+        drops.push(wait(70 * i).then(() => shot(c, 'fx-emoji', 0.4, from, to, 240, 0, 0, '🔥')));
+      }
+      await Promise.all(drops);
+      c.hit('dmcFire');
+      emojiPop(c.vRect, '🔥', 1.4, [{ transform: 'scale(0.3)', opacity: 1 }, { transform: 'scale(1.2)', opacity: 0 }], 450);
+      c.knock(0.3);
+      shakeBoard(c.boardEl);
+      ring(c, '#ff6d00');
+      particles(c.vRect, ['#ff6d00', '#ffd54a', '#ff1744'], 26, 1.4);
+      await anim(c.atk, [{ transform: T(s.x, s.y, 'scale(1.15)'), filter: fire }, { transform: T(s.x, s.y), filter: 'none' }], 180);
+      return s;
+    }
+  };
+
   // Свои атаки, слова, глаза и пыль для наборов фигур (id из PIECE_SETS).
   const SETS = {
     pvz: {
@@ -534,8 +1143,8 @@ window.CaptureFX = (function () {
         bK: [53, 30, 6], bQ: [50, 33, 6], bR: [49, 42, 7], bB: [54, 37, 6], bN: [57, 24, 6], bP: [49, 35, 7]
       }
     },
-    // без своих атак — бьют обычными (меч, молния, таран…)
     dmc: {
+      attacks: { w: DMC_HEROES, b: DMC_DEMONS },
       words: { w: ['БАХ!', 'ВЖУХ!', 'ДЖЕКПОТ!', 'СТИЛЬНО!'], b: ['ГРРР!', 'ХА-ХА!', 'БУМ!', 'ТЬМА!'] },
       dust: { w: ['#c62828', '#90caf9', '#eeeeee'], b: ['#b71c1c', '#212121', '#ff5252'] },
       eyes: {
@@ -544,6 +1153,7 @@ window.CaptureFX = (function () {
       }
     },
     sonic: {
+      attacks: { w: SONIC_HEROES, b: SONIC_VILLAINS },
       words: { w: ['ВЖУХ!', 'ХОП!', 'КЛАСС!', 'БАМ!'], b: ['ХА-ХА-ХА!', 'БУМ!', 'ТРАХ!', 'ПОПАЛСЯ!'] },
       dust: { w: ['#1e63e9', '#ffd54a', '#e53935'], b: ['#212121', '#e53935', '#9e9e9e'] },
       eyes: {
@@ -638,7 +1248,7 @@ window.CaptureFX = (function () {
     const attacks = set && set.attacks ? set.attacks[atkColor] : ATTACKS;
     const words = set ? set.words[atkColor] : WORDS;
     const c = {
-      atk, dx, dy, dist, cell, aRect, vRect, boardEl: o.boardEl,
+      atk, vic, dx, dy, dist, cell, aRect, vRect, boardEl: o.boardEl,
       ux: dx / dist, uy: dy / dist,
       // точка на линии атаки, не доходя d клеток до жертвы
       stop(d) {

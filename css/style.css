@@ -1188,7 +1188,42 @@ main {
   overflow: hidden;
 }
 .fx-piece, .fx-frag, .fx-bit, .fx-flash, .fx-orb, .fx-slash, .fx-word, .fx-ring, .fx-bolt,
-.fx-sun, .fx-pea, .fx-spike, .fx-melon, .fx-goo { position: fixed; }
+.fx-sun, .fx-pea, .fx-spike, .fx-melon, .fx-goo, .fx-emoji, .fx-goldring,
+.fx-bullet, .fx-beam, .fx-sword, .fx-redorb, .fx-circle { position: fixed; }
+/* набор Devil May Cry: пули, столп света, призрачные мечи, красные сферы, магический круг */
+.fx-bullet {
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 0 25%, #ffd54a 50%, #ff9800 80%);
+  box-shadow: 0 0 8px 2px rgba(255, 213, 74, .8);
+}
+.fx-beam {
+  background: linear-gradient(to right, transparent, rgba(255, 236, 179, .9) 35%, #fff 50%, rgba(255, 236, 179, .9) 65%, transparent);
+  filter: drop-shadow(0 0 10px #ffe082);
+}
+.fx-sword {
+  background: linear-gradient(to bottom, transparent 42%, #e3f2fd 42% 58%, transparent 58%);
+  filter: drop-shadow(0 0 6px #448aff) drop-shadow(0 0 2px #82b1ff);
+}
+.fx-redorb {
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fff 0 12%, #ff5252 35%, #b71c1c 80%);
+  box-shadow: 0 0 10px 3px rgba(255, 23, 68, .7);
+}
+.fx-circle {
+  border-radius: 50%;
+  border: 4px dashed #d500f9;
+  box-shadow: 0 0 14px #d500f9, inset 0 0 14px #ff1744;
+  background: radial-gradient(circle, rgba(213, 0, 249, .25), transparent 70%);
+}
+/* значки-эмодзи (гаечный ключ, ракета, бомба, молот) и колечки Соника */
+.fx-emoji { display: flex; align-items: center; justify-content: center; line-height: 1; }
+.fx-goldring {
+  box-sizing: border-box;
+  border-radius: 50%;
+  border-style: solid;
+  border-color: #ffd54a;
+  box-shadow: 0 0 6px #ffecb3, inset 0 0 3px #ff8f00;
+}
 /* снаряды набора «Растения и зомби» */
 .fx-sun {
   border-radius: 50%;

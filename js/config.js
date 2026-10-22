@@ -52,12 +52,50 @@ window.CONFIG = {
     pvzVault:  'assets/sfx/pvz/vault.mp3',   // зомби с шестом: прыжок
     pvzTackle: 'assets/sfx/pvz/tackle.mp3',  // регбист: подкат
     pvzGoo:    'assets/sfx/pvz/goo.mp3',     // зомби-королева: слизь
-    pvzStomp:  'assets/sfx/pvz/stomp.mp3'    // зомби-король: топот
+    pvzStomp:  'assets/sfx/pvz/stomp.mp3',   // зомби-король: топот
+    // набор «Соник»
+    sonicSpin:   'assets/sfx/sonic/spin.mp3',    // Соник: спин-дэш
+    sonicWrench: 'assets/sfx/sonic/wrench.mp3',  // Тейлз: гаечный ключ
+    sonicPunch:  'assets/sfx/sonic/punch.mp3',   // Наклз: удар кулаком
+    sonicPsy:    'assets/sfx/sonic/psy.mp3',     // Сильвер: сила мысли
+    sonicHammer: 'assets/sfx/sonic/hammer.mp3',  // Эми: молот
+    sonicChaos:  'assets/sfx/sonic/chaos.mp3',   // Шадоу: хаос-контроль
+    sonicBonk:   'assets/sfx/sonic/bonk.mp3',    // бадник: прыжки и удар
+    sonicCannon: 'assets/sfx/sonic/cannon.mp3',  // робот: выстрел
+    sonicBoom:   'assets/sfx/sonic/boom.mp3',    // робот: взрыв ракеты
+    sonicDash:   'assets/sfx/sonic/dash.mp3',    // Метал Соник: рывок
+    sonicKick:   'assets/sfx/sonic/kick.mp3',    // Руж: удар ногой
+    sonicRuby:   'assets/sfx/sonic/ruby.mp3',    // Инфинит: рубин
+    sonicBomb:   'assets/sfx/sonic/bomb.mp3',    // Эггман: бомба
+    sonicRings:  'assets/sfx/sonic/rings.mp3',   // колечки рассыпаются
+    // набор Devil May Cry
+    dmcGun:    'assets/sfx/dmc/gun.mp3',     // выстрел (Неро, Данте)
+    dmcBuster: 'assets/sfx/dmc/buster.mp3',  // Неро: дьявольская рука
+    dmcRocket: 'assets/sfx/dmc/rocket.mp3',  // Леди: пуск ракеты
+    dmcBoom:   'assets/sfx/dmc/boom.mp3',    // Леди: взрыв
+    dmcHoly:   'assets/sfx/dmc/holy.mp3',    // Кирия: столп света
+    dmcSwords: 'assets/sfx/dmc/swords.mp3',  // Вергилий: призрачные мечи
+    dmcJudge:  'assets/sfx/dmc/judge.mp3',   // Вергилий: Judgement Cut
+    dmcGreat:  'assets/sfx/dmc/great.mp3',   // Спарда: удар большим мечом
+    dmcStab:   'assets/sfx/dmc/stab.mp3',    // бес: трезубец
+    dmcShield: 'assets/sfx/dmc/shield.mp3',  // страж: удар щитом
+    dmcDive:   'assets/sfx/dmc/dive.mp3',    // рыцарь: пике
+    dmcCurse:  'assets/sfx/dmc/curse.mp3',   // жрец: магический круг
+    dmcOrb:    'assets/sfx/dmc/orb.mp3',     // повелительница: сфера
+    dmcFire:   'assets/sfx/dmc/fire.mp3',    // владыка: огненный дождь
+    dmcOrbs:   'assets/sfx/dmc/orbs.mp3'     // красные сферы разлетаются
   },
   // Пока своих файлов нет — играет похожий звук обычных фигур.
   sfxAlt: {
     pvzSun: 'hitQ', pvzPea: 'hitP', pvzChomp: 'hitN', pvzRoll: 'hitR', pvzSpike: 'hitB', pvzSplat: 'hitQ',
-    pvzBite: 'hitP', pvzCone: 'hitR', pvzVault: 'hitN', pvzTackle: 'hitR', pvzGoo: 'hitQ', pvzStomp: 'hitK'
+    pvzBite: 'hitP', pvzCone: 'hitR', pvzVault: 'hitN', pvzTackle: 'hitR', pvzGoo: 'hitQ', pvzStomp: 'hitK',
+    sonicSpin: 'hitR', sonicWrench: 'hitN', sonicPunch: 'hitP', sonicPsy: 'hitB', sonicHammer: 'hitK', sonicChaos: 'hitK',
+    sonicBonk: 'hitP', sonicCannon: 'whoosh', sonicBoom: 'hitQ', sonicDash: 'hitR', sonicKick: 'hitN', sonicRuby: 'hitQ',
+    sonicBomb: 'hitQ',
+    dmcGun: 'hitP', dmcBuster: 'hitK', dmcRocket: 'whoosh', dmcBoom: 'hitQ', dmcHoly: 'hitB', dmcSwords: 'whoosh',
+    dmcJudge: 'hitK', dmcGreat: 'hitK', dmcStab: 'hitP', dmcShield: 'hitR', dmcDive: 'hitN', dmcCurse: 'hitB',
+    dmcOrb: 'hitQ', dmcFire: 'hitQ'
+    // у колечек (sonicRings) и красных сфер (dmcOrbs) замены нет — пока файлов нет, они беззвучные
   },
   sfxVolume: 0.8,
 
