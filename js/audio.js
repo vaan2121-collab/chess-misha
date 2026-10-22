@@ -130,10 +130,12 @@ window.Sound = (function () {
   function play(name) {
     if (!sfxOn) return;
     const a = sfxCache[name];
-    if (!a || sfxMissing[name]) return beep(name);
+    // нет файла — играем замену из CONFIG.sfxAlt, а если и её нет — «бип»
+    const alt = () => (CONFIG.sfxAlt && CONFIG.sfxAlt[name] ? play(CONFIG.sfxAlt[name]) : beep(name));
+    if (!a || sfxMissing[name]) return alt();
     const clone = a.cloneNode(); // чтобы быстрые повторы не обрывали друг друга
     clone.volume = CONFIG.sfxVolume;
-    clone.play().catch(() => beep(name));
+    clone.play().catch(alt);
   }
 
   // --- Голос ---

@@ -78,12 +78,21 @@ window.TrainGen = (function () {
         return { ok: true, method: 'ran' }; // при таком шахе ходить может только король
       case 'szu':
         return { ok: true, method: move.captured ? 'ate' : move.piece === 'k' ? 'ran' : 'blocked' };
+      case 'mate': {
+        if (after.in_checkmate()) return { ok: true };
+        if (after.in_stalemate()) return { ok: false, oops: 'oops_stalemate' };
+        if (task.theme === 'kiss' && move.piece === 'q' && hanging(after, move.to)) return { ok: false, oops: 'oops_unprotected' };
+        if (after.in_check()) return { ok: false, oops: 'oops_check' };
+        return { ok: false, oops: null };
+      }
     }
     return { ok: false, oops: null };
   }
 
   // Все ходы, которые решают задачу (для подсказок и проверки генерации).
   function solutions(task, game) {
+    // мат: chess.js сам помечает такие ходы знаком # — это быстро
+    if (task.kind === 'mate') return game.moves({ verbose: true }).filter((m) => m.san.endsWith('#'));
     const out = [];
     for (const m of game.moves({ verbose: true })) {
       game.move(m);
@@ -313,7 +322,76 @@ window.TrainGen = (function () {
     return U.pick([free, save, trade])(level);
   }
 
-  const GEN = { free, save, trade, eatChecker, block, escape, szu, hunt };
+  // ---------- Остров «Мат в 1 ход» ----------
+  const onEdge = (s) => s[0] === 'a' || s[0] === 'h' || s[1] === '1' || s[1] === '8';
+
+  // 2.1 Поцелуй смерти: мат ферзём вплотную к королю, ферзя охраняет помощник
+  function kiss(level) {
+    return tryMake(() => {
+      const pl = {};
+      const bk = U.place(pl, 'bK', (s) => onEdge(s) && s[1] !== '1');
+      if (level < 3) {
+        U.place(pl, 'wK', (s) => U.dist(s, bk) === 2); // помощник — свой король
+      } else {
+        U.place(pl, 'wK', (s) => U.dist(s, bk) >= 3);
+        U.place(pl, 'w' + U.pick(['R', 'B', 'N']), (s) => U.dist(s, bk) >= 2);
+      }
+      U.place(pl, 'wQ', (s) => U.dist(s, bk) >= 2);
+      if (level >= 2) decoys(pl, 1, ['bP']);
+      const r = finish({ kind: 'mate', theme: 'kiss' }, pl);
+      if (!r) return null;
+      const sols = solutions(r.task, r.game);
+      if (!sols.length || sols.length > 3) return null;
+      if (!sols.every((m) => m.piece === 'q' && U.dist(m.to, bk) === 1)) return null;
+      return r.task;
+    });
+  }
+
+  // 2.2 Коридорный мат: король за своими пешками, мат по 8-му ряду
+  function corridor(level) {
+    return tryMake(() => {
+      const pl = {};
+      const x = U.rnd(8);
+      pl[U.sq(x, 7)] = 'bK';
+      for (const dx of [-1, 0, 1]) if (U.onBoard(x + dx, 6)) pl[U.sq(x + dx, 6)] = 'bP';
+      U.place(pl, 'w' + U.pick(level < 2 ? ['R'] : ['R', 'Q', 'R']), (s) => +s[1] <= 5);
+      U.place(pl, 'wK', (s) => +s[1] <= 2);
+      if (level >= 3) decoys(pl, 1, ['bN', 'bB']);  // может прикрывать часть ряда
+      if (level >= 5) U.place(pl, 'wR', (s) => +s[1] <= 5);
+      const r = finish({ kind: 'mate', theme: 'corridor' }, pl);
+      if (!r) return null;
+      const sols = solutions(r.task, r.game);
+      if (!sols.length || !sols.every((m) => m.to[1] === '8')) return null;
+      return r.task;
+    });
+  }
+
+  // 2.3 Лесенка: одна ладья отрезает 7-й ряд, вторая ставит мат по 8-му
+  function ladder(level) {
+    return tryMake(() => {
+      const pl = {};
+      const x = U.rnd(8);
+      const bk = U.sq(x, 7);
+      pl[bk] = 'bK';
+      const cutX = U.pick([0, 1, 2, 3, 4, 5, 6, 7].filter((cx) => Math.abs(cx - x) >= 2));
+      pl[U.sq(cutX, 6)] = 'wR';
+      U.place(pl, 'w' + (level < 3 ? 'R' : U.pick(['R', 'Q'])), (s) => +s[1] <= 5 && U.dist(s, bk) >= 2);
+      U.place(pl, 'wK', (s) => +s[1] <= 2);
+      if (level >= 4) decoys(pl, 1, ['bP']);
+      const r = finish({ kind: 'mate', theme: 'ladder' }, pl);
+      if (!r) return null;
+      const sols = solutions(r.task, r.game);
+      if (!sols.length || !sols.every((m) => m.to[1] === '8')) return null;
+      return r.task;
+    });
+  }
+
+  // Испытание: маты всех видов
+  function mateMix(level) {
+    return U.pick([kiss, corridor, ladder])(level);
+  }
+
+  const GEN = { free, save, trade, eatChecker, block, escape, szu, hunt, kiss, corridor, ladder, mateMix };
 
   return { GEN, judge, solutions, hanging, attackersOf, VAL };
 })();

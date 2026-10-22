@@ -32,7 +32,7 @@ window.Sync = (function () {
   function mergeValue(key, mine, theirs) {
     if (mine === undefined) return theirs;
     if (theirs === undefined) return mine;
-    if (key === 'stickers' || key === 'themes' || key === 'trainDone') return Object.assign({}, mine, theirs);
+    if (key === 'stickers' || key === 'themes' || key === 'pieceSets' || key === 'trainDone') return Object.assign({}, mine, theirs);
     if (key === 'learned') {
       const out = {};
       new Set([...Object.keys(mine), ...Object.keys(theirs)]).forEach((p) => {

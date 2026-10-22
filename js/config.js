@@ -39,7 +39,25 @@ window.CONFIG = {
     hitP:    'assets/sfx/hit-pawn.mp3',    // пешка: удар щитом
     hitK:    'assets/sfx/hit-king.mp3',    // король: взмах мечом
     dizzy:   'assets/sfx/dizzy.mp3',       // крестики в глазах
-    crumble: 'assets/sfx/crumble.mp3'      // рассыпается на кубики
+    crumble: 'assets/sfx/crumble.mp3',     // рассыпается на кубики
+    // набор «Растения и зомби»
+    pvzSun:    'assets/sfx/pvz/sun.mp3',     // подсолнух: солнышко
+    pvzPea:    'assets/sfx/pvz/pea.mp3',     // горохострел: «пиу» горошиной
+    pvzChomp:  'assets/sfx/pvz/chomp.mp3',   // кусачка: «хрум» и глоток
+    pvzRoll:   'assets/sfx/pvz/roll.mp3',    // стенорех: катится и бьёт
+    pvzSpike:  'assets/sfx/pvz/spike.mp3',   // кактус: иголки
+    pvzSplat:  'assets/sfx/pvz/splat.mp3',   // арбуз: шмяк
+    pvzBite:   'assets/sfx/pvz/bite.mp3',    // зомби: кусь
+    pvzCone:   'assets/sfx/pvz/cone.mp3',    // зомби с конусом: бодается
+    pvzVault:  'assets/sfx/pvz/vault.mp3',   // зомби с шестом: прыжок
+    pvzTackle: 'assets/sfx/pvz/tackle.mp3',  // регбист: подкат
+    pvzGoo:    'assets/sfx/pvz/goo.mp3',     // зомби-королева: слизь
+    pvzStomp:  'assets/sfx/pvz/stomp.mp3'    // зомби-король: топот
+  },
+  // Пока своих файлов нет — играет похожий звук обычных фигур.
+  sfxAlt: {
+    pvzSun: 'hitQ', pvzPea: 'hitP', pvzChomp: 'hitN', pvzRoll: 'hitR', pvzSpike: 'hitB', pvzSplat: 'hitQ',
+    pvzBite: 'hitP', pvzCone: 'hitR', pvzVault: 'hitN', pvzTackle: 'hitR', pvzGoo: 'hitQ', pvzStomp: 'hitK'
   },
   sfxVolume: 0.8,
 

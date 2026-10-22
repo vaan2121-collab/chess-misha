@@ -577,10 +577,10 @@ main {
   background: center / contain no-repeat;
   filter: drop-shadow(1.5px 0 0 #3a2a1c) drop-shadow(-1.5px 0 0 #3a2a1c) drop-shadow(0 1.5px 0 #3a2a1c) drop-shadow(0 -1.5px 0 #3a2a1c);
 }
-.mark.e-bP { background-image: url("../assets/pieces/bP.png"); }
-.mark.e-bN { background-image: url("../assets/pieces/bN.png"); }
-.mark.e-bB { background-image: url("../assets/pieces/bB.png"); }
-.mark.e-bR { background-image: url("../assets/pieces/bR.png"); }
+.mark.e-bP { background-image: var(--enemy-bP, url("../assets/pieces/bP.png")); }
+.mark.e-bN { background-image: var(--enemy-bN, url("../assets/pieces/bN.png")); }
+.mark.e-bB { background-image: var(--enemy-bB, url("../assets/pieces/bB.png")); }
+.mark.e-bR { background-image: var(--enemy-bR, url("../assets/pieces/bR.png")); }
 
 .ctrl-btn[hidden] { display: none; }
 .ctrl-btn .star-icon { width: 1.3em; height: 1.3em; }
@@ -876,7 +876,8 @@ main {
 .gift-tab span { font-size: 1.3em; }
 .gift-tab small { font-size: 0.75em; opacity: 0.9; white-space: nowrap; }
 @media (max-width: 480px) {
-  .gift-tab { padding: 8px 10px; font-size: 16px; gap: 6px; flex-direction: column; }
+  .gift-tabs { gap: 6px; }
+  .gift-tab { flex: 1 1 0; min-width: 0; padding: 8px 4px; font-size: 14px; gap: 4px; flex-direction: column; }
 }
 .gift-tab:not(.active) { filter: brightness(0.85); }
 
@@ -1133,6 +1134,10 @@ main {
 }
 .theme-card.current .theme-btn { background: var(--grass-dark); }
 .theme-btn .star-icon { width: 17px; height: 17px; }
+/* превью набора фигур: 2×2 клетки с фигурами */
+.piece-preview { grid-template-columns: repeat(2, 1fr); }
+.piece-preview i { display: flex; align-items: center; justify-content: center; }
+.piece-preview img { width: 90%; height: 90%; object-fit: contain; }
 .parents-card input {
   width: 100%;
   padding: 8px;
@@ -1182,7 +1187,30 @@ main {
   z-index: 15;
   overflow: hidden;
 }
-.fx-piece, .fx-frag, .fx-bit, .fx-flash, .fx-orb, .fx-slash, .fx-word, .fx-ring, .fx-bolt { position: fixed; }
+.fx-piece, .fx-frag, .fx-bit, .fx-flash, .fx-orb, .fx-slash, .fx-word, .fx-ring, .fx-bolt,
+.fx-sun, .fx-pea, .fx-spike, .fx-melon, .fx-goo { position: fixed; }
+/* снаряды набора «Растения и зомби» */
+.fx-sun {
+  border-radius: 50%;
+  background: radial-gradient(circle at 40% 40%, #fff 0 12%, #ffe066 30%, #ffb300 70%);
+  box-shadow: 0 0 16px 6px rgba(255, 213, 74, .8);
+}
+.fx-pea {
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e6ffcc 0 15%, #7ed957 40%, #2e7d32 90%);
+  border: 2px solid #1b5e20;
+}
+.fx-spike { background: linear-gradient(to bottom, transparent 45%, #f5e9a8 45% 55%, transparent 55%); filter: drop-shadow(0 0 2px #fff); }
+.fx-melon {
+  border-radius: 50%;
+  background: repeating-linear-gradient(90deg, #2e7d32 0 12%, #66bb6a 12% 22%);
+  border: 3px solid #1b5e20;
+}
+.fx-goo {
+  border-radius: 45% 55% 50% 50%;
+  background: radial-gradient(circle at 35% 35%, #f1f8e9 0 12%, #9ccc65 40%, #558b2f 85%);
+  box-shadow: 0 0 14px 5px rgba(156, 204, 101, .7);
+}
 .fx-ring { border-radius: 50%; border: 6px solid #fff; box-shadow: 0 0 0 3px rgba(0,0,0,.25); }
 .fx-bolt { filter: drop-shadow(0 0 8px #ffd54a) drop-shadow(0 0 3px #fff); }
 .fx-piece { will-change: transform; }

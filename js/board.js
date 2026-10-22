@@ -16,19 +16,32 @@ window.ChessBoard = (function () {
     bk: '♚', bq: '♛', br: '♜', bb: '♝', bn: '♞', bp: '♟︎'
   };
 
-  // Проверяем один раз, какие картинки фигур есть в assets/pieces.
+  // Проверяем, какие картинки фигур есть в папке выбранного набора.
+  // Нет картинки в наборе — берём обычную из assets/pieces, нет и её — символ.
   const pieceImages = {};
   const imageWaiters = [];
-  for (const code in GLYPHS) {
-    const file = code[0] + code[1].toUpperCase(); // wk → wK
-    const src = CONFIG.pieces.path + file + '.' + CONFIG.pieces.ext;
-    const img = new Image();
-    img.onload = () => {
-      pieceImages[code] = src;
-      imageWaiters.forEach((fn) => fn());
-    };
-    img.src = src;
+  let loadId = 0;
+
+  function reloadPieces() {
+    const id = ++loadId;
+    const fallback = window.PieceSets ? PieceSets.base : CONFIG.pieces.path;
+    for (const code in GLYPHS) {
+      const file = code[0] + code[1].toUpperCase() + '.' + CONFIG.pieces.ext; // wk → wK.png
+      const tryLoad = (src, next) => {
+        const img = new Image();
+        img.onload = () => {
+          if (id !== loadId) return; // уже выбрали другой набор
+          pieceImages[code] = src;
+          imageWaiters.forEach((fn) => fn());
+        };
+        img.onerror = next;
+        img.src = src;
+      };
+      const src = CONFIG.pieces.path + file;
+      tryLoad(src, () => { if (src !== fallback + file) tryLoad(fallback + file, null); });
+    }
   }
+  reloadPieces();
 
   function create(el, opts) {
     const state = {
@@ -208,7 +221,7 @@ window.ChessBoard = (function () {
 
         const key = piece ? piece.color + piece.type : '';
         const mark = state.marks[name] || '';
-        const content = key + '|' + mark + '|' + (pieceImages[key] ? 1 : 0);
+        const content = key + '|' + mark + '|' + (pieceImages[key] || '');
         if (cell.dataset.content !== content) {
           cell.dataset.content = content;
           cell.innerHTML = (mark ? '<span class="mark ' + mark + '"></span>' : '') +
@@ -309,5 +322,5 @@ window.ChessBoard = (function () {
     };
   }
 
-  return { create };
+  return { create, reloadPieces };
 })();

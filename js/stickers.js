@@ -178,8 +178,10 @@ window.GiftsScreen = (function () {
     grid.hidden = t !== 'stickers';
     shelf.hidden = t !== 'medals';
     $('#theme-grid').hidden = t !== 'themes';
+    $('#piece-grid').hidden = t !== 'pieces';
     if (t === 'stickers') renderStickers();
     else if (t === 'medals') renderMedals();
+    else if (t === 'pieces') renderPieceSets();
     else renderThemes();
   }
 
@@ -206,6 +208,37 @@ window.GiftsScreen = (function () {
         else if (Themes.buy(t.id)) { Sound.play('win'); FX.confetti(100); }
         else { Sound.play('error'); card.classList.add('shake'); setTimeout(() => card.classList.remove('shake'), 500); return; }
         renderThemes();
+      });
+      box.appendChild(card);
+    }
+  }
+
+  // ---------- Наборы фигур ----------
+  function renderPieceSets() {
+    const box = $('#piece-grid');
+    box.innerHTML = '';
+    const owned = PieceSets.owned(), cur = PieceSets.current();
+    const theme = THEMES.find((x) => x.id === Themes.current()) || THEMES[0];
+    for (const s of PIECE_SETS) {
+      const card = document.createElement('button');
+      card.className = 'theme-card' + (s.id === cur ? ' current' : '') + (owned[s.id] ? '' : ' locked');
+      // мини-доска 2×2 с фигурами набора на клетках текущей доски
+      const path = PieceSets.pathOf(s.id), ext = '.' + CONFIG.pieces.ext;
+      const cells = ['wK', 'bN', 'bQ', 'wR'].map((p, i) =>
+        '<i style="background:' + ((i + Math.floor(i / 2)) % 2 ? theme.dark : theme.light) + '">' +
+        '<img src="' + path + p + ext + '" alt="" onerror="this.onerror=null;this.src=\'' + PieceSets.base + p + ext + '\'"></i>').join('');
+      const label = s.id === cur ? '✔ Выбраны' : owned[s.id] ? 'Выбрать'
+        : '<span class="star-icon"></span>' + s.price;
+      card.innerHTML =
+        '<span class="theme-preview piece-preview" style="border-color:' + theme.frame + '">' + cells + '</span>' +
+        '<span class="theme-name">' + s.icon + ' ' + s.name + '</span>' +
+        '<span class="theme-btn">' + label + '</span>';
+      card.addEventListener('click', () => {
+        if (s.id === cur) return;
+        if (owned[s.id]) { Sound.play('click'); PieceSets.choose(s.id); }
+        else if (PieceSets.buy(s.id)) { Sound.play('win'); FX.confetti(100); }
+        else { Sound.play('error'); card.classList.add('shake'); setTimeout(() => card.classList.remove('shake'), 500); return; }
+        renderPieceSets();
       });
       box.appendChild(card);
     }

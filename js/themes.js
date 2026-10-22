@@ -38,3 +38,50 @@ window.Themes = (function () {
   apply(current());
   return { owned, current, choose, buy, apply };
 })();
+
+// Наборы фигур. Покупаются за ⭐ в «Моих подарках», вкладка «Фигуры».
+// Картинки набора: assets/pieces/<id>/wK.png ... bP.png (нарезка — tools/cut-pieces.ps1 -Set <id>).
+// Обычные фигуры лежат прямо в assets/pieces/. Если в наборе нет какой-то картинки — берётся обычная.
+window.PIECE_SETS = [
+  { id: 'classic', name: 'Обычные', icon: '♟️', price: 0 },
+  // белые — растения, чёрные — зомби (лист: assets/pieces/source/pvz.png, нарезка tools/cut-piece-sheet.ps1)
+  { id: 'pvz', name: 'Растения и зомби', icon: '🌻', price: 50 }
+];
+
+window.PieceSets = (function () {
+  const base = CONFIG.pieces.path;
+  const owned = () => Object.assign({ classic: true }, Store.get('pieceSets', {}));
+  const current = () => {
+    const id = Store.get('pieceSet', 'classic');
+    return PIECE_SETS.some((s) => s.id === id) ? id : 'classic';
+  };
+  const pathOf = (id) => (id === 'classic' ? base : base + id + '/');
+
+  function apply(id) {
+    const path = pathOf(id);
+    CONFIG.pieces.path = path;
+    // чёрные фигуры-«враги» в уроках рисуются через CSS
+    const root = document.documentElement.style;
+    ['bP', 'bN', 'bB', 'bR'].forEach((p) =>
+      root.setProperty('--enemy-' + p, 'url("' + path + p + '.' + CONFIG.pieces.ext + '")'));
+    if (window.ChessBoard) ChessBoard.reloadPieces();
+  }
+
+  function choose(id) {
+    Store.set('pieceSet', id);
+    apply(id);
+  }
+
+  // Купить за звёзды. Возвращает true, если получилось.
+  function buy(id) {
+    const s = PIECE_SETS.find((x) => x.id === id);
+    if (!s || owned()[id] || Progress.stars < s.price) return false;
+    Progress.addStars(-s.price);
+    Store.set('pieceSets', Object.assign(Store.get('pieceSets', {}), { [id]: true }));
+    choose(id);
+    return true;
+  }
+
+  apply(current());
+  return { base, owned, current, choose, buy, pathOf };
+})();
