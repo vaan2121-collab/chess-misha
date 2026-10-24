@@ -42,7 +42,13 @@ window.TrainScreen = (function () {
   const FACES = { normal: ['normal'], talk: ['talk', 'normal'], happy: ['happy', 'normal'], think: ['think', 'normal'], oops: ['surprised', 'think', 'normal'] };
   ['normal', 'talk', 'happy', 'think', 'surprised'].forEach((f) => {
     const img = new Image();
-    img.onload = () => { faceCache[f] = true; };
+    img.onload = () => {
+      faceCache[f] = true;
+      // Тренер уже заговорил, пока картинка грузилась, — меняем значок на лицо
+      document.querySelectorAll('.coach-face[data-face]').forEach((el) => {
+        if (el.querySelector('.avatar-stub')) el.innerHTML = faceHtml(el.dataset.face);
+      });
+    };
     img.src = T.coach.folder + f + '.png';
   });
 
@@ -60,7 +66,8 @@ window.TrainScreen = (function () {
     void el.offsetWidth;
     el.classList.add('pop');
     const f = box.querySelector('.coach-face');
-    f.innerHTML = faceHtml(face || 'talk');
+    f.dataset.face = face || 'talk';
+    f.innerHTML = faceHtml(f.dataset.face);
     f.classList.remove('react');
     void f.offsetWidth;
     f.classList.add('react');
