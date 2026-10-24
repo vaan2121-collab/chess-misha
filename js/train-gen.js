@@ -48,7 +48,9 @@ window.TrainGen = (function () {
 
   // ---------- Судья ----------
   // before — позиция до хода (chess.js), after — после. Возвращает { ok, oops, method }.
-  function judge(task, before, after, move) {
+  // step — какой это ход ребёнка в задаче (0 — первый, 1 — второй, для задач в 2 хода)
+  function judge(task, before, after, move, step) {
+    step = step || 0;
     switch (task.kind) {
       case 'free': {
         if (!move.captured) return { ok: false, oops: 'oops_nothing' };
@@ -78,6 +80,46 @@ window.TrainGen = (function () {
         return { ok: true, method: 'ran' }; // при таком шахе ходить может только король
       case 'szu':
         return { ok: true, method: move.captured ? 'ate' : move.piece === 'k' ? 'ran' : 'blocked' };
+      case 'win2': {
+        const id = move.from + move.to + (move.promotion || '');
+        if (step === 0) {
+          if (task.first.includes(id)) return { ok: false, cont: true };
+          if (task.theme === 'fork' && move.piece === 'n') return { ok: false, oops: 'oops_nofork' };
+          return { ok: false, oops: 'oops_first' };
+        }
+        if (move.captured && VAL[move.captured] >= task.minGain) return { ok: true };
+        return { ok: false, oops: 'oops_missed' };
+      }
+      case 'pin': {
+        if (!pinnedBy(after, move.to)) return { ok: false, oops: 'oops_nopin' };
+        if (hanging(after, move.to)) return { ok: false, oops: 'oops_unsafe' };
+        return { ok: true };
+      }
+      case 'promote': {
+        if (!move.promotion) return { ok: false, oops: 'oops_nopromo' };
+        if (after.in_stalemate()) return { ok: false, oops: 'oops_stalemate' };
+        if (hanging(after, move.to)) return { ok: false, oops: 'oops_unsafe' };
+        return { ok: true, method: move.promotion };
+      }
+      case 'castle': {
+        if (/[kq]/.test(move.flags)) return { ok: true };
+        return { ok: false, oops: move.piece === 'k' ? 'oops_kingwalk' : 'oops_nocastle' };
+      }
+      case 'center': {
+        if (move.piece === 'q') return { ok: false, oops: 'oops_queen' };
+        if (move.piece === 'k') return { ok: false, oops: 'oops_king' };
+        if (move.piece === 'p' && 'abgh'.includes(move.to[0])) return { ok: false, oops: 'oops_edge' };
+        if (hanging(after, move.to)) return { ok: false, oops: 'oops_unsafe' };
+        if (centerScore(after) > centerScore(before)) return { ok: true };
+        return { ok: false, oops: 'oops_nocenter' };
+      }
+      case 'defend': {
+        // ребёнок за чёрных: после хода у белых не должно быть мата в 1 и ферзь не должен висеть
+        if (after.moves().some((s) => s.endsWith('#'))) return { ok: false, oops: 'oops_mate' };
+        const q = piecesOf(after, 'b').find((s) => after.get(s).type === 'q');
+        if (q && attackersOf(after, q, 'w').length && !attackersOf(after, q, 'b').length) return { ok: false, oops: 'oops_queen' };
+        return { ok: true };
+      }
       case 'mate': {
         if (after.in_checkmate()) return { ok: true };
         if (after.in_stalemate()) return { ok: false, oops: 'oops_stalemate' };
@@ -90,7 +132,12 @@ window.TrainGen = (function () {
   }
 
   // Все ходы, которые решают задачу (для подсказок и проверки генерации).
-  function solutions(task, game) {
+  function solutions(task, game, step) {
+    if (task.kind === 'win2') {
+      const ms = game.moves({ verbose: true });
+      return step ? ms.filter((m) => m.captured && VAL[m.captured] >= task.minGain)
+        : ms.filter((m) => task.first.includes(m.from + m.to + (m.promotion || '')));
+    }
     // мат: chess.js сам помечает такие ходы знаком # — это быстро
     if (task.kind === 'mate') return game.moves({ verbose: true }).filter((m) => m.san.endsWith('#'));
     const out = [];
@@ -391,7 +438,421 @@ window.TrainGen = (function () {
     return U.pick([kiss, corridor, ladder])(level);
   }
 
-  const GEN = { free, save, trade, eatChecker, block, escape, szu, hunt, kiss, corridor, ladder, mateMix };
+  // ---------- Задачи в 2 хода: выиграть фигуру ----------
+  const uci = (m) => m.from + m.to + (m.promotion || '');
 
-  return { GEN, judge, solutions, hanging, attackersOf, VAL };
+  // Лучшее, что белые могут съесть следующим ходом (цена фигуры), не отдав больше, чем взяли.
+  function bestGain(g) {
+    let best = 0;
+    for (const m of g.moves({ verbose: true })) {
+      if (!m.captured) continue;
+      const v = VAL[m.captured];
+      if (v <= best) continue;
+      g.move(m);
+      const safe = !attackersOf(g, m.to, 'b').length || VAL[m.piece] <= v;
+      g.undo();
+      if (safe) best = v;
+    }
+    return best;
+  }
+
+  // Ответ соперника: ход, после которого белые выигрывают меньше всего.
+  function reply(g) {
+    let best = null, bestScore = Infinity;
+    for (const m of g.moves({ verbose: true })) {
+      g.move(m);
+      const score = g.in_checkmate() ? -1 : bestGain(g) - (m.captured ? VAL[m.captured] : 0) * 0.5;
+      g.undo();
+      if (score < bestScore || (score === bestScore && Math.random() < 0.5)) { best = m; bestScore = score; }
+    }
+    return best;
+  }
+
+  // Первые ходы, после которых белые ВЫНУЖДЕННО забирают фигуру ценой >= minGain.
+  function forcedFirsts(g, minGain, filter) {
+    const out = [];
+    for (const m of g.moves({ verbose: true })) {
+      if (filter && !filter(m)) continue;
+      g.move(m);
+      let ok = !g.game_over() || g.in_checkmate();
+      if (ok && !g.in_checkmate()) {
+        for (const r of g.moves({ verbose: true })) {
+          g.move(r);
+          const gain = bestGain(g);
+          g.undo();
+          if (gain < minGain) { ok = false; break; }
+        }
+      }
+      g.undo();
+      if (ok) out.push(uci(m));
+    }
+    return out;
+  }
+
+  // Общая проверка задачи «в 2 хода»: решение есть, оно одно-два, и сразу съесть нечего.
+  function finishWin2(task, pl, minGain, themeFilter) {
+    const r = finish(task, pl);
+    if (!r || bestGain(r.game) >= minGain) return null; // нельзя просто взять фигуру сразу
+    const first = forcedFirsts(r.game, minGain);
+    if (!first.length || first.length > 2) return null;
+    if (themeFilter && !r.game.moves({ verbose: true }).some((m) => first.includes(uci(m)) && themeFilter(m))) return null;
+    task.first = first;
+    task.minGain = minGain;
+    return task;
+  }
+
+  const KN = [[1, 2], [2, 1], [2, -1], [1, -2], [-1, -2], [-2, -1], [-2, 1], [-1, 2]];
+  const around = (s, offs) => {
+    const [x, y] = U.xy(s);
+    return offs.map(([dx, dy]) => [x + dx, y + dy]).filter(([a, b]) => U.onBoard(a, b)).map(([a, b]) => U.sq(a, b));
+  };
+
+  // 3.1 Вилка конём: шах королю + нападение на ладью/ферзя, потом забрать
+  function fork2(level) {
+    return tryMake(() => {
+      const pl = {};
+      const s = U.pick(U.ALL);
+      const spots = around(s, KN).sort(() => Math.random() - 0.5);
+      if (spots.length < 3) return null;
+      pl[spots[0]] = 'bK';
+      pl[spots[1]] = 'b' + U.pick(['Q', 'R', 'R']);
+      pl[spots[2]] = 'wN';
+      U.place(pl, 'wK', (q) => U.dist(q, spots[0]) >= 2);
+      if (level >= 2) decoys(pl, 1, ['bP']);
+      if (level >= 4) U.place(pl, 'w' + U.pick(['B', 'P']), U.notEdgeRanks);
+      return finishWin2({ kind: 'win2', theme: 'fork' }, pl, 5, (m) => m.piece === 'n');
+    });
+  }
+
+  // 3.2 Вилка пешкой: пешка шагает и бьёт две фигуры сразу
+  function pawnFork2(level) {
+    return tryMake(() => {
+      const pl = {};
+      const x = 1 + U.rnd(6), y = 2 + U.rnd(4);
+      pl[U.sq(x - 1, y + 1)] = 'b' + U.pick(['N', 'R', 'Q', 'N']);
+      pl[U.sq(x + 1, y + 1)] = 'b' + U.pick(['N', 'R', 'Q', 'N']);
+      pl[y === 3 && Math.random() < 0.5 ? U.sq(x, 1) : U.sq(x, y - 1)] = 'wP';
+      U.place(pl, 'wK', (q) => +q[1] <= 3);
+      U.place(pl, 'bK', (q) => +q[1] >= 7);
+      if (level >= 3) U.place(pl, 'w' + U.pick(['N', 'B']), U.notEdgeRanks);
+      return finishWin2({ kind: 'win2', theme: 'pawnfork' }, pl, 3, (m) => m.piece === 'p');
+    });
+  }
+
+  // 3.3 Связка: поставь слона/ладью/ферзя так, чтобы фигура не могла уйти — за ней король
+  function pin(level) {
+    return tryMake(() => {
+      const pl = {};
+      const bk = U.place(pl, 'bK');
+      const diag = Math.random() < 0.5;
+      const dirs = diag ? [[1, 1], [1, -1], [-1, 1], [-1, -1]] : [[1, 0], [-1, 0], [0, 1], [0, -1]];
+      const [dx, dy] = U.pick(dirs);
+      const [kx, ky] = U.xy(bk);
+      const k = 1 + U.rnd(2);
+      if (!U.onBoard(kx + dx * k, ky + dy * k)) return null;
+      const xSq = U.sq(kx + dx * k, ky + dy * k);
+      if (pl[xSq]) return null;
+      pl[xSq] = 'b' + U.pick(['N', 'N', 'B', 'R']);
+      const sType = level >= 3 && Math.random() < 0.4 ? 'Q' : diag ? 'B' : 'R';
+      U.place(pl, 'w' + sType, (q) => {
+        const [qx, qy] = U.xy(q);
+        // не на той же линии — иначе связка уже есть
+        const along = (qx - kx) * dy === (qy - ky) * dx && Math.sign(qx - kx) === Math.sign(dx) && Math.sign(qy - ky) === Math.sign(dy);
+        return !along && U.dist(q, bk) >= 2;
+      });
+      U.place(pl, 'wK', (q) => U.dist(q, bk) >= 2);
+      if (level >= 2) decoys(pl, 1, ['bP']);
+      const r = finish({ kind: 'pin' }, pl);
+      if (!r) return null;
+      const sols = solutions(r.task, r.game);
+      if (!sols.length || sols.length > 3) return null;
+      return r.task;
+    });
+  }
+
+  // Какая чёрная фигура связана ходом move (между ним и чёрным королём одна чёрная фигура).
+  function pinnedBy(g, from) {
+    const p = g.get(from);
+    if (!p || !['b', 'r', 'q'].includes(p.type)) return null;
+    const dirs = [];
+    if (p.type !== 'b') dirs.push([1, 0], [-1, 0], [0, 1], [0, -1]);
+    if (p.type !== 'r') dirs.push([1, 1], [1, -1], [-1, 1], [-1, -1]);
+    const [x0, y0] = U.xy(from);
+    for (const [dx, dy] of dirs) {
+      let first = null;
+      for (let x = x0 + dx, y = y0 + dy; U.onBoard(x, y); x += dx, y += dy) {
+        const q = g.get(U.sq(x, y));
+        if (!q) continue;
+        if (!first) { if (q.color !== 'b' || q.type === 'k') break; first = U.sq(x, y); continue; }
+        if (q.color === 'b' && q.type === 'k') return first;
+        break;
+      }
+    }
+    return null;
+  }
+
+  function superMix(level) { return U.pick([fork2, pawnFork2, pin])(level); }
+
+  // ---------- Остров «Секретное оружие» ----------
+  // 6.1 Превращение пешки: пешка у последней линии — превратись и не попадись
+  function promote(level) {
+    return tryMake(() => {
+      const pl = {};
+      const x = U.rnd(8);
+      pl[U.sq(x, 6)] = 'wP';
+      U.place(pl, 'bK', (q) => U.dist(q, U.sq(x, 7)) >= (level < 2 ? 3 : 2) && q[1] !== '1');
+      U.place(pl, 'wK', (q) => +q[1] <= 4);
+      if (level >= 2) decoys(pl, 1, ['bN', 'bB', 'bR']); // может бить клетку превращения
+      if (level >= 4 && U.onBoard(x + 1, 7)) pl[U.sq(x + 1, 7)] = pl[U.sq(x + 1, 7)] || 'b' + U.pick(['N', 'B']); // можно превратиться, съев
+      const r = finish({ kind: 'promote' }, pl);
+      if (!r) return null;
+      const sols = solutions(r.task, r.game);
+      if (!sols.length) return null;
+      return r.task;
+    });
+  }
+
+  // 6.2 Рокировка: король в центре, путь свободен — спрячь короля
+  function castle(level) {
+    return tryMake(() => {
+      const pl = { e1: 'wK' };
+      const short = Math.random() < 0.6 || level < 2;
+      const long = !short || (level >= 3 && Math.random() < 0.5);
+      if (short) pl.h1 = 'wR';
+      if (long) pl.a1 = 'wR';
+      // пешки прикрывают короля
+      ['f2', 'g2', 'h2', 'a2', 'b2', 'c2'].forEach((s) => { if (Math.random() < 0.7) pl[s] = 'wP'; });
+      U.place(pl, 'bK', (q) => +q[1] >= 6);
+      decoys(pl, level < 2 ? 1 : 2, ['bN', 'bB', 'bP']);
+      if (level >= 2) U.place(pl, 'w' + U.pick(['N', 'B']), (q) => +q[1] >= 3);
+      const g0 = U.makeGame(pl, 'w');
+      if (!g0) return null;
+      const rights = (short ? 'K' : '') + (long ? 'Q' : '');
+      const fen = g0.fen().replace(' w - - ', ' w ' + rights + ' - ');
+      const g = new Chess();
+      if (!g.load(fen)) return null;
+      const task = { kind: 'castle', fen: g.fen() };
+      if (!g.moves({ verbose: true }).some((m) => /[kq]/.test(m.flags))) return null;
+      return task;
+    });
+  }
+
+  // 6.3 Лазер (сквозной удар): шах по линии, за королём — ферзь или ладья
+  function skewer2(level) {
+    return tryMake(() => {
+      const pl = {};
+      const diag = Math.random() < 0.5;
+      const dirs = diag ? [[1, 1], [1, -1], [-1, 1], [-1, -1]] : [[1, 0], [-1, 0], [0, 1], [0, -1]];
+      const [dx, dy] = U.pick(dirs);
+      const bk = U.pick(U.ALL);
+      const [kx, ky] = U.xy(bk);
+      if (!U.onBoard(kx + dx, ky + dy)) return null;
+      pl[bk] = 'bK';
+      pl[U.sq(kx + dx, ky + dy)] = 'b' + U.pick(['Q', 'R']);
+      U.place(pl, 'w' + (diag ? U.pick(['B', 'Q']) : U.pick(['R', 'Q'])), (q) => U.dist(q, bk) >= 3);
+      U.place(pl, 'wK', (q) => U.dist(q, bk) >= 3);
+      if (level >= 3) decoys(pl, 1, ['bP']);
+      const t = finishWin2({ kind: 'win2', theme: 'skewer' }, pl, 5, (m) => ['b', 'r', 'q'].includes(m.piece));
+      if (!t) return null;
+      // первый ход — именно шах по линии
+      const g = new Chess(t.fen);
+      if (!g.moves({ verbose: true }).some((m) => t.first.includes(uci(m)) && /\+/.test(m.san))) return null;
+      return t;
+    });
+  }
+
+  // 6.4 Вскрытый шах: отпрыгни фигурой — откроется шах, а сама она нападёт на ферзя
+  function discover2(level) {
+    return tryMake(() => {
+      const pl = {};
+      const diag = Math.random() < 0.5;
+      const dirs = diag ? [[1, 1], [1, -1], [-1, 1], [-1, -1]] : [[1, 0], [-1, 0], [0, 1], [0, -1]];
+      const [dx, dy] = U.pick(dirs);
+      const bk = U.place(pl, 'bK');
+      const [kx, ky] = U.xy(bk);
+      const j = 3 + U.rnd(3), i = 1 + U.rnd(j - 2);
+      if (!U.onBoard(kx + dx * j, ky + dy * j)) return null;
+      pl[U.sq(kx + dx * j, ky + dy * j)] = 'w' + (diag ? 'B' : 'R');
+      const blocker = U.sq(kx + dx * i, ky + dy * i);
+      if (pl[blocker]) return null;
+      pl[blocker] = 'w' + U.pick(['N', 'N', diag ? 'N' : 'B']);
+      U.place(pl, 'bQ', (q) => U.dist(q, bk) >= 2);
+      U.place(pl, 'wK', (q) => U.dist(q, bk) >= 3);
+      if (level >= 3) decoys(pl, 1, ['bP']);
+      const t = finishWin2({ kind: 'win2', theme: 'discover' }, pl, 9, (m) => m.from === blocker);
+      return t;
+    });
+  }
+
+  function secretMix(level) { return U.pick([promote, castle, skewer2, discover2])(level); }
+
+  // ---------- Остров «Царь горы» ----------
+  const CENTER = ['d4', 'e4', 'd5', 'e5'];
+  function centerScore(g) {
+    let s = 0;
+    for (const c of CENTER) {
+      const p = g.get(c);
+      if (p && p.color === 'w') s += 2;
+      s += attackersOf(g, c, 'w').length;
+    }
+    return s;
+  }
+
+  // 7.1 Битва за центр — позиции первых ходов партии
+  const OPENINGS = ['', 'e5', 'd5', 'c5', 'e4 e5 Nf3 Nc6', 'd4 d5', 'e4 c5', 'Nf3 d5', 'e4 e5', 'e4 d6', 'c4 e5', 'e4 Nf6', 'd4 Nf6'];
+  function center() {
+    const seq = U.pick(OPENINGS);
+    const moves = seq ? seq.split(' ') : [];
+    const g = new Chess();
+    if (moves.length % 2 === 1) g.move('e4'); // строка начинается с ответа чёрных — белые сначала e4
+    for (const m of moves) if (!g.move(m)) return null;
+    return g.turn() === 'w' ? { kind: 'center', fen: g.fen() } : null;
+  }
+
+  // 7.2 Защита от детского мата — ребёнок играет чёрными
+  const SCHOLAR = ['e4 e5 Bc4 Nc6 Qh5', 'e4 e5 Qh5 Nc6 Bc4', 'e4 e5 Bc4 Bc5 Qf3', 'e4 e5 Qf3 Nc6 Bc4', 'e4 Nc6 Bc4 e5 Qh5', 'e4 e5 Bc4 Nf6 Qf3', 'e4 e5 Nc3 Nc6 Bc4 Bc5 Qh5'];
+  function scholar() {
+    const g = new Chess();
+    U.pick(SCHOLAR).split(' ').forEach((m) => g.move(m));
+    return { kind: 'defend', fen: g.fen() };
+  }
+
+  // 7.3 Капкан: жадная фигура соперника залезла в угол — отрежь ей пути и забери
+  function trap2(level) {
+    return tryMake(() => {
+      const pl = {};
+      const corners = ['a1', 'h1', 'a2', 'h2', 'b1', 'g1', 'a3', 'h3'];
+      const victim = U.pick(corners);
+      pl[victim] = 'b' + U.pick(['B', 'N']);
+      for (let i = 0; i < 3; i++) U.place(pl, 'wP', (q) => +q[1] >= 2 && +q[1] <= 4);
+      U.place(pl, 'w' + U.pick(['R', 'N', 'B']));
+      U.place(pl, 'wK', (q) => +q[1] <= 3);
+      U.place(pl, 'bK', (q) => +q[1] >= 7);
+      return finishWin2({ kind: 'win2', theme: 'trap' }, pl, 3, (m) => !m.captured);
+    });
+  }
+
+  // ---------- Остров «Спасательная операция» ----------
+  // 8.1 Не поставь пат: мат есть, но рядом с ним ловушки-паты
+  function noStalemate(level) {
+    return tryMake(() => {
+      const pl = {};
+      const bk = U.place(pl, 'bK', (s) => ['a8', 'h8', 'a1', 'h1', 'b8', 'g8', 'a7', 'h7'].includes(s));
+      U.place(pl, 'wK', (s) => U.dist(s, bk) === 2);
+      U.place(pl, 'w' + (level < 3 ? 'Q' : U.pick(['Q', 'R'])), (s) => U.dist(s, bk) >= 2);
+      const r = finish({ kind: 'mate', theme: 'stalemate' }, pl);
+      if (!r) return null;
+      const g = r.game;
+      const mates = solutions(r.task, g);
+      if (!mates.length) return null;
+      const stalemates = g.moves({ verbose: true }).filter((m) => { g.move(m); const s = g.in_stalemate(); g.undo(); return s; });
+      if (!stalemates.length) return null;
+      return r.task;
+    });
+  }
+
+  // 8.2 Не зевни: у тебя несколько фигур, одна в опасности — найди её и спаси
+  function guard(level) {
+    return tryMake(() => {
+      const t = save(level + 3);
+      if (!t) return null;
+      // добавляем ещё одну спокойную белую фигуру, чтобы было из чего выбирать
+      const g = new Chess(t.fen);
+      const pl = {};
+      for (const s of U.ALL) { const p = g.get(s); if (p) pl[s] = p.color + p.type.toUpperCase(); }
+      U.place(pl, 'w' + U.pick(['N', 'B', 'R']));
+      const r = finish({ kind: 'save', victim: t.victim }, pl);
+      if (!r || !hanging(r.game, t.victim)) return null;
+      if (piecesOf(r.game, 'w').some((s) => s !== t.victim && hanging(r.game, s))) return null;
+      if (!solutions(r.task, r.game).length) return null;
+      return r.task;
+    });
+  }
+
+  function rescueMix(level) { return U.pick([noStalemate, guard])(level); }
+
+  // Одинокий король-босс убегает: держится подальше от края и от белого короля,
+  // забирает фигуру, если её оставили без защиты.
+  function bossKing(g) {
+    let best = null, bestScore = -Infinity;
+    const wk = piecesOf(g, 'w').find((s) => g.get(s).type === 'k');
+    for (const m of g.moves({ verbose: true })) {
+      const [x, y] = U.xy(m.to);
+      let score = Math.min(x, 7 - x, y, 7 - y) * 10 + U.dist(m.to, wk) + Math.random();
+      if (m.captured) score += 100;
+      g.move(m);
+      if (g.moves().some((s) => s.endsWith('#'))) score -= 15; // не подставляться под мат в 1
+      g.undo();
+      if (score > bestScore) { bestScore = score; best = m; }
+    }
+    return best;
+  }
+
+  // Подсказка для мат-боссов — техника «сжимай короля»: оставь ему как можно меньше ходов,
+  // гони к краю, подводи своего короля; никогда не ставь пат и не подставляй фигуры.
+  // seen — позиции, которые уже были в этой партии (чтобы подсказка не ходила по кругу)
+  function bossHint(g, seen) {
+    const kingOf = (c) => piecesOf(g, c).find((s) => g.get(s).type === 'k');
+    let best = null, bestScore = -Infinity;
+    for (const m of g.moves({ verbose: true })) {
+      g.move(m);
+      let score;
+      if (g.in_checkmate()) score = 1e6;
+      else if (g.in_stalemate()) score = -1e6;
+      else {
+        const bk = kingOf('b'), wk = kingOf('w');
+        const unsafe = piecesOf(g, 'w').some((s) => g.get(s).type !== 'k' && U.dist(s, bk) === 1 && !attackersOf(g, s, 'w').length);
+        if (unsafe) score = -1e5;
+        else {
+          const [x, y] = U.xy(bk);
+          score = -g.moves().length * 10 - Math.min(x, 7 - x, y, 7 - y) * 6 - U.dist(wk, bk) * 3;
+          if (seen && seen.has(g.fen().split(" ")[0])) score -= 60; // уже было — не повторяемся
+          // заглянем на ход вперёд: если на любой ответ есть мат — отличный ход
+          const replies = g.moves({ verbose: true });
+          let mateAll = replies.length > 0;
+          for (const r of replies) {
+            g.move(r);
+            const mate = g.moves().some((s) => s.endsWith('#'));
+            g.undo();
+            if (!mate) { mateAll = false; break; }
+          }
+          if (mateAll) score += 5e5;
+        }
+      }
+      g.undo();
+      if (score > bestScore || (score === bestScore && Math.random() < 0.3)) { bestScore = score; best = m; }
+    }
+    return best;
+  }
+
+  // ---------- Боссы: мини-партии против робота ----------
+  function pawnRace() {
+    return tryMake(() => {
+      const pl = { e1: 'wK', e8: 'bK' };
+      const files = [0, 1, 2, 3, 4, 5, 6, 7].sort(() => Math.random() - 0.5).slice(0, 3);
+      files.forEach((x) => { pl[U.sq(x, 1)] = 'wP'; pl[U.sq(x, 6)] = 'bP'; });
+      const g = U.makeGame(pl, 'w');
+      return g ? { kind: 'boss', boss: 'race', fen: g.fen() } : null;
+    });
+  }
+
+  function mateBoss(pieces, limit) {
+    return () => tryMake(() => {
+      const pl = {};
+      const bk = U.place(pl, 'bK', (s) => { const [x, y] = U.xy(s); return x >= 2 && x <= 5 && y >= 2 && y <= 5; });
+      U.place(pl, 'wK', (s) => U.dist(s, bk) >= 3);
+      pieces.forEach((p) => U.place(pl, 'w' + p, (s) => U.dist(s, bk) >= 2));
+      const g = U.makeGame(pl, 'w');
+      return g ? { kind: 'boss', boss: 'mate', limit, fen: g.fen() } : null;
+    });
+  }
+
+  const GEN = {
+    free, save, trade, eatChecker, block, escape, szu, hunt, kiss, corridor, ladder, mateMix,
+    fork2, pawnFork2, pin, superMix, promote, castle, skewer2, discover2, secretMix,
+    center, scholar, trap2, noStalemate, guard, rescueMix,
+    pawnRace, rooksBoss: mateBoss(['R', 'R'], 30), queenBoss: mateBoss(['Q'], 40)
+  };
+
+  return { GEN, judge, solutions, reply, bossKing, bossHint, hanging, attackersOf, VAL };
 })();

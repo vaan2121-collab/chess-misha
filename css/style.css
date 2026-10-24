@@ -1439,3 +1439,39 @@ main {
   .rank-badge { width: 28px; height: 28px; }
   .step-tab { width: 40px; height: 32px; font-size: 16px; }
 }
+
+/* ===== Выбор фигуры при превращении пешки ===== */
+.promo-pick {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 6;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+  padding: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  border: 4px solid var(--outline);
+  width: 86%;
+  animation: land 0.25s ease-out;
+}
+.promo-pick button {
+  aspect-ratio: 1;
+  padding: 4px;
+  background: var(--sq-light);
+  border: 3px solid var(--outline);
+  cursor: pointer;
+}
+.promo-pick button:first-child { background: #fff6c4; box-shadow: 0 0 0 3px var(--gold); }
+.promo-pick img { width: 100%; height: 100%; object-fit: contain; }
+.promo-pick .glyph { font-size: 9cqw; }
+
+/* ===== Босс: сколько ходов осталось ===== */
+.moves-left {
+  font-weight: 800;
+  padding: 1px 8px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 2px solid var(--outline);
+}
+.moves-left.low { background: var(--redstone); animation: pulse 0.6s infinite alternate; }

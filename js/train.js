@@ -25,6 +25,11 @@ window.TrainScreen = (function () {
   let streak = 0;
   let explainedWhy = false;
   let busy = false;
+  let side = 'w';         // за кого играет ребёнок в этой задаче
+  let step = 0;           // ход ребёнка в задаче «в 2 хода» (0 или 1)
+  let stepFen = '';       // позиция перед текущим ходом ребёнка
+  let movesLeft = 0;      // у босса: сколько ходов осталось
+  let seen = new Set();   // у мат-босса: позиции после ходов ребёнка (подсказка не ходит по кругу)
   const faceCache = {};
 
   // ---------- Где лежат голоса ----------
@@ -165,6 +170,8 @@ window.TrainScreen = (function () {
     // позиция берётся из первого слайда, где она указана, и держится дальше
     const fen = level.explain.slice(0, slide + 1).reverse().find((x) => x.fen).fen;
     if (!game || game.fen() !== fen) { game = new Chess(fen); board.setGame(game); }
+    // показываем со стороны того, кто ходит в первом примере (в «Защите от детского мата» — чёрные)
+    board.setOrientation(new Chess(level.explain[0].fen).turn());
     let marks = Object.assign({}, s.marks || {});
     if (s.safeFor) marks = safeMarks(s.safeFor);
     if (s.values) marks = valueMarks();
@@ -224,11 +231,22 @@ window.TrainScreen = (function () {
     nextTask();
   }
 
+  const tasksOf = () => level.tasks || T.tasksPerLevel;
+
   function nextTask() {
     const count = Store.get('trainCount:' + level.id, 0); // сложность растёт с опытом
     task = TrainGen.GEN[level.gen](count) || TrainGen.GEN[level.gen](0);
     game = new Chess(task.fen);
+    // ребёнок играет той стороной, чей ход (в «Защите от детского мата» — чёрными)
+    side = game.turn();
+    step = 0;
+    stepFen = task.fen;
+    movesLeft = task.limit || 0;
+    seen = new Set();
     board.setGame(game);
+    board.setOrientation(side);
+    board.setPlayerColor(side);
+    board.setChoosePromotion(!!level.choosePromotion);
     board.setMarks(task.checker ? { [task.checker]: 'focus' } : {});
     board.setArrows([]);
     board.setShowTargets(!level.noTargets);
@@ -243,15 +261,46 @@ window.TrainScreen = (function () {
     else saySystem(box, 'next', 'talk');
   }
 
+  // Начать задачу заново (после ошибки) — та же позиция.
+  function resetTask() {
+    game.load(task.fen);
+    step = 0;
+    stepFen = task.fen;
+    movesLeft = task.limit || 0;
+    board.setGame(game);
+    board.setMarks(task.checker ? { [task.checker]: 'focus' } : {});
+    board.setInteractive(true);
+    busy = false;
+    paintProgress();
+  }
+
   function onMove(move) {
-    if (mode !== 'task' || busy) return;
-    const before = new Chess(task.fen);
-    const r = TrainGen.judge(task, before, game, move);
+    if (mode !== 'task') return;
+    // ход соперника (он ходит через ту же доску) — после него снова ход ребёнка
+    if (move.color !== side) return afterReply(move);
+    if (busy) return;
+    if (level.boss) return bossMove(move);
+    const before = new Chess(stepFen);
+    const r = TrainGen.judge(task, before, game, move, step);
     const box = $('#train-coach');
     board.setMarks({});
     board.setArrows([]);
     busy = true;
     board.setInteractive(false);
+
+    // задача в 2 хода: первый ход верный — соперник отвечает, потом снова ход ребёнка
+    if (r.cont) {
+      step = 1;
+      hintLevel = 0;
+      FX.sparkle(board.squareEl(move.to));
+      Sound.play('star');
+      if (level.cont) say(box, level.cont, levelVoice('cont'), 'happy');
+      setTimeout(() => {
+        const m = TrainGen.reply(game);
+        if (m) board.makeMove(m.from, m.to, m.promotion);
+      }, 1300);
+      return;
+    }
 
     if (r.ok) {
       streak++;
@@ -266,7 +315,7 @@ window.TrainScreen = (function () {
       taskIdx++;
       paintProgress();
       setTimeout(() => {
-        if (taskIdx >= T.tasksPerLevel) finishLevel();
+        if (taskIdx >= tasksOf()) finishLevel();
         else nextTask();
       }, explainedWhy && taskIdx === 1 ? 2600 : 1500);
       return;
@@ -284,13 +333,88 @@ window.TrainScreen = (function () {
     el.classList.add('wrong');
     setTimeout(() => {
       el.classList.remove('wrong');
-      game.load(task.fen);
-      board.setGame(game);
-      board.setMarks(task.checker ? { [task.checker]: 'focus' } : {});
-      board.setInteractive(true);
-      busy = false;
+      resetTask();
       if (taskMistakes >= 2 && hintLevel < 2) showHint(true);
     }, 1400);
+  }
+
+  // Соперник ответил — запоминаем позицию, ход снова за ребёнком.
+  function afterReply(move) {
+    stepFen = game.fen();
+    if (level.boss) return bossAfterReply(move);
+    busy = false;
+    board.setInteractive(true);
+    if (level.cont2) say($('#train-coach'), level.cont2, levelVoice('cont2'), 'talk');
+  }
+
+  // ---- боссы: мини-партия против робота ----
+  function bossMove(move) {
+    let status = null;
+    if (task.boss === 'race') {
+      if (move.flags.includes('p')) status = 'win';
+      else if (game.game_over()) status = 'lose_draw';
+    } else {
+      movesLeft--;
+      seen.add(game.fen().split(' ')[0]);
+      if (game.in_checkmate()) status = 'win';
+      else if (game.in_stalemate()) return bossTakeBack('oops_stalemate', 1);
+      else if (movesLeft <= 0) status = 'lose_limit';
+    }
+    paintProgress();
+    if (status) return bossEnd(status);
+    busy = true;
+    board.setInteractive(false);
+    setTimeout(() => {
+      const m = task.boss === 'race' ? ChessAI.choose(game, level.ai || 2) : TrainGen.bossKing(game);
+      if (m) board.makeMove(m.from, m.to, m.promotion);
+    }, 700);
+  }
+
+  function bossAfterReply(move) {
+    if (task.boss === 'race' && move.flags.includes('p')) return bossEnd('lose_race');
+    if (task.boss === 'mate' && move.captured) return bossTakeBack('lose_piece', 2);
+    if (game.game_over()) return bossEnd('lose_draw');
+    busy = false;
+    board.setInteractive(true);
+  }
+
+  // Мат-босс: пат или потерянная фигура — не начинаем заново, а возвращаем ход и объясняем.
+  function bossTakeBack(status, plies) {
+    busy = true;
+    board.setInteractive(false);
+    mistakes++;
+    Sound.play('error');
+    const box = $('#train-coach');
+    if (level.oops && level.oops[status]) say(box, level.oops[status], levelVoice(status), 'oops');
+    else saySystem(box, 'wrong', 'oops');
+    setTimeout(() => {
+      for (let i = 0; i < plies; i++) game.undo();
+      movesLeft++;
+      board.setGame(game);
+      paintProgress();
+      busy = false;
+      board.setInteractive(true);
+    }, 2600);
+  }
+
+  function bossEnd(status) {
+    busy = true;
+    board.setInteractive(false);
+    const box = $('#train-coach');
+    if (status === 'win') {
+      FX.sparkle(board.squareEl(game.history({ verbose: true }).pop().to));
+      say(box, level.why, levelVoice('why'), 'happy');
+      taskIdx = tasksOf();
+      Store.set('trainCount:' + level.id, Store.get('trainCount:' + level.id, 0) + 1);
+      setTimeout(finishLevel, 2200);
+      return;
+    }
+    // проиграли боссу — объясняем и начинаем новую партию
+    mistakes++;
+    Sound.play('error');
+    if (level.oops && level.oops[status]) say(box, level.oops[status], levelVoice(status), 'oops');
+    else saySystem(box, 'wrong', 'oops');
+    setTimeout(nextTask, 3200);
   }
 
   // Режим «без подсказок ходов»: ребёнок ткнул туда, куда нельзя.
@@ -304,7 +428,10 @@ window.TrainScreen = (function () {
   // Подсказка по нарастающей: вопрос → фигура → ход.
   function showHint(auto) {
     if (mode !== 'task' || busy) return;
-    const sols = TrainGen.solutions(task, game);
+    // у босса подсказывает «мозг» робота, у задач — список решений
+    const sols = level.boss
+      ? [task.boss === 'mate' ? TrainGen.bossHint(game, seen) : ChessAI.hint(game)].filter(Boolean)
+      : TrainGen.solutions(task, game, step);
     if (!sols.length) return;
     const m = sols[0];
     const texts = level.hint || [];
@@ -326,7 +453,12 @@ window.TrainScreen = (function () {
   function paintProgress() {
     const bar = $('#train-progress');
     bar.innerHTML = '';
-    for (let i = 0; i < T.tasksPerLevel; i++) {
+    // у босса с ограничением — сколько ходов осталось
+    if (level.boss && task && task.limit) {
+      bar.innerHTML = '<span class="moves-left' + (movesLeft <= 5 ? ' low' : '') + '">Ходов: ' + movesLeft + '</span>';
+      return;
+    }
+    for (let i = 0; i < tasksOf(); i++) {
       const s = document.createElement('span');
       s.className = 'chest-slot' + (i < taskIdx ? ' got' : '');
       bar.appendChild(s);
@@ -404,5 +536,5 @@ window.TrainScreen = (function () {
   }
 
   // current() — для отладки и автотестов
-  return { enter, current: () => ({ task, game, mode }) };
+  return { enter, current: () => ({ task, game, mode, step, side, busy, level, movesLeft }) };
 })();

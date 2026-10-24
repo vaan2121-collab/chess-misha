@@ -57,6 +57,7 @@ window.ChessBoard = (function () {
       // подсвечивать ли, куда может пойти выбранная фигура (в части заданий ребёнок ищет сам)
       showTargets: opts.showTargets !== false,
       onIllegal: opts.onIllegal || null,
+      choosePromotion: !!opts.choosePromotion, // спрашивать, в кого превратить пешку
       interactive: opts.interactive !== false,
       selected: null,
       targets: [],
@@ -123,7 +124,9 @@ window.ChessBoard = (function () {
       // Тап по клетке, куда можно сходить.
       const move = state.targets.find((m) => m.to === square);
       if (state.selected && move) {
-        makeMove(state.selected, square);
+        // превращение пешки: если включён выбор — спрашиваем, в кого превратиться
+        if (move.flags && move.flags.includes('p') && state.choosePromotion) showPromotion(state.selected, square);
+        else makeMove(state.selected, square);
         return;
       }
 
@@ -146,7 +149,29 @@ window.ChessBoard = (function () {
       }
     }
 
-    function makeMove(from, to) {
+    // Выбор фигуры для превращения пешки: 4 большие кнопки поверх доски.
+    function showPromotion(from, to) {
+      const color = state.game.turn();
+      const box = document.createElement('div');
+      box.className = 'promo-pick';
+      ['q', 'r', 'b', 'n'].forEach((p) => {
+        const b = document.createElement('button');
+        const key = color + p;
+        b.innerHTML = pieceImages[key] ? '<img src="' + pieceImages[key] + '" alt="">' : '<span class="piece glyph ' + color + '">' + GLYPHS[key] + '</span>';
+        b.addEventListener('pointerdown', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          box.remove();
+          makeMove(from, to, p);
+        });
+        box.appendChild(b);
+      });
+      el.appendChild(box);
+      Sound.play('select');
+    }
+
+    // promotion — в кого превращается пешка (по умолчанию в ферзя, чтобы не усложнять детям)
+    function makeMove(from, to, promotion) {
       const game = state.game;
       // Кого съедают и где он стоит (при взятии на проходе — не на клетке to).
       const legal = game.moves({ square: from, verbose: true }).find((m) => m.to === to);
@@ -158,8 +183,7 @@ window.ChessBoard = (function () {
       const enemyMatch = victimEl && victimEl.className.match(/e-(\w\w)/);
       const victimCode = victimPiece ? victimPiece.color + victimPiece.type.toUpperCase() : enemyMatch && enemyMatch[1];
 
-      // Превращение пешки — всегда в ферзя, чтобы не усложнять детям.
-      const move = game.move({ from, to, promotion: 'q' });
+      const move = game.move({ from, to, promotion: promotion || 'q' });
       if (!move) return null;
       state.selected = null;
       state.targets = [];
@@ -287,6 +311,7 @@ window.ChessBoard = (function () {
       setInteractive(v) { state.interactive = v; if (!v) clearSelection(); },
       setPlayerColor(color) { state.playerColor = color; },
       setShowTargets(v) { state.showTargets = v; render(); },
+      setChoosePromotion(v) { state.choosePromotion = !!v; },
       // Стрелки поверх доски: [{ from: 'b1', to: 'f1', color: 'green' | 'red' | 'yellow' }]
       setArrows(list) {
         let svg = el.querySelector('svg.arrows');
