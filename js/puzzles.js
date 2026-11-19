@@ -33,9 +33,22 @@ window.PuzzlesScreen = (function () {
   let hintLevel = 0;
   let busy = false;
   let winsInRow = 0;     // победы за этот заход — для особой похвалы
+  let epoch = 0;
+  const timers = new Set();
+
+  function schedule(fn, ms) {
+    const token = epoch;
+    const id = setTimeout(() => {
+      timers.delete(id);
+      if (token === epoch) fn();
+    }, ms);
+    timers.add(id);
+    return id;
+  }
 
   // ---------- Разделы ----------
   function renderList() {
+    listView.hidden = false;
     listView.innerHTML = '';
     for (const w of WORLDS) {
       const tile = document.createElement('button');
@@ -166,7 +179,7 @@ window.PuzzlesScreen = (function () {
       step = 1;
       busy = true;
       board.setInteractive(false);
-      setTimeout(() => {
+      schedule(() => {
         const reply = PuzzleGen.blackReply(game);
         if (!reply) return fail(move);
         game.move(reply);
@@ -190,7 +203,7 @@ window.PuzzlesScreen = (function () {
     Sound.voice(V.tryAgain);
     const el = board.squareEl(move.to);
     el.classList.add('wrong');
-    setTimeout(() => {
+    schedule(() => {
       el.classList.remove('wrong');
       game.load(puzzle.fen);
       step = 0;
@@ -238,13 +251,13 @@ window.PuzzlesScreen = (function () {
     if (puzzle.goal === 'mate') lines.push(V.mateDone);
     lines.push(...praise);
     if (chestFull) lines.push(V.chest);
-    setTimeout(() => Sound.voice(lines), 300);
+    schedule(() => Sound.voice(lines), 300);
 
     $('#puzzle-win-title').textContent = PRAISE_TITLES[Math.floor(Math.random() * PRAISE_TITLES.length)];
     $('#puzzle-win-reward').hidden = !chestFull;
     paintChest($('#win-chest'), chestFull ? CHEST_SIZE : chest);
     paintChest($('#puzzle-chest'));
-    setTimeout(() => { overlay.hidden = false; }, 900);
+    schedule(() => { overlay.hidden = false; }, 900);
   }
 
   function paintChest(el, filled) {
@@ -286,5 +299,21 @@ window.PuzzlesScreen = (function () {
   }
 
   // current() — для отладки и автотестов: текущая задачка и позиция.
-  return { enter, current: () => ({ puzzle, game, step }) };
+  function leave() {
+    epoch++;
+    timers.forEach(clearTimeout);
+    timers.clear();
+    Sound.stopVoice();
+    overlay.hidden = true;
+    if (board) {
+      board.setInteractive(false);
+      board.setGame(new Chess());
+    }
+    busy = false;
+    puzzle = null;
+    game = null;
+    world = null;
+  }
+
+  return { enter, leave, renderList, current: () => ({ puzzle, game, step }) };
 })();

@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Паутина — набор фигур</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; background: #f2f5f4; color: #1b2926; font: 16px/1.4 system-ui, sans-serif; }
+    main { width: min(100%, 760px); margin: 0 auto; padding: 24px 16px 40px; }
+    h1 { margin: 0 0 20px; font-size: 28px; }
+    .board { display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); width: min(100%, 640px); aspect-ratio: 1; margin: 0 auto; border: 6px solid #38473f; }
+    .square { aspect-ratio: 1; display: grid; place-items: center; min-width: 0; background: #ead9a4; }
+    .square.dark { background: #74a944; }
+    .square img { width: 94%; height: 94%; object-fit: contain; }
+    .palette { display: flex; flex-wrap: wrap; justify-content: center; gap: 8px 24px; margin: 16px 0 24px; }
+    .palette span { display: inline-flex; align-items: center; gap: 8px; }
+    .swatch { width: 18px; height: 18px; border: 1px solid #263c35; background: #009d9c; }
+    .swatch.black { background: #421447; }
+    .pieces { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px 4px; }
+    figure { margin: 0; min-width: 0; text-align: center; }
+    figure img { width: 100%; aspect-ratio: 1; object-fit: contain; background: #e4e9e5; }
+    figcaption { font-size: 13px; overflow-wrap: anywhere; }
+    @media (max-width: 500px) { main { padding: 16px 8px; } .board { border-width: 4px; } h1 { font-size: 24px; } .pieces { grid-template-columns: repeat(3, minmax(0, 1fr)); } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Паутина</h1>
+    <div id="board" class="board" role="img" aria-label="Начальная шахматная позиция с набором Паутина"></div>
+    <div class="palette"><span><i class="swatch"></i>Белые</span><span><i class="swatch black"></i>Чёрные</span></div>
+    <div id="pieces" class="pieces"></div>
+  </main>
+  <script>
+    const names = { K: 'Король', Q: 'Ферзь', B: 'Слон', N: 'Конь', R: 'Ладья', P: 'Пешка' };
+    const rows = ['rnbqkbnr', 'pppppppp', '', '', '', '', 'PPPPPPPP', 'RNBQKBNR'];
+    const makeImage = (code) => {
+      const image = document.createElement('img');
+      image.src = code + '.png';
+      image.alt = (code[0] === 'w' ? 'Белые: ' : 'Чёрные: ') + names[code[1]];
+      return image;
+    };
+    rows.forEach((row, rank) => {
+      for (let file = 0; file < 8; file++) {
+        const square = document.createElement('div');
+        square.className = 'square' + ((file + rank) % 2 ? ' dark' : '');
+        if (row[file]) square.appendChild(makeImage((rank < 2 ? 'b' : 'w') + row[file].toUpperCase()));
+        document.getElementById('board').appendChild(square);
+      }
+    });
+    for (const side of ['w', 'b']) for (const type of ['K', 'Q', 'B', 'N', 'R', 'P']) {
+      const figure = document.createElement('figure');
+      const label = document.createElement('figcaption');
+      label.textContent = names[type];
+      figure.append(makeImage(side + type), label);
+      document.getElementById('pieces').appendChild(figure);
+    }
+  </script>
+</body>
+</html>

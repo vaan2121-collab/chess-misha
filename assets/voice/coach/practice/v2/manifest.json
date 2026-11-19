@@ -1,0 +1,1234 @@
+{
+  "version": 5,
+  "relativeAudioRoot": "assets/voice/coach/practice/v2/",
+  "mainCount": 88,
+  "coordinateCount": 64,
+  "items": [
+    {
+      "file": "center_goal.mp3",
+      "text": "Контролируй две клетки в середине. Выведи коня и слона.",
+      "record": "Контролируй две клетки в середине. Выведи коня и слона.",
+      "group": "Держи центр",
+      "source": "js/practice-logic.js: MODES.center.goal",
+      "aliases": []
+    },
+    {
+      "file": "center_rule.mp3",
+      "text": "Держи под прицелом две клетки: d4, e4, d5 или e5. Помогут пешки, кони и слоны.",
+      "record": "Держи под прицелом две клетки: дэ четыре, е четыре, дэ пять или е пять. Помогут пешки, кони и слоны.",
+      "group": "Держи центр",
+      "source": "js/practice-logic.js: MODES.center.rule",
+      "aliases": []
+    },
+    {
+      "file": "center_why.mp3",
+      "text": "Центр — как перекрёсток. Отсюда фигурам легче помогать друг другу и попадать в разные части доски.",
+      "record": "Центр — как перекрёсток. Отсюда фигурам легче помогать друг другу и попадать в разные части доски.",
+      "group": "Держи центр",
+      "source": "js/practice-logic.js: MODES.center.why",
+      "aliases": []
+    },
+    {
+      "file": "center_question.mp3",
+      "text": "Какие клетки в середине видят твои фигуры?",
+      "record": "Какие клетки в середине видят твои фигуры?",
+      "group": "Держи центр",
+      "source": "js/practice-logic.js: MODES.center.question",
+      "aliases": []
+    },
+    {
+      "file": "center_takeaway.mp3",
+      "text": "Центр можно занять пешками или держать под прицелом издалека. Прежде чем идти вперёд, проверь защиту.",
+      "record": "Центр можно занять пешками или держать под прицелом издалека. Прежде чем идти вперёд, проверь защиту.",
+      "group": "Держи центр",
+      "source": "js/practice-logic.js: MODES.center.takeaway",
+      "aliases": []
+    },
+    {
+      "file": "development_goal.mp3",
+      "text": "Выведи коня и слона. Сделай рокировку.",
+      "record": "Выведи коня и слона. Сделай рокировку.",
+      "group": "Собери команду",
+      "source": "js/practice-logic.js: MODES.development.goal",
+      "aliases": []
+    },
+    {
+      "file": "development_rule.mp3",
+      "text": "Открой дорогу коню и слону. Потом спрячь короля рокировкой.",
+      "record": "Открой дорогу коню и слону. Потом спрячь короля рокировкой.",
+      "group": "Собери команду",
+      "source": "js/practice-logic.js: MODES.development.rule",
+      "aliases": []
+    },
+    {
+      "file": "development_why.mp3",
+      "text": "Фигуры на первой линии ещё не помогают команде. Выведи помощников, а короля спрячь за пешками.",
+      "record": "Фигуры на первой линии ещё не помогают команде. Выведи помощников, а короля спрячь за пешками.",
+      "group": "Собери команду",
+      "source": "js/practice-logic.js: MODES.development.why",
+      "aliases": []
+    },
+    {
+      "file": "development_question.mp3",
+      "text": "Кто ещё сидит дома? Что мешает рокировке?",
+      "record": "Кто ещё сидит дома? Что мешает рокировке?",
+      "group": "Собери команду",
+      "source": "js/practice-logic.js: MODES.development.question",
+      "aliases": []
+    },
+    {
+      "file": "development_takeaway.mp3",
+      "text": "Развивай фигуры и береги короля. Если тебе объявили шах, сначала защити его.",
+      "record": "Развивай фигуры и береги короля. Если тебе объявили шах, сначала защити его.",
+      "group": "Собери команду",
+      "source": "js/practice-logic.js: MODES.development.takeaway",
+      "aliases": []
+    },
+    {
+      "file": "watch_goal.mp3",
+      "text": "Посмотри ход чёрных. Найди фигуру под ударом и спаси её.",
+      "record": "Посмотри ход чёрных. Найди фигуру под ударом и спаси её.",
+      "group": "Что задумал соперник?",
+      "source": "js/practice-logic.js: MODES.watch.goal",
+      "aliases": []
+    },
+    {
+      "file": "watch_rule.mp3",
+      "text": "После хода соперника спроси: на что он напал? Нажми на свою фигуру в опасности.",
+      "record": "После хода соперника спроси: на что он напал? Нажми на свою фигуру в опасности.",
+      "group": "Что задумал соперник?",
+      "source": "js/practice-logic.js: MODES.watch.rule",
+      "aliases": []
+    },
+    {
+      "file": "watch_why.mp3",
+      "text": "Соперник тоже строит планы. Замечая его нападения, ты успеешь защитить свою команду.",
+      "record": "Соперник тоже строит планы. Замечая его нападения, ты успеешь защитить свою команду.",
+      "group": "Что задумал соперник?",
+      "source": "js/practice-logic.js: MODES.watch.why",
+      "aliases": []
+    },
+    {
+      "file": "watch_question.mp3",
+      "text": "Что изменилось после последнего хода?",
+      "record": "Что изменилось после последнего хода?",
+      "group": "Что задумал соперник?",
+      "source": "js/practice-logic.js: MODES.watch.question",
+      "aliases": []
+    },
+    {
+      "file": "watch_takeaway.mp3",
+      "text": "После каждого хода соперника проверь: есть ли шах, взятие или новая угроза?",
+      "record": "После каждого хода соперника проверь: есть ли шах, взятие или новая угроза?",
+      "group": "Что задумал соперник?",
+      "source": "js/practice-logic.js: MODES.watch.takeaway",
+      "aliases": []
+    },
+    {
+      "file": "rescue_goal.mp3",
+      "text": "Заметь нападение и спаси свою фигуру.",
+      "record": "Заметь нападение и спаси свою фигуру.",
+      "group": "Спаси фигуру",
+      "source": "js/practice-logic.js: MODES.rescue.goal",
+      "aliases": []
+    },
+    {
+      "file": "rescue_why.mp3",
+      "text": "Каждая фигура — помощник. Сохрани её, чтобы она могла защищать друзей и нападать.",
+      "record": "Каждая фигура — помощник. Сохрани её, чтобы она могла защищать друзей и нападать.",
+      "group": "Спаси фигуру",
+      "source": "js/practice-logic.js: MODES.rescue.why",
+      "aliases": []
+    },
+    {
+      "file": "rescue_question.mp3",
+      "text": "Можно уйти, защитить фигуру или убрать нападающего?",
+      "record": "Можно уйти, защитить фигуру или убрать нападающего?",
+      "group": "Спаси фигуру",
+      "source": "js/practice-logic.js: MODES.rescue.question",
+      "aliases": []
+    },
+    {
+      "file": "rescue_takeaway.mp3",
+      "text": "Спасти — не всегда убежать. Иногда помогает защита, перекрытие или взятие нападающего.",
+      "record": "Спасти — не всегда убежать. Иногда помогает защита, перекрытие или взятие нападающего.",
+      "group": "Спаси фигуру",
+      "source": "js/practice-logic.js: MODES.rescue.takeaway",
+      "aliases": []
+    },
+    {
+      "file": "capture_goal.mp3",
+      "text": "Забери фигуру без ответного взятия.",
+      "record": "Забери фигуру без ответного взятия.",
+      "group": "Бери без потерь",
+      "source": "js/practice-logic.js: MODES.capture.goal",
+      "aliases": []
+    },
+    {
+      "file": "capture_why.mp3",
+      "text": "Не всякий подарок безопасен. Прежде чем взять фигуру, представь ответ соперника.",
+      "record": "Не всякий подарок безопасен. Прежде чем взять фигуру, представь ответ соперника.",
+      "group": "Бери без потерь",
+      "source": "js/practice-logic.js: MODES.capture.why",
+      "aliases": []
+    },
+    {
+      "file": "capture_question.mp3",
+      "text": "Кто сможет забрать мою фигуру после взятия?",
+      "record": "Кто сможет забрать мою фигуру после взятия?",
+      "group": "Бери без потерь",
+      "source": "js/practice-logic.js: MODES.capture.question",
+      "aliases": []
+    },
+    {
+      "file": "capture_takeaway.mp3",
+      "text": "Проверяй ответ на своё взятие. В обычной партии выгодный размен тоже бывает хорошим ходом.",
+      "record": "Проверяй ответ на своё взятие. В обычной партии выгодный размен тоже бывает хорошим ходом.",
+      "group": "Бери без потерь",
+      "source": "js/practice-logic.js: MODES.capture.takeaway",
+      "aliases": []
+    },
+    {
+      "file": "traps_goal.mp3",
+      "text": "Заметь приманку и проверь ответ соперника.",
+      "record": "Заметь приманку и проверь ответ соперника.",
+      "group": "Лаборатория ловушек",
+      "source": "js/practice-logic.js: MODES.traps.goal",
+      "aliases": []
+    },
+    {
+      "file": "traps_rule.mp3",
+      "text": "Ловушка сработает, только если соперник ошибётся. Проверяй его ответ.",
+      "record": "Ловушка сработает, только если соперник ошибётся. Проверяй его ответ.",
+      "group": "Лаборатория ловушек",
+      "source": "js/practice-logic.js: MODES.traps.rule",
+      "aliases": []
+    },
+    {
+      "file": "traps_why.mp3",
+      "text": "Заманчивая фигура может быть приманкой. Научись считать несколько ходов и замечать опасность.",
+      "record": "Заманчивая фигура может быть приманкой. Научись считать несколько ходов и замечать опасность.",
+      "group": "Лаборатория ловушек",
+      "source": "js/practice-logic.js: MODES.traps.why",
+      "aliases": []
+    },
+    {
+      "file": "traps_question.mp3",
+      "text": "Что будет, если соперник не возьмёт приманку?",
+      "record": "Что будет, если соперник не возьмёт приманку?",
+      "group": "Лаборатория ловушек",
+      "source": "js/practice-logic.js: MODES.traps.question",
+      "aliases": []
+    },
+    {
+      "file": "traps_takeaway.mp3",
+      "text": "Соперник может разгадать ловушку. Тогда продолжай развивать фигуры и защищать короля.",
+      "record": "Соперник может разгадать ловушку. Тогда продолжай развивать фигуры и защищать короля.",
+      "group": "Лаборатория ловушек",
+      "source": "js/practice-logic.js: MODES.traps.takeaway",
+      "aliases": []
+    },
+    {
+      "file": "legal_mate_rule.mp3",
+      "text": "Развивай фигуры и замечай, когда соперник жадно берёт ферзя.",
+      "record": "Развивай фигуры и замечай, когда соперник жадно берёт ферзя.",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.rule",
+      "aliases": []
+    },
+    {
+      "file": "legal_mate_why.mp3",
+      "text": "Конь с f3 на e5 открывает слону чёрных путь к ферзю на d1. Если чёрные жадно заберут ферзя, слон и конь начнут шаховать короля.",
+      "record": "Конь с эф три на е пять открывает слону чёрных путь к ферзю на дэ один. Если чёрные жадно заберут ферзя, слон и конь начнут шаховать короля.",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.why",
+      "aliases": []
+    },
+    {
+      "file": "legal_mate_question.mp3",
+      "text": "Почему после взятия ферзя король всё равно не спасся?",
+      "record": "Почему после взятия ферзя король всё равно не спасся?",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.question",
+      "aliases": []
+    },
+    {
+      "file": "legal_mate_takeaway.mp3",
+      "text": "Перед взятием всегда проверь: не будет ли у соперника шаха или мата?",
+      "record": "Перед взятием всегда проверь: не будет ли у соперника шаха или мата?",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.takeaway",
+      "aliases": []
+    },
+    {
+      "file": "legal_mate_step_01.mp3",
+      "text": "Пешка с e2 на e4 занимает центр и открывает дорогу слону.",
+      "record": "Пешка с е два на е четыре занимает центр и открывает дорогу слону.",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.reasons[0]",
+      "aliases": [
+        {
+          "key": "legal_defense_step_01",
+          "source": "js/practice-traps.js: legals-defense.reasons[0]"
+        }
+      ]
+    },
+    {
+      "file": "legal_mate_step_02.mp3",
+      "text": "Конь с g1 на f3 выходит в игру и нападает на пешку e5.",
+      "record": "Конь с жэ один на эф три выходит в игру и нападает на пешку е пять.",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.reasons[1]",
+      "aliases": [
+        {
+          "key": "legal_defense_step_02",
+          "source": "js/practice-traps.js: legals-defense.reasons[1]"
+        }
+      ]
+    },
+    {
+      "file": "legal_mate_step_03.mp3",
+      "text": "Слон с f1 на c4 выходит в игру и смотрит на слабое поле f7.",
+      "record": "Слон с эф один на цэ четыре выходит в игру и смотрит на слабое поле эф семь.",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.reasons[2]",
+      "aliases": []
+    },
+    {
+      "file": "legal_mate_step_04.mp3",
+      "text": "Конь с b1 на c3 выходит в игру и помогает бороться за центр.",
+      "record": "Конь с бэ один на цэ три выходит в игру и помогает бороться за центр.",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.reasons[3]",
+      "aliases": []
+    },
+    {
+      "file": "legal_mate_step_05.mp3",
+      "text": "Конь с f3 на e5 будто предлагает взять ферзя: он открыл слону чёрных диагональ к ферзю на d1. Если чёрные жадно возьмут ферзя слоном с g4 на d1, белые ответят шахами слона и коня.",
+      "record": "Конь с эф три на е пять будто предлагает взять ферзя: он открыл слону чёрных диагональ к ферзю на дэ один. Если чёрные жадно возьмут ферзя слоном с жэ четыре на дэ один, белые ответят шахами слона и коня.",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.reasons[4]",
+      "aliases": []
+    },
+    {
+      "file": "legal_mate_step_06.mp3",
+      "text": "Слон с c4 на f7 забирает пешку и шахует. Слону помогает конь, поэтому королю трудно укрыться.",
+      "record": "Слон с цэ четыре на эф семь забирает пешку и шахует. Слону помогает конь, поэтому королю трудно укрыться.",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.reasons[5]",
+      "aliases": []
+    },
+    {
+      "file": "legal_mate_step_07.mp3",
+      "text": "Конь с c3 на d5 ставит мат: королю некуда уйти и нечем закрыться.",
+      "record": "Конь с цэ три на дэ пять ставит мат: королю некуда уйти и нечем закрыться.",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.reasons[6]",
+      "aliases": []
+    },
+    {
+      "file": "legal_mate_success.mp3",
+      "text": "Мат! Чёрные взяли ферзя и пропустили мат.",
+      "record": "Мат! Чёрные взяли ферзя и пропустили мат.",
+      "group": "Ловушка Легаля: мат в конце",
+      "source": "js/practice-traps.js: legals-mate.success",
+      "aliases": []
+    },
+    {
+      "file": "legal_defense_rule.mp3",
+      "text": "Займи центр, развивай фигуры и следи, как отвечает соперник.",
+      "record": "Займи центр, развивай фигуры и следи, как отвечает соперник.",
+      "group": "Ловушка Легаля: соперник разгадал план",
+      "source": "js/practice-traps.js: legals-defense.rule",
+      "aliases": []
+    },
+    {
+      "file": "legal_defense_why.mp3",
+      "text": "Ловушка зависит от ответа соперника. Если она не сработала, продолжай развивать фигуры и береги короля.",
+      "record": "Ловушка зависит от ответа соперника. Если она не сработала, продолжай развивать фигуры и береги короля.",
+      "group": "Ловушка Легаля: соперник разгадал план",
+      "source": "js/practice-traps.js: legals-defense.why",
+      "aliases": []
+    },
+    {
+      "file": "legal_defense_question.mp3",
+      "text": "Как изменился план соперника, и что теперь важно сделать белым?",
+      "record": "Как изменился план соперника, и что теперь важно сделать белым?",
+      "group": "Ловушка Легаля: соперник разгадал план",
+      "source": "js/practice-traps.js: legals-defense.question",
+      "aliases": []
+    },
+    {
+      "file": "legal_defense_takeaway.mp3",
+      "text": "Ловушка зависит от ответа соперника. Если он защищается, продолжай развивать фигуры.",
+      "record": "Ловушка зависит от ответа соперника. Если он защищается, продолжай развивать фигуры.",
+      "group": "Ловушка Легаля: соперник разгадал план",
+      "source": "js/practice-traps.js: legals-defense.takeaway",
+      "aliases": []
+    },
+    {
+      "file": "legal_defense_step_03.mp3",
+      "text": "Слон с f1 на c4 выходит в игру и смотрит на поле f7.",
+      "record": "Слон с эф один на цэ четыре выходит в игру и смотрит на поле эф семь.",
+      "group": "Ловушка Легаля: соперник разгадал план",
+      "source": "js/practice-traps.js: legals-defense.reasons[2]",
+      "aliases": []
+    },
+    {
+      "file": "legal_defense_step_04.mp3",
+      "text": "Конь с b1 на c3 выходит в игру. Обе стороны борются за центр.",
+      "record": "Конь с бэ один на цэ три выходит в игру. Обе стороны борются за центр.",
+      "group": "Ловушка Легаля: соперник разгадал план",
+      "source": "js/practice-traps.js: legals-defense.reasons[3]",
+      "aliases": []
+    },
+    {
+      "file": "legal_defense_step_05.mp3",
+      "text": "Чёрные вывели коня с b8 на c6: теперь пешку e5 защищают и этот конь, и пешка d6. Не забирай её конём с f3; продвинь пешку d2 на d3, чтобы поддержать центр и открыть слону дорогу.",
+      "record": "Чёрные вывели коня с бэ восемь на цэ шесть: теперь пешку е пять защищают и этот конь, и пешка дэ шесть. Не забирай её конём с эф три; продвинь пешку дэ два на дэ три, чтобы поддержать центр и открыть слону дорогу.",
+      "group": "Ловушка Легаля: соперник разгадал план",
+      "source": "js/practice-traps.js: legals-defense.reasons[4]",
+      "aliases": []
+    },
+    {
+      "file": "legal_defense_step_06.mp3",
+      "text": "Слон с c1 на e3 выходит в игру и помогает закончить развитие.",
+      "record": "Слон с цэ один на е три выходит в игру и помогает закончить развитие.",
+      "group": "Ловушка Легаля: соперник разгадал план",
+      "source": "js/practice-traps.js: legals-defense.reasons[5]",
+      "aliases": []
+    },
+    {
+      "file": "legal_defense_step_07.mp3",
+      "text": "Король с e1 на g1 и ладья с h1 на f1 рокируются: король прячется в безопасное место.",
+      "record": "Король с е один на жэ один и ладья с аш один на эф один рокируются: король прячется в безопасное место.",
+      "group": "Ловушка Легаля: соперник разгадал план",
+      "source": "js/practice-traps.js: legals-defense.reasons[6]",
+      "aliases": []
+    },
+    {
+      "file": "legal_defense_success.mp3",
+      "text": "Хорошо сыграно: фигуры развиты, король укрыт. Чёрные не попались в ловушку.",
+      "record": "Хорошо сыграно: фигуры развиты, король укрыт. Чёрные не попались в ловушку.",
+      "group": "Ловушка Легаля: соперник разгадал план",
+      "source": "js/practice-traps.js: legals-defense.success",
+      "aliases": []
+    },
+    {
+      "file": "center_progress.mp3",
+      "text": "Держи две центральные клетки под прицелом. Пешка смотрит по диагонали, а конь может помочь издалека.",
+      "record": "Держи две центральные клетки под прицелом. Пешка смотрит по диагонали, а конь может помочь издалека.",
+      "group": "Ходы и результаты",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "knight_progress.mp3",
+      "text": "Выведи коня ближе к середине: там у него больше дорог для помощи команде.",
+      "record": "Выведи коня ближе к середине: там у него больше дорог для помощи команде.",
+      "group": "Ходы и результаты",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "bishop_progress.mp3",
+      "text": "Освободи диагональ и выведи слона. Из дома он пока мало помогает.",
+      "record": "Освободи диагональ и выведи слона. Из дома он пока мало помогает.",
+      "group": "Ходы и результаты",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "castle_ready.mp3",
+      "text": "Дорога открыта! Сделай рокировку: король идёт на две клетки к ладье.",
+      "record": "Дорога открыта! Сделай рокировку: король идёт на две клетки к ладье.",
+      "group": "Ходы и результаты",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "castle_prepare.mp3",
+      "text": "Подготовь рокировку: освободи клетки между королём и ладьёй. Король не должен проходить через шах.",
+      "record": "Подготовь рокировку: освободи клетки между королём и ладьёй. Король не должен проходить через шах.",
+      "group": "Ходы и результаты",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "development_success.mp3",
+      "text": "Помощники в игре, король за пешками! Теперь легче играть всей командой.",
+      "record": "Помощники в игре, король за пешками! Теперь легче играть всей командой.",
+      "group": "Ходы и результаты",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "center_success.mp3",
+      "text": "Ты контролируешь центр, а конь и слон помогают команде. Центр можно держать и издалека!",
+      "record": "Ты контролируешь центр, а конь и слон помогают команде. Центр можно держать и издалека!",
+      "group": "Ходы и результаты",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "rescue_multiple_attackers.mp3",
+      "text": "На фигуру нападают несколько чёрных фигур. Проверь все нападения: можно уйти, защититься или взять нападающего.",
+      "record": "На фигуру нападают несколько чёрных фигур. Проверь все нападения: можно уйти, защититься или взять нападающего.",
+      "group": "Ходы и результаты",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "rescue_other_exposed.mp3",
+      "text": "Эту фигуру спасли, но теперь другой помощник под ударом. Попробуй сохранить обоих.",
+      "record": "Эту фигуру спасли, но теперь другой помощник под ударом. Попробуй сохранить обоих.",
+      "group": "Ходы и результаты",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "rescue_explain_move.mp3",
+      "text": "Ты увёл фигуру из-под удара.",
+      "record": "Ты увёл фигуру из-под удара.",
+      "group": "Пояснения после решения",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "rescue_explain_capture.mp3",
+      "text": "Ты убрал нападающего или изменил защиту.",
+      "record": "Ты убрал нападающего или изменил защиту.",
+      "group": "Пояснения после решения",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "rescue_explain_help.mp3",
+      "text": "Ты помог фигуре другим ходом: закрыл нападение или добавил защиту.",
+      "record": "Ты помог фигуре другим ходом: закрыл нападение или добавил защиту.",
+      "group": "Пояснения после решения",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "check_threats_again.mp3",
+      "text": "На своём следующем ходу снова проверь угрозы.",
+      "record": "На своём следующем ходу снова проверь угрозы.",
+      "group": "Пояснения после решения",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "capture_explanation.mp3",
+      "text": "Ты проверил ответ соперника: сразу забрать твою фигуру он не может.",
+      "record": "Ты проверил ответ соперника: сразу забрать твою фигуру он не может.",
+      "group": "Пояснения после решения",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "watch_observe.mp3",
+      "text": "Смотри, какой ход сделают чёрные. Потом найди свою фигуру под ударом.",
+      "record": "Смотри, какой ход сделают чёрные. Потом найди свою фигуру под ударом.",
+      "group": "Наблюдение и подсказки",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "watch_wrong_piece.mp3",
+      "text": "Проверь, какую белую фигуру чёрные могут выгодно забрать. Посмотри, куда смотрит их последняя фигура.",
+      "record": "Проверь, какую белую фигуру чёрные могут выгодно забрать. Посмотри, куда смотрит их последняя фигура.",
+      "group": "Наблюдение и подсказки",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "watch_hint_direction.mp3",
+      "text": "Куда теперь смотрит фигура, которой сходили чёрные? Проследи её нападения.",
+      "record": "Куда теперь смотрит фигура, которой сходили чёрные? Проследи её нападения.",
+      "group": "Наблюдение и подсказки",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "watch_hint_arrow.mp3",
+      "text": "Посмотри по стрелке. Какая белая фигура под ударом?",
+      "record": "Посмотри по стрелке. Какая белая фигура под ударом?",
+      "group": "Наблюдение и подсказки",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "quiz_attacker_arrow.mp3",
+      "text": "Вот кто нападает. Посмотри на красную стрелку.",
+      "record": "Вот кто нападает. Посмотри на красную стрелку.",
+      "group": "Наблюдение и подсказки",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "quiz_who_can_take.mp3",
+      "text": "Кто может забрать фигуру? Найди соперника.",
+      "record": "Кто может забрать фигуру? Найди соперника.",
+      "group": "Наблюдение и подсказки",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "king_in_check.mp3",
+      "text": "Твой король под шахом. Его нужно защитить!",
+      "record": "Твой король под шахом. Его нужно защитить!",
+      "group": "Ходы и результаты",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "opening_retry.mp3",
+      "text": "Хорошая попытка! Попробуем ещё раз и соберём все цели.",
+      "record": "Хорошая попытка! Попробуем ещё раз и соберём все цели.",
+      "group": "Ходы и результаты",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "trap_missing.mp3",
+      "text": "Задание не найдено. Начни его заново.",
+      "record": "Задание не найдено. Начни его заново.",
+      "group": "Ловушки: служебные фразы",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "trap_off_plan.mp3",
+      "text": "Это учебный пример: другой законный ход может быть хорошим! Чтобы пройти именно эту линию, начни заново и попробуй подсказку.",
+      "record": "Это учебный пример: другой законный ход может быть хорошим! Чтобы пройти именно эту линию, начни заново и попробуй подсказку.",
+      "group": "Ловушки: служебные фразы",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "trap_wait_reply.mp3",
+      "text": "Ход сделан. Дождись ответа чёрных и проверь, что изменилось.",
+      "record": "Ход сделан. Дождись ответа чёрных и проверь, что изменилось.",
+      "group": "Ловушки: служебные фразы",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "trap_choose_move.mp3",
+      "text": "Посмотри на угрозы и выбери ход.",
+      "record": "Посмотри на угрозы и выбери ход.",
+      "group": "Ловушки: служебные фразы",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_rescue_on.mp3",
+      "text": "Спаси фигуру на",
+      "record": "Спаси фигуру на",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_black_from.mp3",
+      "text": "Чёрные сходили с",
+      "record": "Чёрные сходили с",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_to.mp3",
+      "text": "на",
+      "record": "на",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_watch_find.mp3",
+      "text": "Какая твоя фигура теперь в опасности? Нажми на неё.",
+      "record": "Какая твоя фигура теперь в опасности? Нажми на неё.",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_enemy_took_on.mp3",
+      "text": "Соперник забрал фигуру на",
+      "record": "Соперник забрал фигуру на",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_keep_others.mp3",
+      "text": "Береги остальные!",
+      "record": "Береги остальные!",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_piece_on.mp3",
+      "text": "Фигура на",
+      "record": "Фигура на",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_under_attack.mp3",
+      "text": "под ударом. Береги её!",
+      "record": "под ударом. Береги её!",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_watch_correct_on.mp3",
+      "text": "Верно! Фигура на",
+      "record": "Верно! Фигура на",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_watch_rescue.mp3",
+      "text": "под ударом. Теперь спаси её: уйди, защити или убери нападающего.",
+      "record": "под ударом. Теперь спаси её: уйди, защити или убери нападающего.",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_look_piece_on.mp3",
+      "text": "Посмотри на фигуру на",
+      "record": "Посмотри на фигуру на",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "part_look_square.mp3",
+      "text": "Посмотри на клетку",
+      "record": "Посмотри на клетку",
+      "group": "Части фраз с координатами",
+      "source": "js/practice.js / js/practice-logic.js / js/practice-traps.js",
+      "aliases": []
+    },
+    {
+      "file": "squares/a1.mp3",
+      "text": "a1",
+      "record": "а один",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/a2.mp3",
+      "text": "a2",
+      "record": "а два",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/a3.mp3",
+      "text": "a3",
+      "record": "а три",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/a4.mp3",
+      "text": "a4",
+      "record": "а четыре",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/a5.mp3",
+      "text": "a5",
+      "record": "а пять",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/a6.mp3",
+      "text": "a6",
+      "record": "а шесть",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/a7.mp3",
+      "text": "a7",
+      "record": "а семь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/a8.mp3",
+      "text": "a8",
+      "record": "а восемь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/b1.mp3",
+      "text": "b1",
+      "record": "бэ один",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/b2.mp3",
+      "text": "b2",
+      "record": "бэ два",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/b3.mp3",
+      "text": "b3",
+      "record": "бэ три",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/b4.mp3",
+      "text": "b4",
+      "record": "бэ четыре",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/b5.mp3",
+      "text": "b5",
+      "record": "бэ пять",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/b6.mp3",
+      "text": "b6",
+      "record": "бэ шесть",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/b7.mp3",
+      "text": "b7",
+      "record": "бэ семь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/b8.mp3",
+      "text": "b8",
+      "record": "бэ восемь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/c1.mp3",
+      "text": "c1",
+      "record": "цэ один",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/c2.mp3",
+      "text": "c2",
+      "record": "цэ два",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/c3.mp3",
+      "text": "c3",
+      "record": "цэ три",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/c4.mp3",
+      "text": "c4",
+      "record": "цэ четыре",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/c5.mp3",
+      "text": "c5",
+      "record": "цэ пять",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/c6.mp3",
+      "text": "c6",
+      "record": "цэ шесть",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/c7.mp3",
+      "text": "c7",
+      "record": "цэ семь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/c8.mp3",
+      "text": "c8",
+      "record": "цэ восемь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/d1.mp3",
+      "text": "d1",
+      "record": "дэ один",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/d2.mp3",
+      "text": "d2",
+      "record": "дэ два",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/d3.mp3",
+      "text": "d3",
+      "record": "дэ три",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/d4.mp3",
+      "text": "d4",
+      "record": "дэ четыре",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/d5.mp3",
+      "text": "d5",
+      "record": "дэ пять",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/d6.mp3",
+      "text": "d6",
+      "record": "дэ шесть",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/d7.mp3",
+      "text": "d7",
+      "record": "дэ семь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/d8.mp3",
+      "text": "d8",
+      "record": "дэ восемь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/e1.mp3",
+      "text": "e1",
+      "record": "е один",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/e2.mp3",
+      "text": "e2",
+      "record": "е два",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/e3.mp3",
+      "text": "e3",
+      "record": "е три",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/e4.mp3",
+      "text": "e4",
+      "record": "е четыре",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/e5.mp3",
+      "text": "e5",
+      "record": "е пять",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/e6.mp3",
+      "text": "e6",
+      "record": "е шесть",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/e7.mp3",
+      "text": "e7",
+      "record": "е семь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/e8.mp3",
+      "text": "e8",
+      "record": "е восемь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/f1.mp3",
+      "text": "f1",
+      "record": "эф один",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/f2.mp3",
+      "text": "f2",
+      "record": "эф два",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/f3.mp3",
+      "text": "f3",
+      "record": "эф три",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/f4.mp3",
+      "text": "f4",
+      "record": "эф четыре",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/f5.mp3",
+      "text": "f5",
+      "record": "эф пять",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/f6.mp3",
+      "text": "f6",
+      "record": "эф шесть",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/f7.mp3",
+      "text": "f7",
+      "record": "эф семь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/f8.mp3",
+      "text": "f8",
+      "record": "эф восемь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/g1.mp3",
+      "text": "g1",
+      "record": "жэ один",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/g2.mp3",
+      "text": "g2",
+      "record": "жэ два",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/g3.mp3",
+      "text": "g3",
+      "record": "жэ три",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/g4.mp3",
+      "text": "g4",
+      "record": "жэ четыре",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/g5.mp3",
+      "text": "g5",
+      "record": "жэ пять",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/g6.mp3",
+      "text": "g6",
+      "record": "жэ шесть",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/g7.mp3",
+      "text": "g7",
+      "record": "жэ семь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/g8.mp3",
+      "text": "g8",
+      "record": "жэ восемь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/h1.mp3",
+      "text": "h1",
+      "record": "аш один",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/h2.mp3",
+      "text": "h2",
+      "record": "аш два",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/h3.mp3",
+      "text": "h3",
+      "record": "аш три",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/h4.mp3",
+      "text": "h4",
+      "record": "аш четыре",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/h5.mp3",
+      "text": "h5",
+      "record": "аш пять",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/h6.mp3",
+      "text": "h6",
+      "record": "аш шесть",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/h7.mp3",
+      "text": "h7",
+      "record": "аш семь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    },
+    {
+      "file": "squares/h8.mp3",
+      "text": "h8",
+      "record": "аш восемь",
+      "group": "Координаты",
+      "source": "Шахматная клетка",
+      "aliases": []
+    }
+  ]
+}

@@ -31,6 +31,18 @@ window.TrainScreen = (function () {
   let movesLeft = 0;      // у босса: сколько ходов осталось
   let seen = new Set();   // у мат-босса: позиции после ходов ребёнка (подсказка не ходит по кругу)
   const faceCache = {};
+  let epoch = 0;
+  const timers = new Set();
+
+  function schedule(fn, ms) {
+    const token = epoch;
+    const id = setTimeout(() => {
+      timers.delete(id);
+      if (token === epoch) fn();
+    }, ms);
+    timers.add(id);
+    return id;
+  }
 
   // ---------- Где лежат голоса ----------
   const sysVoice = (key, i) => VOICE + 'system/' + key + (T.system[key].length > 1 ? i + 1 : '');
@@ -110,6 +122,22 @@ window.TrainScreen = (function () {
       });
       mapView.appendChild(card);
     });
+  }
+
+  function leave() {
+    epoch++;
+    timers.forEach(clearTimeout);
+    timers.clear();
+    Sound.stopVoice();
+    doneBox.hidden = true;
+    if (board) {
+      board.setInteractive(false);
+      board.setGame(new Chess());
+    }
+    mode = 'idle';
+    busy = false;
+    task = null;
+    game = null;
   }
 
   // ---------- Остров ----------
@@ -302,7 +330,7 @@ window.TrainScreen = (function () {
       FX.sparkle(board.squareEl(move.to));
       Sound.play('star');
       if (level.cont) say(box, level.cont, levelVoice('cont'), 'happy');
-      setTimeout(() => {
+      schedule(() => {
         const m = TrainGen.reply(game);
         if (m) board.makeMove(m.from, m.to, m.promotion);
       }, 1300);
@@ -321,7 +349,7 @@ window.TrainScreen = (function () {
       else saySystem(box, 'correct', 'happy');
       taskIdx++;
       paintProgress();
-      setTimeout(() => {
+      schedule(() => {
         if (taskIdx >= tasksOf()) finishLevel();
         else nextTask();
       }, explainedWhy && taskIdx === 1 ? 2600 : 1500);
@@ -338,7 +366,7 @@ window.TrainScreen = (function () {
     Sound.play('error');
     const el = board.squareEl(move.to);
     el.classList.add('wrong');
-    setTimeout(() => {
+    schedule(() => {
       el.classList.remove('wrong');
       resetTask();
       if (taskMistakes >= 2 && hintLevel < 2) showHint(true);
@@ -371,7 +399,7 @@ window.TrainScreen = (function () {
     if (status) return bossEnd(status);
     busy = true;
     board.setInteractive(false);
-    setTimeout(() => {
+    schedule(() => {
       const m = task.boss === 'race' ? ChessAI.choose(game, level.ai || 2) : TrainGen.bossKing(game);
       if (m) board.makeMove(m.from, m.to, m.promotion);
     }, 700);
@@ -394,7 +422,7 @@ window.TrainScreen = (function () {
     const box = $('#train-coach');
     if (level.oops && level.oops[status]) say(box, level.oops[status], levelVoice(status), 'oops');
     else saySystem(box, 'wrong', 'oops');
-    setTimeout(() => {
+    schedule(() => {
       for (let i = 0; i < plies; i++) game.undo();
       movesLeft++;
       board.setGame(game);
@@ -413,7 +441,7 @@ window.TrainScreen = (function () {
       say(box, level.why, levelVoice('why'), 'happy');
       taskIdx = tasksOf();
       Store.set('trainCount:' + level.id, Store.get('trainCount:' + level.id, 0) + 1);
-      setTimeout(finishLevel, 2200);
+      schedule(finishLevel, 2200);
       return;
     }
     // проиграли боссу — объясняем и начинаем новую партию
@@ -421,7 +449,7 @@ window.TrainScreen = (function () {
     Sound.play('error');
     if (level.oops && level.oops[status]) say(box, level.oops[status], levelVoice(status), 'oops');
     else saySystem(box, 'wrong', 'oops');
-    setTimeout(nextTask, 3200);
+    schedule(nextTask, 3200);
   }
 
   // Режим «без подсказок ходов»: ребёнок ткнул туда, куда нельзя.
@@ -480,8 +508,8 @@ window.TrainScreen = (function () {
     const first = !map[level.id];
     if (!map[level.id] || perfect) map[level.id] = perfect ? 'perfect' : 'done';
     Store.set('trainDone', map);
-    const stars = level.exam ? (first ? 5 : 1) : (first ? 3 : 1);
-    Progress.addStars(stars);
+    const stars = first ? (level.exam ? 5 : 3) : 0;
+    if (stars) Progress.addStars(stars);
     Progress.addXP(first ? (level.exam ? 50 : 20) : 5);
 
     Sound.play('win');
@@ -494,10 +522,12 @@ window.TrainScreen = (function () {
     $('#td-letter').hidden = !level.letter;
     $('#td-rule').textContent = level.done;
     $('#td-result').textContent = perfect ? '🌟 Без единой ошибки!' : 'Ошибок: ' + mistakes + (hints ? ' · подсказок: ' + hints : '');
-    $('#td-reward').innerHTML = '+' + stars + ' <span class="star-icon"></span>';
+    $('#td-reward').innerHTML = stars
+      ? '+' + stars + ' <span class="star-icon"></span>'
+      : 'Повтор: звёзды уже получены';
     const idx = module.levels.indexOf(level);
     $('#btn-td-next').hidden = idx >= module.levels.length - 1;
-    setTimeout(() => { doneBox.hidden = false; }, 900);
+    schedule(() => { doneBox.hidden = false; }, 900);
   }
 
   function setButtons() {
@@ -515,7 +545,7 @@ window.TrainScreen = (function () {
     board.setInteractive(false);
     setButtons();
     saySystem($('#train-coach'), 'explain_again', 'talk');
-    setTimeout(startExplain, 1800);
+    schedule(startExplain, 1800);
   });
   $('#btn-td-again').addEventListener('click', () => { Sound.play('click'); openLevel(level.id); });
   $('#btn-td-island').addEventListener('click', () => { Sound.play('click'); location.hash = 'train/' + module.id; });
@@ -533,6 +563,7 @@ window.TrainScreen = (function () {
     doneBox.hidden = true;
     if (!param) {
       renderMap();
+      PuzzlesScreen.renderList();
       const box = $('#map-coach');
       saySystem(box, 'hello', 'talk');
     } else if (isIsland) {
@@ -543,5 +574,5 @@ window.TrainScreen = (function () {
   }
 
   // current() — для отладки и автотестов
-  return { enter, current: () => ({ task, game, mode, step, side, busy, level, movesLeft }) };
+  return { enter, leave, current: () => ({ task, game, mode, step, side, busy, level, movesLeft }) };
 })();

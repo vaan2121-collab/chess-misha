@@ -7,7 +7,7 @@
   <title>Шахматы Миши</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=202610250215">
+  <link rel="stylesheet" href="css/style.css?v=202611180001">
 </head>
 <body>
   <!-- Верхняя панель: назад + звук -->
@@ -30,11 +30,8 @@
         <button class="block-btn menu-btn diamond menu-wide" data-go="train">
           <span class="menu-icon">🎯</span><span class="menu-label">Тренировка</span>
         </button>
-        <button class="block-btn menu-btn grass" data-go="learn">
-          <span class="menu-icon">♞</span><span class="menu-label">Учим фигуры</span>
-        </button>
-        <button class="block-btn menu-btn lapis" data-go="puzzles">
-          <span class="menu-icon">🧩</span><span class="menu-label">Задачки</span>
+        <button class="block-btn menu-btn gold menu-wide" data-go="practice">
+          <span class="menu-icon">♟️</span><span class="menu-label">Тренировочные игры</span>
         </button>
         <button class="block-btn menu-btn redstone" data-go="play">
           <span class="menu-icon">🤖</span><span class="menu-label">Игра с роботом</span>
@@ -52,7 +49,10 @@
         <div id="map-coach" class="coach-panel">
           <div class="coach-face"></div><div class="coach-text"></div>
         </div>
+        <h2 class="train-section-heading">Уроки с тренером</h2>
         <div id="train-map" class="island-grid"></div>
+        <h2 class="train-section-heading train-puzzles-heading">Задачки</h2>
+        <div id="puzzle-list" class="world-grid"></div>
       </div>
 
       <!-- остров: список уровней -->
@@ -104,6 +104,7 @@
     <!-- Игра -->
     <section id="screen-play" class="screen" hidden>
       <div id="opp-list" class="opp-grid"></div>
+      <div class="practice-entry"><a class="block-btn ctrl-btn lapis" href="#practice">Тренировочные игры</a></div>
 
       <div id="play-view" class="play-layout" hidden>
         <!-- соперник — со своей (чёрной) стороны доски -->
@@ -139,49 +140,8 @@
       </div>
     </section>
 
-    <!-- Заглушки модулей следующих этапов -->
-    <!-- Учим фигуры -->
-    <section id="screen-learn" class="screen" hidden>
-      <div id="learn-list" class="piece-grid"></div>
-
-      <div id="learn-lesson" class="play-layout" hidden>
-        <div class="lesson-head learn-head">
-          <div class="lesson-top">
-            <img id="lesson-img" alt="">
-            <div class="lesson-title">
-              <div id="lesson-name"></div>
-              <div id="lesson-value" class="value-strip"></div>
-              <div id="lesson-stars" class="star-bar" hidden></div>
-            </div>
-          </div>
-          <div id="lesson-steps" class="step-tabs"></div>
-        </div>
-        <div class="board-wrap"><div id="learn-board"></div></div>
-        <div class="controls">
-          <button id="btn-moves" class="block-btn ctrl-btn lapis" data-for-step="info"><span>👣</span>Ходы</button>
-          <button id="btn-power" class="block-btn ctrl-btn redstone" data-for-step="info"><span>💪</span>Сила</button>
-          <button id="btn-value" class="block-btn ctrl-btn gold" data-for-step="info"><span>🪙</span>Цена</button>
-          <button id="btn-listen" class="block-btn ctrl-btn lapis" data-for-step="stars eat check"><span>🔊</span>Слушать</button>
-          <button id="btn-restart" class="block-btn ctrl-btn stone" data-for-step="stars eat check"><span>⟳</span>Заново</button>
-        </div>
-      </div>
-
-      <div id="learn-win" class="overlay" hidden>
-        <div class="panel">
-          <div class="go-icon">🏆</div>
-          <div id="learn-win-title" class="go-title">Молодец!</div>
-          <div id="learn-win-reward" class="reward">+1 <span class="star-icon"></span> в копилку</div>
-          <div class="panel-buttons">
-            <button id="btn-learn-again" class="block-btn ctrl-btn stone"><span>⟳</span>Ещё</button>
-            <button id="btn-learn-next" class="block-btn ctrl-btn grass"><span>➜</span>Дальше</button>
-          </div>
-        </div>
-      </div>
-    </section>
-    <!-- Задачки -->
+    <!-- Упражнение из раздела задачек -->
     <section id="screen-puzzles" class="screen" hidden>
-      <div id="puzzle-list" class="world-grid"></div>
-
       <div id="puzzle-view" class="play-layout" hidden>
         <div id="puzzle-head" class="lesson-head">
           <div class="lesson-title">
@@ -210,6 +170,62 @@
         </div>
       </div>
     </section>
+    <!-- Короткие тренировочные игры -->
+    <section id="screen-practice" class="screen" hidden>
+      <div id="practice-list" class="practice-list"></div>
+      <div id="practice-view" class="practice-view" hidden>
+        <div class="practice-heading">
+          <div id="practice-coach" class="coach-panel">
+            <div class="coach-face"><img src="assets/coach/normal.png" alt="Тренер"></div>
+            <div id="practice-coach-text" class="coach-text" aria-live="polite"></div>
+          </div>
+          <div class="practice-progress"><b id="practice-title"></b><span id="practice-count"></span></div>
+          <div id="practice-goals" class="practice-goals" aria-live="polite"></div>
+          <details id="practice-purpose" class="practice-purpose">
+            <summary>Зачем это нужно?</summary>
+            <p id="practice-why-text"></p>
+            <p id="practice-question" class="practice-question"></p>
+          </details>
+          <div id="practice-feedback" class="practice-feedback" aria-live="polite" hidden></div>
+        </div>
+        <div class="board-wrap practice-board-wrap"><div id="practice-board" aria-label="Шахматная доска для тренировки"></div></div>
+        <div class="controls practice-controls">
+          <button id="practice-hint" class="block-btn ctrl-btn gold"><span>💡</span>Подсказка</button>
+          <button id="practice-listen" class="block-btn ctrl-btn lapis"><span>🔊</span>Слушать</button>
+          <button id="practice-retry" class="block-btn ctrl-btn stone" hidden><span>↻</span>Попробую ещё</button>
+          <button id="practice-next" class="block-btn ctrl-btn grass" hidden><span>➜</span>Дальше</button>
+          <button id="practice-modes" class="block-btn ctrl-btn stone"><span>▦</span>Режимы</button>
+          <button id="practice-restart" class="block-btn ctrl-btn redstone"><span>↻</span>Сначала</button>
+        </div>
+      </div>
+      <div id="practice-intro" class="overlay" hidden>
+        <div class="panel practice-intro-panel" role="dialog" aria-modal="true" aria-labelledby="practice-intro-title" aria-describedby="practice-intro-why">
+          <h2 id="practice-intro-title"></h2>
+          <p id="practice-intro-why"></p>
+          <p class="practice-mission"><b>Твоя задача</b><span id="practice-intro-goal"></span></p>
+          <p id="practice-intro-question" class="practice-question"></p>
+          <div class="panel-buttons">
+            <button id="practice-begin" class="block-btn ctrl-btn grass">Начнём!</button>
+            <button id="practice-intro-listen" class="block-btn ctrl-btn lapis">🔊 Послушать</button>
+            <button id="practice-intro-list" class="block-btn ctrl-btn stone">К режимам</button>
+          </div>
+        </div>
+      </div>
+      <div id="practice-result" class="overlay" hidden>
+        <div class="panel practice-result-panel" role="dialog" aria-modal="true" aria-labelledby="practice-result-title">
+          <div class="go-icon" aria-hidden="true">♟️</div>
+          <div id="practice-result-title" class="go-title"></div>
+          <div id="practice-result-text" class="sm-note"></div>
+          <div id="practice-result-count" class="practice-score"></div>
+          <div class="panel-buttons">
+            <button id="practice-result-retry" class="block-btn ctrl-btn stone"><span>↻</span>Ещё раз</button>
+            <button id="practice-result-next" class="block-btn ctrl-btn lapis" hidden><span>➜</span>Другой ответ</button>
+            <button id="practice-result-list" class="block-btn ctrl-btn grass"><span>▦</span>Режимы</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- Для родителей: вход — долгое нажатие на копилку ⭐ -->
     <section id="screen-parents" class="screen" hidden>
       <div class="parents">
@@ -314,26 +330,28 @@
   <script src="vendor/chess.min.js?v=202610250215"></script>
   <script src="js/config.js?v=202610250215"></script>
   <script src="js/storage.js?v=202610250215"></script>
-  <script src="js/themes.js?v=202610250215"></script>
+  <script src="js/themes.js?v=202611180001"></script>
   <script src="js/audio.js?v=202610250215"></script>
   <script src="js/capture-fx.js?v=202610250215"></script>
   <script src="js/board.js?v=202610250215"></script>
-  <script src="js/solo.js?v=202610250215"></script>
   <script src="js/fx.js?v=202610250215"></script>
-  <script src="js/learn.js?v=202610250215"></script>
   <script src="js/puzzle-gen.js?v=202610250215"></script>
   <script src="js/puzzles-data.js?v=202610250215"></script>
-  <script src="js/puzzles.js?v=202610250215"></script>
+  <script src="js/puzzles.js?v=202611180001"></script>
   <script src="js/ai.js?v=202610250215"></script>
   <script src="js/opponents.js?v=202610250215"></script>
-  <script src="js/play.js?v=202610250215"></script>
+  <script src="js/play.js?v=202611180001"></script>
   <script src="js/stickers.js?v=202610250215"></script>
   <script src="js/train-gen.js?v=202610250215"></script>
   <script src="js/train-data.js?v=202610250215"></script>
-  <script src="js/train.js?v=202610250215"></script>
+  <script src="js/train.js?v=202611180001"></script>
   <script src="vendor/lz-string.min.js?v=202610250215"></script>
   <script src="vendor/qrcode.min.js?v=202610250215"></script>
   <script src="js/sync.js?v=202610250215"></script>
-  <script src="js/app.js?v=202610250215"></script>
+  <script src="js/practice-traps.js?v=202611190001"></script>
+  <script src="js/practice-logic.js?v=202611190002"></script>
+  <script src="js/practice-voice.js?v=202611180001"></script>
+  <script src="js/practice.js?v=202611190002"></script>
+  <script src="js/app.js?v=202611180001"></script>
 </body>
 </html>

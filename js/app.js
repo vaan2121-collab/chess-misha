@@ -2,11 +2,10 @@
 // Экраны переключаются через адрес (#menu, #play ...), поэтому кнопка
 // «Назад» на телефоне/планшете возвращает в меню, а не закрывает приложение.
 (function () {
-  const SCREENS = ['menu', 'learn', 'puzzles', 'play', 'gifts', 'parents', 'train'];
+  const SCREENS = ['menu', 'puzzles', 'play', 'gifts', 'parents', 'train', 'practice'];
   const $ = (sel) => document.querySelector(sel);
 
   // --- Навигация ---
-  // Адрес вида #learn/r: экран learn, параметр r (какая фигура).
   let current = { name: 'menu', param: '' };
 
   function show(hash) {
@@ -19,19 +18,30 @@
       return;
     }
     let [name, param] = (hash || '').split('/');
+    if (name === 'learn' || (name === 'puzzles' && !param)) {
+      history.replaceState(null, '', location.pathname + location.search + '#train');
+      hash = 'train';
+      name = 'train';
+      param = '';
+    }
     if (!SCREENS.includes(name)) { name = 'menu'; param = ''; }
-    current = { name, param: param || '' };
+    if (current.name === 'practice' && name !== 'practice' && window.PracticeScreen) PracticeScreen.leave();
+    if (current.name === 'play' && name !== 'play' && window.PlayScreen && PlayScreen.leave) PlayScreen.leave();
+    const nextParam = param || '';
+    if (current.name === 'train' && (name !== 'train' || nextParam !== current.param) && window.TrainScreen) TrainScreen.leave();
+    if (current.name === 'puzzles' && (name !== 'puzzles' || nextParam !== current.param) && window.PuzzlesScreen) PuzzlesScreen.leave();
+    current = { name, param: nextParam };
     document.querySelectorAll('.screen').forEach((s) => {
       s.hidden = s.id !== 'screen-' + name;
     });
     $('#btn-back').hidden = name === 'menu';
     if (name === 'menu' || name === 'gifts') Sound.stopVoice();
     if (name === 'play') PlayScreen.enter(current.param);
-    if (name === 'learn') LearnScreen.enter(current.param);
     if (name === 'puzzles') PuzzlesScreen.enter(current.param);
     if (name === 'gifts') GiftsScreen.enter();
     if (name === 'parents') ParentsScreen.enter();
     if (name === 'train') TrainScreen.enter(current.param);
+    if (name === 'practice') PracticeScreen.enter(current.param);
     if (name === 'menu') paintMenuBars();
   }
 
@@ -44,9 +54,13 @@
     });
   });
 
-  // «Назад» поднимается на уровень выше: из урока — к списку фигур, оттуда — в меню.
+  // «Назад» поднимается на уровень выше: из упражнения — к карте тренировки.
   $('#btn-back').addEventListener('click', () => {
     Sound.play('click');
+    if (current.name === 'puzzles') {
+      location.hash = 'train';
+      return;
+    }
     // из уровня тренировки — на его остров
     if (current.name === 'train' && current.param) {
       const m = TRAIN.modules.find((x) => (x.levels || []).some((l) => l.id === current.param));
@@ -128,6 +142,7 @@
   function paintSoundButtons() {
     musicBtn.classList.toggle('off', !Sound.musicOn);
     sfxBtn.classList.toggle('off', !Sound.sfxOn);
+    if (!Sound.sfxOn && window.speechSynthesis) window.speechSynthesis.cancel();
   }
   musicBtn.addEventListener('click', () => { Sound.toggleMusic(); paintSoundButtons(); });
   sfxBtn.addEventListener('click', () => { Sound.toggleSfx(); Sound.play('click'); paintSoundButtons(); });

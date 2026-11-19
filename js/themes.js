@@ -54,7 +54,8 @@ window.PIECE_SETS = [
   { id: 'sonic', name: 'Соник', icon: '🦔', price: 50 },
   // белые — мама, чёрные — хлеб (лист: assets/pieces/source/bread.png,
   // нарезка: tools/cut-piece-sheet.ps1 -Set bread -SatMax 12 -Light)
-  { id: 'bread', name: 'Мама против Хлеба', icon: '🥖', price: 25 }
+  { id: 'bread', name: 'Мама против Хлеба', icon: '🥖', price: 25 },
+  { id: 'spider', name: 'Паутина', icon: '🕸️', price: 0 }
 ];
 
 window.PieceSets = (function () {

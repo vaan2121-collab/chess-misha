@@ -19,6 +19,123 @@ window.PlayScreen = (function () {
   let thinking = false;
   let faceTimer = null;
   const faceCache = {};        // 'lenya/happy' → true/false (есть ли картинка)
+  let coachEnabled = Store.get('playCoach', true);
+  let coachCount = 0;
+  let review = null;
+  const coach = document.createElement('div');
+  coach.className = 'play-coach';
+  coach.hidden = true;
+  coach.innerHTML = '<div class="play-coach-text" role="status" aria-live="polite"></div>' +
+    '<div class="play-coach-actions"><button type="button" class="block-btn ctrl-btn gold" id="play-coach-show">Покажи</button>' +
+    '<button type="button" class="block-btn ctrl-btn grass" id="play-coach-retry" hidden>Переиграть</button>' +
+    '<button type="button" class="block-btn ctrl-btn stone" id="play-coach-continue">Играю дальше</button></div>';
+  $('#opp-panel').appendChild(coach);
+  const coachToggle = document.createElement('label');
+  coachToggle.className = 'play-coach-toggle';
+  coachToggle.innerHTML = '<input type="checkbox"> Тренер';
+  $('#opp-panel .opp-info').appendChild(coachToggle);
+  const coachInput = coachToggle.querySelector('input');
+  coachInput.checked = coachEnabled;
+
+  function coachSay(text) {
+    coach.querySelector('.play-coach-text').textContent = text;
+    Sound.stopVoice();
+    if (window.speechSynthesis) speechSynthesis.cancel();
+    const voiceKey = {
+      'Смотрим ответ соперника.': 'reply_watch',
+      'Вот ответ! Теперь попробуй ход, после которого фигуру не отдадим.': 'safe_move'
+    }[text];
+    const dynamicKey = text.startsWith('Фигура на ') ? 'danger_find'
+      : text.startsWith('Посмотри, откуда чёрная фигура') ? 'find_attacker' : voiceKey;
+    if (dynamicKey && Sound.sfxOn) {
+      Sound.voice([['assets/voice/coach/play/' + dynamicKey]]);
+      return;
+    }
+    if (!window.speechSynthesis) return;
+    window.speechSynthesis.cancel();
+    if (!Sound.sfxOn || !window.SpeechSynthesisUtterance) return;
+    const line = new SpeechSynthesisUtterance(text);
+    line.lang = 'ru-RU';
+    line.rate = 0.9;
+    window.speechSynthesis.speak(line);
+  }
+
+  function closeCoach() {
+    review = null;
+    coach.hidden = true;
+    coachInput.disabled = false;
+    if (window.speechSynthesis) window.speechSynthesis.cancel();
+  }
+
+  function offerCoach(move) {
+    if (!coachEnabled || coachCount >= 2 || !window.PracticeLogic) return false;
+    const reply = PracticeLogic.threat(game, move.to);
+    if (!reply) return false;
+    coachCount++;
+    review = { source: game, move, reply, phase: 'question' };
+    board.setInteractive(false);
+    coach.hidden = false;
+    $('#play-coach-show').hidden = false;
+    $('#play-coach-retry').hidden = true;
+    $('#play-coach-continue').disabled = false;
+    coachSay('Фигура на ' + move.to + ' под ударом. Найди чёрную фигуру, которая может её забрать.');
+    board.setMarks({ [move.to]: 'danger' });
+    return true;
+  }
+
+  function showConsequence() {
+    if (!review || review.phase !== 'question' || board.isBusy()) return;
+    const r = review;
+    r.phase = 'demo';
+    game = new Chess(r.source.fen());
+    board.setGame(game);
+    board.setInteractive(false);
+    board.setArrows([{ from: r.reply.from, to: r.reply.to, color: 'red' }]);
+    $('#play-coach-show').hidden = true;
+    $('#play-coach-continue').disabled = true;
+    coachInput.disabled = true;
+    coachSay('Смотрим ответ соперника.');
+    board.makeMove(r.reply.from, r.reply.to, r.reply.promotion);
+  }
+
+  function restoreCoach(retry) {
+    if (!review || board.isBusy() || review.phase === 'demo') return;
+    const r = review;
+    game = r.source;
+    if (retry) game.undo();
+    closeCoach();
+    board.setGame(game);
+    board.setMarks({});
+    board.setArrows([]);
+    const h = game.history({ verbose: true });
+    board.setLastMove(h[h.length - 1] || null);
+    updateStatus();
+    if (retry) {
+      board.setInteractive(true);
+      Sound.voice(V.tryAgain);
+    } else robotTurn();
+  }
+
+  $('#play-coach-show').addEventListener('click', showConsequence);
+  $('#play-coach-retry').addEventListener('click', () => restoreCoach(true));
+  $('#play-coach-continue').addEventListener('click', () => restoreCoach(false));
+  coachInput.addEventListener('change', () => {
+    coachEnabled = coachInput.checked;
+    Store.set('playCoach', coachEnabled);
+    if (!coachEnabled && review) restoreCoach(false);
+  });
+  $('#board').addEventListener('pointerdown', (e) => {
+    if (!review || review.phase !== 'question') return;
+    e.preventDefault();
+    e.stopPropagation();
+    const cell = e.target.closest('[data-square]');
+    if (!cell) return;
+    if (cell.dataset.square === review.reply.from) showConsequence();
+    else {
+      coachSay('Посмотри, откуда чёрная фигура может прийти на ' + review.move.to + '.');
+      board.setArrows([{ from: review.reply.from, to: review.reply.to, color: 'red' }]);
+    }
+  }, true);
 
   const folder = (o) => 'assets/opponents/' + o.id + '/';
 
@@ -116,6 +233,9 @@ window.PlayScreen = (function () {
     opp = id === 'duo' ? DUO : OPPONENTS.find((o) => o.id === id);
     if (!opp) { location.hash = 'play'; return; }
     token++;
+    closeCoach();
+    coachCount = 0;
+    coachToggle.hidden = opp.id === 'duo';
     thinking = false;
     game = new Chess();
     overlay.hidden = true;
@@ -128,13 +248,15 @@ window.PlayScreen = (function () {
     board.setOrientation('w');
     board.setGame(game);
     board.setMarks({});
+    board.setArrows([]);
     board.setInteractive(true);
 
     gameView.classList.toggle('duo', opp.id === 'duo');
     $('#opp-name').textContent = opp.name;
     $('#opp-level').innerHTML = opp.level
       ? '<i class="on"></i>'.repeat(opp.level) + '<i></i>'.repeat(5 - opp.level) : '';
-    preloadFaces(opp).then(() => setFace('normal'));
+    const my = token;
+    preloadFaces(opp).then(() => { if (my === token) setFace('normal'); });
     setFace('normal');
     updateStatus();
     say('hello');
@@ -150,6 +272,14 @@ window.PlayScreen = (function () {
   }
 
   function onMove(move) {
+    if (review && review.phase === 'demo') {
+      review.phase = 'replay';
+      $('#play-coach-retry').hidden = false;
+      $('#play-coach-continue').disabled = false;
+      coachInput.disabled = false;
+      coachSay('Вот ответ! Теперь попробуй ход, после которого фигуру не отдадим.');
+      return;
+    }
     board.setMarks({});
     updateStatus();
     if (game.game_over()) return finish();
@@ -157,6 +287,7 @@ window.PlayScreen = (function () {
 
     if (move.color === 'w') {
       // ребёнок сходил
+      if (offerCoach(move)) return;
       if (move.captured) { setFace('sad', true); bubble('😢'); say('lost'); }
       robotTurn();
     } else {
@@ -180,7 +311,7 @@ window.PlayScreen = (function () {
       const m = ChessAI.choose(game, opp.level);
       thinking = false;
       if (!m || my !== token) return;
-      board.makeMove(m.from, m.to);
+      board.makeMove(m.from, m.to, m.promotion);
     }, delay);
   }
 
@@ -229,7 +360,8 @@ window.PlayScreen = (function () {
     overlay.querySelector('.go-icon').hidden = !icon;
     overlay.querySelector('.go-title').textContent = title;
     $('#go-medal').innerHTML = medalHtml;
-    setTimeout(() => { overlay.hidden = false; }, 1200);
+    const my = token;
+    setTimeout(() => { if (my === token) overlay.hidden = false; }, 1200);
   }
 
   function nextMedalNote(wins) {
@@ -239,6 +371,7 @@ window.PlayScreen = (function () {
 
   // ---------- Кнопки ----------
   function undo() {
+    if (review) { restoreCoach(true); return; }
     if (thinking || board.isBusy() || !game.history().length) return;
     token++;
     Sound.play('click');
@@ -255,6 +388,7 @@ window.PlayScreen = (function () {
   }
 
   function hint() {
+    if (review) { showConsequence(); return; }
     if (thinking || board.isBusy() || game.game_over() || (opp.id !== 'duo' && game.turn() !== 'w')) return;
     Sound.play('click');
     Sound.voice(V.hint);
@@ -275,12 +409,24 @@ window.PlayScreen = (function () {
     gameView.hidden = !param;
     if (param) startGame(param);
     else {
-      token++;
-      overlay.hidden = true;
-      Sound.stopVoice();
+      leave();
       renderList();
     }
   }
 
-  return { enter };
+  function leave() {
+    token++;
+    thinking = false;
+    clearTimeout(faceTimer);
+    closeCoach();
+    overlay.hidden = true;
+    Sound.stopVoice();
+    if (board) {
+      // Replacing the game also invalidates a pending capture animation callback.
+      board.setGame(new Chess());
+      board.setInteractive(false);
+    }
+  }
+
+  return { enter, leave, current: () => ({ game, board, opp, review, coachCount, thinking }) };
 })();

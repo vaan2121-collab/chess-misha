@@ -397,19 +397,13 @@ main {
 .go-title { font-size: clamp(26px, 6vw, 40px); font-weight: 700; text-shadow: 3px 3px 0 rgba(0,0,0,.45); text-align: center; }
 
 /* ===== Звёзды ===== */
-.star-icon, .wallet-star, .star-slot {
+.star-icon, .wallet-star {
   display: inline-block;
   width: 1em;
   height: 1em;
   background: var(--star) center / contain no-repeat;
   vertical-align: -0.12em;
 }
-.star-slot { background-image: var(--star-empty); width: 40px; height: 40px; }
-.star-slot.got { background-image: var(--star); animation: land 0.3s ease-out; }
-.star-bar { display: flex; gap: 6px; }
-.star-bar[hidden] { display: none; }
-.star-bar.big .star-slot { width: 72px; height: 72px; }
-
 .wallet {
   display: flex;
   align-items: center;
@@ -453,52 +447,7 @@ main {
   to   { transform: scale(1.6); opacity: 0; }
 }
 
-/* ===== Учим фигуры: список ===== */
-.piece-grid {
-  height: 100%;
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 18px;
-  align-content: center;
-  width: min(100%, 560px);
-  margin: 0 auto;
-}
-@media (orientation: landscape) {
-  .piece-grid {
-    grid-template-columns: repeat(3, 1fr);
-    width: min(100%, calc((100vh - var(--topbar-h) - 60px) * 1.45));
-  }
-}
-.piece-grid[hidden] { display: none; }
-
-.piece-card {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  padding: 10px 6px 12px;
-  aspect-ratio: 1;
-}
-.piece-card img {
-  width: 78%;
-  height: 72%;
-  object-fit: contain;
-  filter: drop-shadow(0 5px 0 rgba(0,0,0,.3));
-}
-.piece-card-name { font-size: clamp(18px, 3.4vw, 26px); }
-.piece-card-badge {
-  position: absolute !important;
-  top: 6px;
-  right: 6px;
-  width: 34px;
-  height: 34px;
-  font-size: 0;
-  background: var(--star) center / contain no-repeat;
-  display: none;
-}
-.piece-card.done .piece-card-badge { display: block; }
-
-/* ===== Учим фигуры: урок ===== */
+/* ===== Шапка урока (задачки) ===== */
 .lesson-head {
   display: flex;
   align-items: center;
@@ -507,69 +456,6 @@ main {
   background: rgba(0, 0, 0, 0.35);
   border: 4px solid var(--outline);
 }
-.lesson-head img {
-  width: 64px;
-  height: 64px;
-  object-fit: contain;
-}
-#lesson-name {
-  font-size: clamp(24px, 4vw, 34px);
-  font-weight: 800;
-  text-shadow: 2px 2px 0 rgba(0,0,0,.5);
-}
-.lesson-head .star-slot { width: 30px; height: 30px; }
-
-/* урок: шапка в две строки — фигура и вкладки шагов */
-.learn-head { flex-direction: column; align-items: stretch; gap: 6px; padding: 6px 10px 8px; }
-.lesson-top { display: flex; align-items: center; gap: 12px; }
-.value-strip { display: flex; flex-wrap: wrap; max-width: 220px; }
-.value-strip img { width: 24px; height: 24px; object-fit: contain; margin-right: -4px; }
-.value-strip .crown { font-size: 28px; line-height: 1; }
-.step-tabs { display: flex; gap: 8px; justify-content: center; }
-.step-tab {
-  width: 54px;
-  height: 46px;
-  font-size: 24px;
-  border: 4px solid var(--outline);
-  background: var(--stone);
-  box-shadow: inset 3px 3px 0 rgba(255,255,255,.3), inset -3px -3px 0 rgba(0,0,0,.3);
-  cursor: pointer;
-  position: relative;
-  filter: grayscale(.6);
-}
-.step-tab.active { background: var(--lapis); filter: none; transform: translateY(-3px); }
-.step-tab.done { filter: none; }
-.step-tab.done::after {
-  content: '';
-  position: absolute;
-  right: -8px;
-  top: -8px;
-  width: 20px;
-  height: 20px;
-  background: var(--star) center / contain no-repeat;
-}
-.step-tab.next { filter: none; animation: bob 0.6s ease-in-out infinite alternate; }
-
-/* прослушанный рассказ — галочка-звезда на кнопке */
-.ctrl-btn.heard::after {
-  content: '';
-  position: absolute;
-  right: -10px;
-  top: -10px;
-  width: 26px;
-  height: 26px;
-  background: var(--star) center / contain no-repeat;
-}
-
-/* прогресс шагов на карточке фигуры */
-.step-dots { display: flex; gap: 5px; margin-top: 4px; }
-.step-dots i {
-  width: 14px;
-  height: 14px;
-  background: rgba(0,0,0,.3);
-  border: 2px solid var(--outline);
-}
-.step-dots i.got { background: var(--gold); }
 
 /* враг на клетке — чёрная фигура */
 .mark.enemy {
@@ -1033,6 +919,11 @@ main {
 
 .train-head { grid-area: turn; display: flex; flex-direction: column; gap: 4px; width: min(100%, 560px); }
 .train-head .coach-panel { width: 100%; }
+#screen-train #train-map-wrap { width: min(100%, 920px); margin: 0 auto; }
+#screen-train .train-section-heading { width: min(100%, 900px); margin: 18px auto 8px; font-size: 24px; text-shadow: 2px 2px 0 rgba(0,0,0,.45); }
+#screen-train .train-puzzles-heading { margin-top: 24px; }
+#screen-train #puzzle-list { width: 100%; min-height: 0; margin: 0 auto; padding-bottom: 24px; }
+@media (max-width: 500px) { #screen-train .train-section-heading { font-size: 20px; } }
 .train-sub { display: flex; align-items: center; justify-content: space-between; gap: 8px; font-size: 16px; text-shadow: 2px 2px 0 rgba(0,0,0,.45); }
 .train-sub .chest-bar { margin: 0; }
 #train-view .board-wrap { position: relative; }
@@ -1342,11 +1233,6 @@ main {
 
   /* шапки заданий — ниже и плотнее */
   .lesson-head, .opp-panel { padding: 4px 8px; gap: 8px; border-width: 3px; }
-  .lesson-head img, #lesson-img { width: 44px; height: 44px; }
-  #lesson-name { font-size: 22px; }
-  .lesson-head .star-slot { width: 22px; height: 22px; }
-  .learn-head { gap: 4px; }
-  .step-tab { width: 44px; height: 36px; font-size: 18px; border-width: 3px; }
   .goal-text { font-size: 20px; }
   .puzzle-icons img { width: 40px; height: 40px; }
   .chest-bar { margin-top: 2px; gap: 3px; }
@@ -1377,10 +1263,6 @@ main {
   .controls .ctrl-btn span { font-size: 1.35em; }
 
   /* цена фигуры в уроке — маленькие пешки в одну строку */
-  .value-strip { flex-wrap: nowrap; max-width: none; }
-  .value-strip img { width: 15px; height: 15px; margin-right: -3px; }
-  .value-strip .crown { font-size: 18px; }
-  .lesson-top { gap: 8px; }
 
   /* соперник — маленький портрет, всё в одну плотную строку */
   .opp-face { width: 46px; height: 46px; }
@@ -1420,6 +1302,84 @@ main {
   .level-btn { padding: 10px 12px; font-size: 17px; }
 }
 
+/* ===== Тренировочные игры ===== */
+#screen-menu { justify-content: safe center; }
+#screen-menu > * { flex-shrink: 0; }
+.practice-entry { display: flex; justify-content: center; padding: 14px 0 22px; }
+.practice-entry a { display: inline-flex; text-decoration: none; }
+#screen-play:has(#play-view:not([hidden])) .practice-entry { display: none; }
+.practice-list { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; width: min(100%, 640px); margin: 0 auto; padding: 4px 0 24px; }
+.practice-card { display: flex; align-items: center; gap: 14px; width: 100%; min-height: 112px; padding: 12px; text-align: left; }
+.practice-card img { width: 68px; height: 68px; flex: none; object-fit: contain; background: rgba(255,255,255,.8); border: 3px solid var(--outline); }
+.practice-card-copy { display: flex; flex-direction: column; gap: 4px; min-width: 0; overflow-wrap: anywhere; }
+.practice-card-copy b { font-size: 23px; }
+.practice-card-copy span { font-size: 16px; }
+.practice-card-copy small { font-size: 14px; opacity: .9; }
+.practice-view { width: min(100%, 1120px); height: calc(100dvh - var(--topbar-h) - 32px); min-height: 520px; margin: 0 auto; display: grid; grid-template-areas: "head" "board" "controls"; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; gap: 8px; }
+.practice-heading { grid-area: head; }
+.practice-heading { display: flex; flex-direction: column; gap: 6px; }
+.practice-heading .coach-panel { width: 100%; }
+.practice-purpose, .practice-feedback { border: 2px solid var(--outline); background: rgba(22,49,64,.85); padding: 8px 10px; font-size: 15px; line-height: 1.35; }
+.practice-purpose summary { cursor: pointer; font-weight: 800; }
+.practice-purpose p { margin: 8px 0 0; }
+.practice-question { color: #fff1ad; font-weight: 800; }
+.practice-feedback { border-color: #d7ecac; background: #315026; }
+.practice-intro-panel { width: min(100%, 540px); max-height: calc(100dvh - 40px); overflow-y: auto; font-size: 19px; line-height: 1.45; }
+.practice-intro-panel h2 { font-size: 25px; margin: 0 0 12px; }
+.practice-intro-panel p { margin: 12px 0; }
+.practice-intro-panel .ctrl-btn { min-height: 48px; padding: 8px 12px; font-size: 17px; }
+.practice-mission { padding: 12px; background: rgba(0,0,0,.25); border: 2px solid var(--outline); }
+.practice-mission b, .practice-mission span { display: block; }
+.practice-mission b { font-size: 15px; color: #fff1ad; margin-bottom: 5px; }
+.practice-central { outline: 3px dashed #ffdc63; outline-offset: -5px; }
+.practice-central.practice-controlled { outline: 4px solid #ffe78c; outline-offset: -5px; }
+.practice-progress { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 8px; padding: 0 4px; font-size: 16px; text-shadow: 2px 2px 0 rgba(0,0,0,.4); }
+.practice-progress b { font-size: 18px; }
+.practice-goals { display: flex; flex-wrap: wrap; justify-content: center; gap: 5px; }
+.practice-goal { padding: 3px 7px; border: 2px solid var(--outline); background: rgba(0,0,0,.4); font-size: 13px; }
+.practice-goal.done { background: var(--grass-dark); }
+.practice-board-wrap { grid-area: board; min-height: 0; }
+.practice-controls { width: 100%; justify-content: center; flex-wrap: wrap; gap: 8px; }
+.practice-controls { grid-area: controls; }
+.practice-controls .ctrl-btn { min-height: 48px; padding: 6px 12px; font-size: 16px; }
+.practice-result-panel { width: min(100%, 480px); text-align: center; }
+.practice-result-panel .sm-note { font-size: 18px; }
+.practice-score { font-size: 20px; font-weight: 800; color: #fff6c4; text-shadow: 2px 2px 0 rgba(0,0,0,.5); }
+.practice-result-panel .ctrl-btn { min-height: 48px; padding: 6px 12px; font-size: 16px; }
+.practice-view[hidden], .practice-list[hidden] { display: none; }
+
+/* Тренер на экране соперника создаётся PlayScreen в строке панели соперника. */
+.opp-panel { flex-wrap: wrap; }
+.play-coach { width: 100%; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 6px 10px; }
+.play-coach-text { flex: 1 1 170px; min-width: 0; font-size: 16px; line-height: 1.25; }
+.play-coach-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; }
+.play-coach-actions button { min-height: 36px; padding: 4px 9px; font-size: 13px; }
+.play-coach-toggle { display: inline-flex; align-items: center; gap: 4px; font-size: 13px; white-space: nowrap; }
+.play-coach-toggle input { width: 18px; height: 18px; margin: 0; }
+
+@media (min-width: 640px) {
+  .practice-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (orientation: landscape) and (min-width: 700px) {
+  .practice-view { grid-template-areas: "head board" ". board" "controls board"; grid-template-columns: minmax(250px, 320px) minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; align-items: center; }
+}
+@media (max-width: 500px), (max-height: 720px) {
+  #screen-menu { justify-content: flex-start; }
+  .practice-view { height: calc(100dvh - var(--topbar-h) - 32px); min-height: 500px; grid-template-areas: "head" "board" "controls"; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr) auto; }
+  .practice-board-wrap { min-height: 0; }
+  .practice-controls { gap: 6px; }
+  .practice-controls .ctrl-btn { flex: 1 1 28%; min-width: 88px; max-width: 170px; min-height: 46px; padding: 4px 6px; flex-direction: column; gap: 0; white-space: normal; text-align: center; font-size: 13px; }
+  .practice-controls .ctrl-btn span { font-size: 1.25em; }
+  .practice-card { min-height: 92px; gap: 10px; padding: 9px; }
+  .practice-card img { width: 54px; height: 54px; }
+  .practice-card-copy span { font-size: 14px; }
+  .practice-card-copy small { font-size: 12px; }
+  .practice-card-copy b { font-size: 20px; }
+  .practice-intro-panel { padding: 16px; font-size: 17px; }
+  .practice-purpose, .practice-feedback { font-size: 14px; }
+  .play-coach-text { font-size: 13px; }
+}
+
 /* Совсем узкий экран (маленький телефон с увеличенным масштабом) */
 @media (max-width: 340px) {
   :root { --topbar-h: 48px; }
@@ -1430,14 +1390,12 @@ main {
   .board { --board-room: 9px; }
   .controls .ctrl-btn { min-height: 46px; font-size: 13px; }
   .lesson-head, .opp-panel { padding: 3px 6px; }
-  #lesson-name { font-size: 19px; }
   #screen-menu { gap: 8px; padding-top: 6px; }
   .menu-btn { aspect-ratio: 1.6; }
   .menu-btn.menu-wide { min-height: 46px; }
   .menu-icon { font-size: 26px; }
   .rank-bar, .goal-bar { padding: 2px 6px; }
   .rank-badge { width: 28px; height: 28px; }
-  .step-tab { width: 40px; height: 32px; font-size: 16px; }
 }
 
 /* ===== Выбор фигуры при превращении пешки ===== */

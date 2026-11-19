@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Сравнение озвучки</title>
+  <style>
+    :root { color-scheme: light; font: 16px/1.45 system-ui, sans-serif; background: #e9f0ec; color: #1b2926; }
+    body { margin: 0; }
+    main { width: min(100%, 820px); margin: auto; padding: 24px 16px 48px; }
+    h1 { margin: 0 0 6px; font-size: 28px; }
+    .note { margin: 0 0 22px; color: #4d625b; }
+    .sample { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 10px; margin: 0 0 14px; padding: 14px; background: #fff; border: 2px solid #b9c9c1; border-radius: 8px; }
+    .sample h2 { grid-column: 1 / -1; margin: 0; font-size: 18px; }
+    .sample p { grid-column: 1 / -1; margin: -4px 0 4px; }
+    .variant { min-width: 0; padding: 10px; background: #f4f7f5; border-radius: 6px; }
+    .variant strong { display: block; margin-bottom: 6px; }
+    audio { display: block; width: 100%; }
+    a { display: inline-block; margin-top: 6px; font-size: 13px; color: #176d66; }
+    @media (max-width: 560px) { .sample { grid-template-columns: 1fr; } .sample h2, .sample p { grid-column: auto; } }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Сравнение голосов</h1>
+    <p class="note">Новая версия: локальный Piper с голосом Dmitri. Edge TTS временно недоступен: сервис не ответил по сети. В игру эти файлы пока не подключены.</p>
+    <div id="samples"></div>
+  </main>
+  <script>
+    const samples = [
+      ['01-threat', 'Посмотри, кто нападает на твою фигуру.'],
+      ['02-consequence', 'Ладья забрала пешку, но теперь её может съесть слон.'],
+      ['03-praise', 'Ты заметил угрозу и спас коня. Отличный ход!']
+    ];
+    const root = document.getElementById('samples');
+    for (const [name, text] of samples) {
+      const card = document.createElement('section');
+      card.className = 'sample';
+      card.innerHTML = '<h2>' + text + '</h2>';
+      for (const method of ['dmitri', 'piper']) {
+        const box = document.createElement('div');
+        box.className = 'variant';
+        const label = method === 'dmitri' ? 'Новый вариант · Dmitri' : 'Старый вариант · Ruslan';
+        const file = method + '/' + name + '.mp3';
+        box.innerHTML = '<strong>' + label + '</strong><audio controls preload="none" src="' + file + '"></audio><a download href="' + file + '">Скачать MP3</a>';
+        card.appendChild(box);
+      }
+      root.appendChild(card);
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,3671 @@
+{
+  "summary": {
+    "expected": 152,
+    "found": 152,
+    "main_found": 88,
+    "squares_found": 64,
+    "missing": [],
+    "extra_mp3": [],
+    "failed_decode": [],
+    "silent_files": [],
+    "duplicate_audio": [],
+    "near_fullscale": [],
+    "short_leading_quiet": [],
+    "short_trailing_quiet": [],
+    "duration_seconds": 548.61,
+    "bytes": 3383152,
+    "formats": [
+      "{\"bit_rate\": \"48000\", \"channels\": 1, \"codec_name\": \"mp3\", \"sample_rate\": \"24000\"}"
+    ]
+  },
+  "files": [
+    {
+      "file": "center_goal.mp3",
+      "text": "Контролируй две клетки в середине. Выведи коня и слона.",
+      "exists": true,
+      "bytes": 33356,
+      "sha256": "0124356ba75dc10d3ee2dfa2a2d5d7981c849f9c2058daea72de6a33c09490d6",
+      "duration": 5.452375,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 5.452375,
+      "peak_dbfs": -3.58,
+      "rms_dbfs": -20.68,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.192
+    },
+    {
+      "file": "center_rule.mp3",
+      "text": "Держи под прицелом две клетки: дэ четыре, е четыре, дэ пять или е пять. Помогут пешки, кони и слоны.",
+      "exists": true,
+      "bytes": 58412,
+      "sha256": "d70fff9d02c2a1904763778765986df847e8556b1db4257154a8970ac6ef01d4",
+      "duration": 9.631292,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 9.631291666666666,
+      "peak_dbfs": -4.65,
+      "rms_dbfs": -20.15,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.191
+    },
+    {
+      "file": "center_why.mp3",
+      "text": "Центр — как перекрёсток. Отсюда фигурам легче помогать друг другу и попадать в разные части доски.",
+      "exists": true,
+      "bytes": 48620,
+      "sha256": "f2440cc0d5807eea967793784047723300bbc6a8aba6e06730aa730e8e9bc202",
+      "duration": 8.007667,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 8.007666666666667,
+      "peak_dbfs": -4.04,
+      "rms_dbfs": -20.47,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "center_question.mp3",
+      "text": "Какие клетки в середине видят твои фигуры?",
+      "exists": true,
+      "bytes": 19388,
+      "sha256": "cf142e2e0e9dc6a028217ef4f2d6c4ce38627cc1d94d6c0d14c4080f2c2d7840",
+      "duration": 3.125958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 3.125958333333333,
+      "peak_dbfs": -4.73,
+      "rms_dbfs": -20.16,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "center_takeaway.mp3",
+      "text": "Центр можно занять пешками или держать под прицелом издалека. Прежде чем идти вперёд, проверь защиту.",
+      "exists": true,
+      "bytes": 50924,
+      "sha256": "2926da32cff05285a48310048fcacfb53ee0a7c00e0511f6a80ccc48257153f0",
+      "duration": 8.398667,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 8.398666666666667,
+      "peak_dbfs": -4.53,
+      "rms_dbfs": -20.56,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.19,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "development_goal.mp3",
+      "text": "Выведи коня и слона. Сделай рокировку.",
+      "exists": true,
+      "bytes": 28028,
+      "sha256": "3b2719b4e9126d85b18cb30584b134fd30cde3746bd2dfa80b261627e6c04ccd",
+      "duration": 4.577042,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.577041666666666,
+      "peak_dbfs": -4.33,
+      "rms_dbfs": -20.03,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.197
+    },
+    {
+      "file": "development_rule.mp3",
+      "text": "Открой дорогу коню и слону. Потом спрячь короля рокировкой.",
+      "exists": true,
+      "bytes": 33932,
+      "sha256": "8f61a47a05cb2c971c9e00364593e2cbf18850339ffc4ed13a9e11e2305f15e8",
+      "duration": 5.547375,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 5.547375,
+      "peak_dbfs": -5.05,
+      "rms_dbfs": -20.35,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.197
+    },
+    {
+      "file": "development_why.mp3",
+      "text": "Фигуры на первой линии ещё не помогают команде. Выведи помощников, а короля спрячь за пешками.",
+      "exists": true,
+      "bytes": 48908,
+      "sha256": "3fff22f0c498ba6bb9195a57fa13d76d51157e498bbc68ebd3b64a72ba87f0f2",
+      "duration": 8.053375,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 8.053375,
+      "peak_dbfs": -5.05,
+      "rms_dbfs": -20.65,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "development_question.mp3",
+      "text": "Кто ещё сидит дома? Что мешает рокировке?",
+      "exists": true,
+      "bytes": 27020,
+      "sha256": "9246f097bf55e32f11c0a7615ceb2c45e526c356571cca3844f464db5cc2849f",
+      "duration": 4.397167,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.397166666666666,
+      "peak_dbfs": -4.76,
+      "rms_dbfs": -20.27,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.25,
+      "trailing_quiet_seconds": 0.197
+    },
+    {
+      "file": "development_takeaway.mp3",
+      "text": "Развивай фигуры и береги короля. Если тебе объявили шах, сначала защити его.",
+      "exists": true,
+      "bytes": 44300,
+      "sha256": "9e9f993fe940191ae9b4905b634d85f7c0175179e6ff77031dd6498081474b00",
+      "duration": 7.288875,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.288875,
+      "peak_dbfs": -4.07,
+      "rms_dbfs": -20.36,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.189
+    },
+    {
+      "file": "watch_goal.mp3",
+      "text": "Посмотри ход чёрных. Найди фигуру под ударом и спаси её.",
+      "exists": true,
+      "bytes": 33500,
+      "sha256": "d42524f69c4785d4fc0b038954c3119182e1033d52d5fed11d3c683ae1a7a85f",
+      "duration": 5.473958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 5.473958333333333,
+      "peak_dbfs": -4.96,
+      "rms_dbfs": -20.58,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "watch_rule.mp3",
+      "text": "После хода соперника спроси: на что он напал? Нажми на свою фигуру в опасности.",
+      "exists": true,
+      "bytes": 41276,
+      "sha256": "a9b2b481cf808aacdeb273b9070feb72f0b95292cbcda9729132764ce8e0b823",
+      "duration": 6.7855,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 6.7855,
+      "peak_dbfs": -5.04,
+      "rms_dbfs": -20.7,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.185
+    },
+    {
+      "file": "watch_why.mp3",
+      "text": "Соперник тоже строит планы. Замечая его нападения, ты успеешь защитить свою команду.",
+      "exists": true,
+      "bytes": 45884,
+      "sha256": "44ada683c82801d18a3ce5df3e8dbcba40efb0e4c8d65d3a5f3e61e882c13928",
+      "duration": 7.558583,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.558583333333333,
+      "peak_dbfs": -5.26,
+      "rms_dbfs": -20.37,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.19,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "watch_question.mp3",
+      "text": "Что изменилось после последнего хода?",
+      "exists": true,
+      "bytes": 17228,
+      "sha256": "ff525edf844a8e54cd52b8fe7567cc799f60335e1cc905015de134855fbfe16d",
+      "duration": 2.776208,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 2.7762083333333334,
+      "peak_dbfs": -6.16,
+      "rms_dbfs": -18.67,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "watch_takeaway.mp3",
+      "text": "После каждого хода соперника проверь: есть ли шах, взятие или новая угроза?",
+      "exists": true,
+      "bytes": 34940,
+      "sha256": "b1e0e6418d4c618e6d81f694779f9e68abef8a047c8caed2f0232ed7f35ac958",
+      "duration": 5.722833,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 5.722833333333333,
+      "peak_dbfs": -5.58,
+      "rms_dbfs": -19.57,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "rescue_goal.mp3",
+      "text": "Заметь нападение и спаси свою фигуру.",
+      "exists": true,
+      "bytes": 18524,
+      "sha256": "d319311b19218d6fc7c5f170fd3d9c16cb59740cec467e11df2bda27ade956f8",
+      "duration": 2.998208,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 2.9982083333333334,
+      "peak_dbfs": -5.24,
+      "rms_dbfs": -19.58,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "rescue_why.mp3",
+      "text": "Каждая фигура — помощник. Сохрани её, чтобы она могла защищать друзей и нападать.",
+      "exists": true,
+      "bytes": 43724,
+      "sha256": "470e9d1fdb9e4dfcc96b530e82dc0f0da341e01f27340eecd48299c4e2fdcd6b",
+      "duration": 7.18225,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.18225,
+      "peak_dbfs": -4.59,
+      "rms_dbfs": -20.92,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.192
+    },
+    {
+      "file": "rescue_question.mp3",
+      "text": "Можно уйти, защитить фигуру или убрать нападающего?",
+      "exists": true,
+      "bytes": 25004,
+      "sha256": "7526f8bea3ee8933d59ecd90a5cbfe5edee959a00eda2bec21fd38532b36b1e0",
+      "duration": 4.074583,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.074583333333333,
+      "peak_dbfs": -4.51,
+      "rms_dbfs": -19.62,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "rescue_takeaway.mp3",
+      "text": "Спасти — не всегда убежать. Иногда помогает защита, перекрытие или взятие нападающего.",
+      "exists": true,
+      "bytes": 47036,
+      "sha256": "ae84f66366fcde993b3bbca7f97aef78e2b62abb3c33da77b70c6bfbb99ac32c",
+      "duration": 7.736125,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.736125,
+      "peak_dbfs": -4.84,
+      "rms_dbfs": -20.52,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "capture_goal.mp3",
+      "text": "Забери фигуру без ответного взятия.",
+      "exists": true,
+      "bytes": 16076,
+      "sha256": "220dc027c535a7569ef7d39f5b8591d8877812cde95a60e28b6ef764aaabce6e",
+      "duration": 2.580333,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 2.5803333333333334,
+      "peak_dbfs": -4.43,
+      "rms_dbfs": -19.38,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.19
+    },
+    {
+      "file": "capture_why.mp3",
+      "text": "Не всякий подарок безопасен. Прежде чем взять фигуру, представь ответ соперника.",
+      "exists": true,
+      "bytes": 43004,
+      "sha256": "b29c6b5a3cb5ac7d5f73847c04b9f8ba1c24f1fa0861647f1def28bc8400dfb1",
+      "duration": 7.074667,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.074666666666666,
+      "peak_dbfs": -4.45,
+      "rms_dbfs": -20.74,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "capture_question.mp3",
+      "text": "Кто сможет забрать мою фигуру после взятия?",
+      "exists": true,
+      "bytes": 19964,
+      "sha256": "cf32c1a08cb821ed803d290f492e25c2d75f3154677a13c0565c1ad109342891",
+      "duration": 3.2225,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 3.2225,
+      "peak_dbfs": -4.39,
+      "rms_dbfs": -19.37,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.25,
+      "trailing_quiet_seconds": 0.192
+    },
+    {
+      "file": "capture_takeaway.mp3",
+      "text": "Проверяй ответ на своё взятие. В обычной партии выгодный размен тоже бывает хорошим ходом.",
+      "exists": true,
+      "bytes": 45308,
+      "sha256": "a5811cb644927250b472c9f0f4fdc5aaaa206a5b8ce65c8d6483a2eacb968c6a",
+      "duration": 7.453125,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.453125,
+      "peak_dbfs": -4.58,
+      "rms_dbfs": -20.62,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "traps_goal.mp3",
+      "text": "Заметь приманку и проверь ответ соперника.",
+      "exists": true,
+      "bytes": 20252,
+      "sha256": "1b5619df10d7141ad8658cdaa5cd41b41fcd012ab1b2e533fa27032e4a8d64af",
+      "duration": 3.2855,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 3.2855,
+      "peak_dbfs": -5.39,
+      "rms_dbfs": -19.62,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "traps_rule.mp3",
+      "text": "Ловушка сработает, только если соперник ошибётся. Проверяй его ответ.",
+      "exists": true,
+      "bytes": 38828,
+      "sha256": "fdbdd95452380a87f0bd7d1eba7dfad12b72477ee7323deaa959e85a1986c2c7",
+      "duration": 6.374625,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 6.374625,
+      "peak_dbfs": -4.71,
+      "rms_dbfs": -20.44,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "traps_why.mp3",
+      "text": "Заманчивая фигура может быть приманкой. Научись считать несколько ходов и замечать опасность.",
+      "exists": true,
+      "bytes": 45884,
+      "sha256": "ffb1e570244072ab6a66ac8b5ee0efbd20c13b95d509df5d29a6645a03796cd3",
+      "duration": 7.539292,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.539291666666666,
+      "peak_dbfs": -4.99,
+      "rms_dbfs": -20.96,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "traps_question.mp3",
+      "text": "Что будет, если соперник не возьмёт приманку?",
+      "exists": true,
+      "bytes": 21980,
+      "sha256": "e72f128eb04fc6ec5c1fd72e4c6212d04011b816aad90e86174614354114fb60",
+      "duration": 3.567542,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 3.5675416666666666,
+      "peak_dbfs": -4.42,
+      "rms_dbfs": -19.94,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "traps_takeaway.mp3",
+      "text": "Соперник может разгадать ловушку. Тогда продолжай развивать фигуры и защищать короля.",
+      "exists": true,
+      "bytes": 42860,
+      "sha256": "0456b13009d8678e1f4079ecf4ec0a03ff8774d96dd2fe80516f73c90ddb2eac",
+      "duration": 7.054542,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.054541666666666,
+      "peak_dbfs": -5.09,
+      "rms_dbfs": -20.14,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "legal_mate_rule.mp3",
+      "text": "Развивай фигуры и замечай, когда соперник жадно берёт ферзя.",
+      "exists": true,
+      "bytes": 27740,
+      "sha256": "323e2f85b3f0f079e7fb001938b6684ecd86eab72bcf1c01fe529968be502b10",
+      "duration": 4.53475,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.53475,
+      "peak_dbfs": -5.37,
+      "rms_dbfs": -19.84,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "legal_mate_why.mp3",
+      "text": "Конь с эф три на е пять открывает слону чёрных путь к ферзю на дэ один. Если чёрные жадно заберут ферзя, слон и конь начнут шаховать короля.",
+      "exists": true,
+      "bytes": 67052,
+      "sha256": "57bc2b33e49b45a976a3eddc5666371c3d21591de07aabb9184e5163afa31da6",
+      "duration": 11.080625,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 11.080625,
+      "peak_dbfs": -4.97,
+      "rms_dbfs": -20.16,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.191
+    },
+    {
+      "file": "legal_mate_question.mp3",
+      "text": "Почему после взятия ферзя король всё равно не спасся?",
+      "exists": true,
+      "bytes": 21836,
+      "sha256": "8ffd6403d52448ec1845a3b0879b597dc1109a2f63a46c7cc5247ab80128ad7b",
+      "duration": 3.534375,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 3.534375,
+      "peak_dbfs": -5.09,
+      "rms_dbfs": -20.03,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "legal_mate_takeaway.mp3",
+      "text": "Перед взятием всегда проверь: не будет ли у соперника шаха или мата?",
+      "exists": true,
+      "bytes": 29324,
+      "sha256": "0aa598540c11a109421d54a7fd08a66e6627a69b4c80d09496586824e09690eb",
+      "duration": 4.779875,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.779875,
+      "peak_dbfs": -5.02,
+      "rms_dbfs": -20.42,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "legal_mate_step_01.mp3",
+      "text": "Пешка с е два на е четыре занимает центр и открывает дорогу слону.",
+      "exists": true,
+      "bytes": 28460,
+      "sha256": "3890d2faf997d654732fc048e1368c4082759403277bb4283d87a41c68410406",
+      "duration": 4.65275,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.65275,
+      "peak_dbfs": -3.7,
+      "rms_dbfs": -19.53,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "legal_mate_step_02.mp3",
+      "text": "Конь с жэ один на эф три выходит в игру и нападает на пешку е пять.",
+      "exists": true,
+      "bytes": 27884,
+      "sha256": "5857308b9576b44d5ac59d81cb4db75a60e3cc067a8d1878ba8b73079ac3344b",
+      "duration": 4.551333,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.551333333333333,
+      "peak_dbfs": -6.08,
+      "rms_dbfs": -19.87,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.191
+    },
+    {
+      "file": "legal_mate_step_03.mp3",
+      "text": "Слон с эф один на цэ четыре выходит в игру и смотрит на слабое поле эф семь.",
+      "exists": true,
+      "bytes": 32636,
+      "sha256": "cd9e9390af79894e69de0adb2a8e7d8e0cbcd1df558de664adbc185fd75fc986",
+      "duration": 5.342667,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 5.342666666666666,
+      "peak_dbfs": -5.1,
+      "rms_dbfs": -19.36,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "legal_mate_step_04.mp3",
+      "text": "Конь с бэ один на цэ три выходит в игру и помогает бороться за центр.",
+      "exists": true,
+      "bytes": 28028,
+      "sha256": "cffc981c3fcb57b1f3f5bb7a41c97767e8c9176b39da39065022d789da9a76fb",
+      "duration": 4.578333,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.578333333333333,
+      "peak_dbfs": -4.64,
+      "rms_dbfs": -19.57,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "legal_mate_step_05.mp3",
+      "text": "Конь с эф три на е пять будто предлагает взять ферзя: он открыл слону чёрных диагональ к ферзю на дэ один. Если чёрные жадно возьмут ферзя слоном с жэ четыре на дэ один, белые ответят шахами слона и коня.",
+      "exists": true,
+      "bytes": 90092,
+      "sha256": "d08188347ff5e09cf98d52693aea97e7566726cae0de807c3ec9a76d981a77cf",
+      "duration": 14.908917,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 14.908916666666666,
+      "peak_dbfs": -5.11,
+      "rms_dbfs": -20.13,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "legal_mate_step_06.mp3",
+      "text": "Слон с цэ четыре на эф семь забирает пешку и шахует. Слону помогает конь, поэтому королю трудно укрыться.",
+      "exists": true,
+      "bytes": 53084,
+      "sha256": "f0e6486210cb288968cee157d951702e0cf45a589a6c3edfc559a0fa88f093bd",
+      "duration": 8.739833,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 8.739833333333333,
+      "peak_dbfs": -4.21,
+      "rms_dbfs": -20.23,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "legal_mate_step_07.mp3",
+      "text": "Конь с цэ три на дэ пять ставит мат: королю некуда уйти и нечем закрыться.",
+      "exists": true,
+      "bytes": 31772,
+      "sha256": "d3d04ea69d513ccfaa7dba70849f8e8432e2c2774cd77177bf555353c432037b",
+      "duration": 5.202708,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 5.202708333333334,
+      "peak_dbfs": -4.9,
+      "rms_dbfs": -19.28,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "legal_mate_success.mp3",
+      "text": "Мат! Чёрные взяли ферзя и пропустили мат.",
+      "exists": true,
+      "bytes": 26876,
+      "sha256": "73a5e041479c88aa1bc3bf2d6b5dcf7ab1ff7fd02b6fab87b62ca2d256a6c7c3",
+      "duration": 4.369958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.369958333333333,
+      "peak_dbfs": -4.35,
+      "rms_dbfs": -20.82,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "legal_defense_rule.mp3",
+      "text": "Займи центр, развивай фигуры и следи, как отвечает соперник.",
+      "exists": true,
+      "bytes": 29612,
+      "sha256": "0752dab4b2cf5d16d0f31030e61929842212ac1106b561a5a982b37a8c65ce79",
+      "duration": 4.843208,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.843208333333333,
+      "peak_dbfs": -5.05,
+      "rms_dbfs": -20.72,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "legal_defense_why.mp3",
+      "text": "Ловушка зависит от ответа соперника. Если она не сработала, продолжай развивать фигуры и береги короля.",
+      "exists": true,
+      "bytes": 51068,
+      "sha256": "708272a023452df861c5ba561efee3fc54b125731824ae2af1e05c08aa0a9d8d",
+      "duration": 8.420583,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 8.420583333333333,
+      "peak_dbfs": -4.52,
+      "rms_dbfs": -20.41,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.191
+    },
+    {
+      "file": "legal_defense_question.mp3",
+      "text": "Как изменился план соперника, и что теперь важно сделать белым?",
+      "exists": true,
+      "bytes": 27740,
+      "sha256": "d2d02ad8b43a5ab2dca080fb8fad66b6dec8a0bce281e8dd0d48e76e8c3ea22d",
+      "duration": 4.531167,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.531166666666667,
+      "peak_dbfs": -5.36,
+      "rms_dbfs": -19.86,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.191
+    },
+    {
+      "file": "legal_defense_takeaway.mp3",
+      "text": "Ловушка зависит от ответа соперника. Если он защищается, продолжай развивать фигуры.",
+      "exists": true,
+      "bytes": 45452,
+      "sha256": "e0f4a17caecc5c20e4544f33736fa534c786e945c2cd2d61c2fd58a1a65c2e75",
+      "duration": 7.472708,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.472708333333333,
+      "peak_dbfs": -5.38,
+      "rms_dbfs": -20.73,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "legal_defense_step_03.mp3",
+      "text": "Слон с эф один на цэ четыре выходит в игру и смотрит на поле эф семь.",
+      "exists": true,
+      "bytes": 30188,
+      "sha256": "5cde7bf3ec0ba33c4399ad65f547254a1218d4c6b621a3a76410263eba901beb",
+      "duration": 4.925625,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.925625,
+      "peak_dbfs": -3.49,
+      "rms_dbfs": -19.51,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "legal_defense_step_04.mp3",
+      "text": "Конь с бэ один на цэ три выходит в игру. Обе стороны борются за центр.",
+      "exists": true,
+      "bytes": 37532,
+      "sha256": "8f382af1e2e8cf0ca0944533a1bb79bd1e028cc38577e4f2aa9a46483d276ff8",
+      "duration": 6.1525,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 6.1525,
+      "peak_dbfs": -4.78,
+      "rms_dbfs": -19.78,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.202
+    },
+    {
+      "file": "legal_defense_step_05.mp3",
+      "text": "Чёрные вывели коня с бэ восемь на цэ шесть: теперь пешку е пять защищают и этот конь, и пешка дэ шесть. Не забирай её конём с эф три; продвинь пешку дэ два на дэ три, чтобы поддержать центр и открыть слону дорогу.",
+      "exists": true,
+      "bytes": 95708,
+      "sha256": "fde854dc7c02c8b2fc37f48821d7ae44ffc957bb22eaf8b107a3a30c5458a0f2",
+      "duration": 15.842792,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 15.842791666666667,
+      "peak_dbfs": -3.73,
+      "rms_dbfs": -20.14,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "legal_defense_step_06.mp3",
+      "text": "Слон с цэ один на е три выходит в игру и помогает закончить развитие.",
+      "exists": true,
+      "bytes": 29900,
+      "sha256": "aa5ff2317e3b05e84717e89ad2d4fab1d5878d99db5199b4d56e0a5917c8387d",
+      "duration": 4.88625,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.88625,
+      "peak_dbfs": -4.92,
+      "rms_dbfs": -19.62,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "legal_defense_step_07.mp3",
+      "text": "Король с е один на жэ один и ладья с аш один на эф один рокируются: король прячется в безопасное место.",
+      "exists": true,
+      "bytes": 45164,
+      "sha256": "b8edf1dbc4ebbfcc2633b0ce0e4948191d59249213b85ab306036d0a9fd766da",
+      "duration": 7.418708,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.418708333333333,
+      "peak_dbfs": -5.21,
+      "rms_dbfs": -20.09,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "legal_defense_success.mp3",
+      "text": "Хорошо сыграно: фигуры развиты, король укрыт. Чёрные не попались в ловушку.",
+      "exists": true,
+      "bytes": 41564,
+      "sha256": "f638ddb846cb40c371aff831184951adeac7c48ff9a88935dc1ecf918726c23e",
+      "duration": 6.82975,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 6.82975,
+      "peak_dbfs": -4.85,
+      "rms_dbfs": -20.71,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "center_progress.mp3",
+      "text": "Держи две центральные клетки под прицелом. Пешка смотрит по диагонали, а конь может помочь издалека.",
+      "exists": true,
+      "bytes": 50636,
+      "sha256": "df55cbffdc05d4e9ccdd6479c0f82c09ae6896dcfc2fdd73629bf2bc51b58e6f",
+      "duration": 8.347292,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 8.347291666666667,
+      "peak_dbfs": -4.19,
+      "rms_dbfs": -20.3,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.197
+    },
+    {
+      "file": "knight_progress.mp3",
+      "text": "Выведи коня ближе к середине: там у него больше дорог для помощи команде.",
+      "exists": true,
+      "bytes": 30764,
+      "sha256": "79b1a0fdf28407e8819fe11d3595be253b3254738aab35b794595149b1af8fb4",
+      "duration": 5.028708,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 5.028708333333333,
+      "peak_dbfs": -4.91,
+      "rms_dbfs": -19.59,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "bishop_progress.mp3",
+      "text": "Освободи диагональ и выведи слона. Из дома он пока мало помогает.",
+      "exists": true,
+      "bytes": 37676,
+      "sha256": "52005bf0eb75ce1e2fef2557e37e6072cae39d71d1d8ff031635789a35442e85",
+      "duration": 6.169958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 6.169958333333334,
+      "peak_dbfs": -4.79,
+      "rms_dbfs": -20.33,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "castle_ready.mp3",
+      "text": "Дорога открыта! Сделай рокировку: король идёт на две клетки к ладье.",
+      "exists": true,
+      "bytes": 37820,
+      "sha256": "fad5117fd2a605373f9eed3a47bff7c8a6b41719e80e6ec15dbb42fa93cf52a8",
+      "duration": 6.200375,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 6.200375,
+      "peak_dbfs": -4.92,
+      "rms_dbfs": -20.52,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.19
+    },
+    {
+      "file": "castle_prepare.mp3",
+      "text": "Подготовь рокировку: освободи клетки между королём и ладьёй. Король не должен проходить через шах.",
+      "exists": true,
+      "bytes": 48044,
+      "sha256": "510a46432e755559400d75a35e2d7cbdf1f1caae422ffa6afc3275d082cdbaa3",
+      "duration": 7.9035,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.9035,
+      "peak_dbfs": -5.29,
+      "rms_dbfs": -20.62,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "development_success.mp3",
+      "text": "Помощники в игре, король за пешками! Теперь легче играть всей командой.",
+      "exists": true,
+      "bytes": 37676,
+      "sha256": "aa5d1aa230fd0d48c465159cc97fb894540683938f88a80da1cb8e31eb1091e5",
+      "duration": 6.172667,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 6.172666666666666,
+      "peak_dbfs": -5.34,
+      "rms_dbfs": -20.83,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "center_success.mp3",
+      "text": "Ты контролируешь центр, а конь и слон помогают команде. Центр можно держать и издалека!",
+      "exists": true,
+      "bytes": 46028,
+      "sha256": "aad374008e31a74716f4fa73b0d1dc17044986147f620f473e25cbe7d7510ba9",
+      "duration": 7.565333,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 7.565333333333333,
+      "peak_dbfs": -4.58,
+      "rms_dbfs": -20.35,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "rescue_multiple_attackers.mp3",
+      "text": "На фигуру нападают несколько чёрных фигур. Проверь все нападения: можно уйти, защититься или взять нападающего.",
+      "exists": true,
+      "bytes": 54812,
+      "sha256": "f82e85fe5512573fbe5f1d9c11ff121624debb522e886252bf26153406a07248",
+      "duration": 9.04625,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 9.04625,
+      "peak_dbfs": -4.31,
+      "rms_dbfs": -20.43,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "rescue_other_exposed.mp3",
+      "text": "Эту фигуру спасли, но теперь другой помощник под ударом. Попробуй сохранить обоих.",
+      "exists": true,
+      "bytes": 42284,
+      "sha256": "ad179324e2b1dab425dd8f18407ce2d434e780cb9b30383ca17a875788a376b3",
+      "duration": 6.937958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 6.9379583333333334,
+      "peak_dbfs": -5.16,
+      "rms_dbfs": -21.11,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "rescue_explain_move.mp3",
+      "text": "Ты увёл фигуру из-под удара.",
+      "exists": true,
+      "bytes": 14204,
+      "sha256": "41f303fe7778f318b1a97344bae92ceffc62c85af303eb226946bfca1f3f3e06",
+      "duration": 2.257958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 2.2579583333333333,
+      "peak_dbfs": -4.84,
+      "rms_dbfs": -17.49,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "rescue_explain_capture.mp3",
+      "text": "Ты убрал нападающего или изменил защиту.",
+      "exists": true,
+      "bytes": 19244,
+      "sha256": "df64d4c3ca525b97d4cbeae1a3f7983106497d5ebfd4af23ff04d897c3b33ba0",
+      "duration": 3.105042,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 3.1050416666666667,
+      "peak_dbfs": -5.36,
+      "rms_dbfs": -18.91,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "rescue_explain_help.mp3",
+      "text": "Ты помог фигуре другим ходом: закрыл нападение или добавил защиту.",
+      "exists": true,
+      "bytes": 30188,
+      "sha256": "acb9fde34198b128c75b7aeaa7291e9f59e2ca67f1180eea337903339991c349",
+      "duration": 4.942583,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.942583333333333,
+      "peak_dbfs": -5.03,
+      "rms_dbfs": -19.23,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "check_threats_again.mp3",
+      "text": "На своём следующем ходу снова проверь угрозы.",
+      "exists": true,
+      "bytes": 19676,
+      "sha256": "9b4b39c2612abb3ab9dfdcb2bed74da235a847e6f64c7a91d15573947527552c",
+      "duration": 3.183167,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 3.1831666666666667,
+      "peak_dbfs": -5.25,
+      "rms_dbfs": -19.25,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "capture_explanation.mp3",
+      "text": "Ты проверил ответ соперника: сразу забрать твою фигуру он не может.",
+      "exists": true,
+      "bytes": 28748,
+      "sha256": "fbade7db1c5be2c5d128bb3c41e9365210216735073bfcab419ed880210e0738",
+      "duration": 4.681958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.681958333333333,
+      "peak_dbfs": -5.19,
+      "rms_dbfs": -19.24,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.192
+    },
+    {
+      "file": "watch_observe.mp3",
+      "text": "Смотри, какой ход сделают чёрные. Потом найди свою фигуру под ударом.",
+      "exists": true,
+      "bytes": 39260,
+      "sha256": "b62c4b9780f8f990c710e78b8b097bd8c1acf850f7a6ec118b76dbfe1d4efb6b",
+      "duration": 6.444625,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 6.444625,
+      "peak_dbfs": -4.97,
+      "rms_dbfs": -20.7,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "watch_wrong_piece.mp3",
+      "text": "Проверь, какую белую фигуру чёрные могут выгодно забрать. Посмотри, куда смотрит их последняя фигура.",
+      "exists": true,
+      "bytes": 51500,
+      "sha256": "c568ea92e85501dd223786955a0dd41bad43c1c5c5f8577af427a80ad0144f67",
+      "duration": 8.474083,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 8.474083333333333,
+      "peak_dbfs": -4.45,
+      "rms_dbfs": -20.79,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "watch_hint_direction.mp3",
+      "text": "Куда теперь смотрит фигура, которой сходили чёрные? Проследи её нападения.",
+      "exists": true,
+      "bytes": 39980,
+      "sha256": "1666dcb0c8798e9805d878268f98fda452a20552def393b9d1b71559fdb1d304",
+      "duration": 6.5705,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 6.5705,
+      "peak_dbfs": -4.41,
+      "rms_dbfs": -20.46,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "watch_hint_arrow.mp3",
+      "text": "Посмотри по стрелке. Какая белая фигура под ударом?",
+      "exists": true,
+      "bytes": 29468,
+      "sha256": "a8293231e32006cbcbda8e6f7896e5c844f4aae726862f865062efd197faae14",
+      "duration": 4.822333,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.822333333333333,
+      "peak_dbfs": -4.74,
+      "rms_dbfs": -20.58,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.192
+    },
+    {
+      "file": "quiz_attacker_arrow.mp3",
+      "text": "Вот кто нападает. Посмотри на красную стрелку.",
+      "exists": true,
+      "bytes": 28460,
+      "sha256": "80f6e60ba618f7aec9e1ee8c1ac652ae898281b739af1360ad75613557ba2b21",
+      "duration": 4.643625,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.643625,
+      "peak_dbfs": -5.53,
+      "rms_dbfs": -21.14,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "quiz_who_can_take.mp3",
+      "text": "Кто может забрать фигуру? Найди соперника.",
+      "exists": true,
+      "bytes": 26444,
+      "sha256": "7972e9146d7d8fc63e4795bad49b154be2ba9f4d328b6d7b37105828b5761a96",
+      "duration": 4.307583,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.3075833333333335,
+      "peak_dbfs": -5.05,
+      "rms_dbfs": -20.92,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.26,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "king_in_check.mp3",
+      "text": "Твой король под шахом. Его нужно защитить!",
+      "exists": true,
+      "bytes": 27164,
+      "sha256": "8999d45d07586dc52986ccb1bdee2bde968ee331e4de30b20dedafb66d017a5a",
+      "duration": 4.427833,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.427833333333333,
+      "peak_dbfs": -5.48,
+      "rms_dbfs": -21.08,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "opening_retry.mp3",
+      "text": "Хорошая попытка! Попробуем ещё раз и соберём все цели.",
+      "exists": true,
+      "bytes": 32204,
+      "sha256": "7a517378f94d0360a7bbe715abbc45b8b95941252f92c169b55485edf35a139e",
+      "duration": 5.276708,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 5.276708333333334,
+      "peak_dbfs": -4.97,
+      "rms_dbfs": -20.18,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.197
+    },
+    {
+      "file": "trap_missing.mp3",
+      "text": "Задание не найдено. Начни его заново.",
+      "exists": true,
+      "bytes": 25724,
+      "sha256": "afe9d586679ca5beb3e3e235a786a93c014fec6fccbcbae1d4fe675a01309153",
+      "duration": 4.178792,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 4.178791666666666,
+      "peak_dbfs": -4.92,
+      "rms_dbfs": -19.94,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "trap_off_plan.mp3",
+      "text": "Это учебный пример: другой законный ход может быть хорошим! Чтобы пройти именно эту линию, начни заново и попробуй подсказку.",
+      "exists": true,
+      "bytes": 61436,
+      "sha256": "3a5f8a0ef7c8476685c66e5eb403c10f6ce919ad4e64775625acc8f3fae1a9c3",
+      "duration": 10.141875,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 10.141875,
+      "peak_dbfs": -4.85,
+      "rms_dbfs": -19.93,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.192
+    },
+    {
+      "file": "trap_wait_reply.mp3",
+      "text": "Ход сделан. Дождись ответа чёрных и проверь, что изменилось.",
+      "exists": true,
+      "bytes": 35804,
+      "sha256": "649679f83ebf6e47f7eb16cc73dbbd2941b3805956ee189d153c9ab436e1e93f",
+      "duration": 5.873292,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 5.873291666666667,
+      "peak_dbfs": -4.03,
+      "rms_dbfs": -21.2,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "trap_choose_move.mp3",
+      "text": "Посмотри на угрозы и выбери ход.",
+      "exists": true,
+      "bytes": 14780,
+      "sha256": "d28173a2cbc73d730b9f576f33527fa1a2ddeb5072dc7905083ab5061acc92c0",
+      "duration": 2.358792,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 2.358791666666667,
+      "peak_dbfs": -5.86,
+      "rms_dbfs": -19.5,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "part_rescue_on.mp3",
+      "text": "Спаси фигуру на",
+      "exists": true,
+      "bytes": 9740,
+      "sha256": "c15fc30767954cce92df59abcbd769517a806140678e5e29063699d06256a8a6",
+      "duration": 1.530292,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.5302916666666666,
+      "peak_dbfs": -5.89,
+      "rms_dbfs": -20.05,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "part_black_from.mp3",
+      "text": "Чёрные сходили с",
+      "exists": true,
+      "bytes": 9596,
+      "sha256": "d1e60bbb77dcaeffbcdfa18d54da8d85ccf5d7bab38a254f088838dcd5c16d7e",
+      "duration": 1.502958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.5029583333333334,
+      "peak_dbfs": -5.42,
+      "rms_dbfs": -19.27,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "part_to.mp3",
+      "text": "на",
+      "exists": true,
+      "bytes": 3980,
+      "sha256": "ada9f2f22806a3e455fd08d5cbad2448e644d94d62caccbadc5c76105e2341da",
+      "duration": 0.558125,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.558125,
+      "peak_dbfs": -6.7,
+      "rms_dbfs": -24.08,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.19,
+      "trailing_quiet_seconds": 0.188
+    },
+    {
+      "file": "part_watch_find.mp3",
+      "text": "Какая твоя фигура теперь в опасности? Нажми на неё.",
+      "exists": true,
+      "bytes": 30908,
+      "sha256": "bb61a4aed0a9b45d02fb2b569484cd2336be147f7ec53c6696d1dff850581867",
+      "duration": 5.050583,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 5.050583333333333,
+      "peak_dbfs": -5.44,
+      "rms_dbfs": -20.83,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.191
+    },
+    {
+      "file": "part_enemy_took_on.mp3",
+      "text": "Соперник забрал фигуру на",
+      "exists": true,
+      "bytes": 13196,
+      "sha256": "2e47994796ef9713597c7781320e1067d83d9dca4925df3381308fd047b0168c",
+      "duration": 2.106083,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 2.1060833333333333,
+      "peak_dbfs": -4.31,
+      "rms_dbfs": -19.92,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "part_keep_others.mp3",
+      "text": "Береги остальные!",
+      "exists": true,
+      "bytes": 10172,
+      "sha256": "120a415a0e7c7ff8cd11cc6e108f89fe5d81e98078869b76e499d62704172317",
+      "duration": 1.601583,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.6015833333333334,
+      "peak_dbfs": -4.98,
+      "rms_dbfs": -18.94,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.192
+    },
+    {
+      "file": "part_piece_on.mp3",
+      "text": "Фигура на",
+      "exists": true,
+      "bytes": 6860,
+      "sha256": "6132e79109d195b02c1e11e35373185613832d54c7d60a02ae2980a5ebc3e4bb",
+      "duration": 1.038,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.038,
+      "peak_dbfs": -4.84,
+      "rms_dbfs": -19.34,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "part_under_attack.mp3",
+      "text": "под ударом. Береги её!",
+      "exists": true,
+      "bytes": 18668,
+      "sha256": "5bb7416fa32c3bff039f6a54f136e2e293c98f2cd0fa393d8f3d083cf5cbb349",
+      "duration": 3.011583,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 3.0115833333333333,
+      "peak_dbfs": -4.38,
+      "rms_dbfs": -21.6,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.192
+    },
+    {
+      "file": "part_watch_correct_on.mp3",
+      "text": "Верно! Фигура на",
+      "exists": true,
+      "bytes": 17660,
+      "sha256": "3371a4bd6f31fc742c01728c5c5ef74bd23934c8faf9a184fd29ae3f8dff3e12",
+      "duration": 2.847542,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 2.847541666666667,
+      "peak_dbfs": -4.28,
+      "rms_dbfs": -21.39,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "part_watch_rescue.mp3",
+      "text": "под ударом. Теперь спаси её: уйди, защити или убери нападающего.",
+      "exists": true,
+      "bytes": 38972,
+      "sha256": "427f0492c4e9e7e36e73a3bb577fe347804d1243f28e0c2e6890b20154e60946",
+      "duration": 6.401625,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 6.401625,
+      "peak_dbfs": -4.6,
+      "rms_dbfs": -20.54,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.192
+    },
+    {
+      "file": "part_look_piece_on.mp3",
+      "text": "Посмотри на фигуру на",
+      "exists": true,
+      "bytes": 10604,
+      "sha256": "31b1f965b79365eb792546d6a126722c4dde938a65de534a44809d5999a69982",
+      "duration": 1.666708,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.6667083333333332,
+      "peak_dbfs": -6.05,
+      "rms_dbfs": -20.29,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.197
+    },
+    {
+      "file": "part_look_square.mp3",
+      "text": "Посмотри на клетку",
+      "exists": true,
+      "bytes": 9452,
+      "sha256": "12431b63a3043d23526fa860c0c6198111f8791b9c99f6431a849c6d25a74e8d",
+      "duration": 1.466458,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.4664583333333334,
+      "peak_dbfs": -5.99,
+      "rms_dbfs": -20.52,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "squares/a1.mp3",
+      "text": "а один",
+      "exists": true,
+      "bytes": 5420,
+      "sha256": "b72af41ae7fbad286fd4263238f96a903dc2237543a5a6cd4f7097e7b903e6f2",
+      "duration": 0.795875,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.795875,
+      "peak_dbfs": -3.8,
+      "rms_dbfs": -20.59,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "squares/a2.mp3",
+      "text": "а два",
+      "exists": true,
+      "bytes": 4988,
+      "sha256": "5835f7debfb1bb733d7e0db857735f8117d3e589175c6a36eb3a7c98be44d406",
+      "duration": 0.74,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.74,
+      "peak_dbfs": -3.8,
+      "rms_dbfs": -21.97,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "squares/a3.mp3",
+      "text": "а три",
+      "exists": true,
+      "bytes": 5276,
+      "sha256": "e9219228789eb1e1d7aec9459227acf2fea2d68946c56905d30ca359d88c9923",
+      "duration": 0.769958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.7699583333333333,
+      "peak_dbfs": -3.75,
+      "rms_dbfs": -21.01,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "squares/a4.mp3",
+      "text": "а четыре",
+      "exists": true,
+      "bytes": 6284,
+      "sha256": "a0dfd0423f794993c455d162febe521cf1745a651e4c4797ff7e757ad93f9899",
+      "duration": 0.937958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9379583333333333,
+      "peak_dbfs": -5.6,
+      "rms_dbfs": -21.66,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "squares/a5.mp3",
+      "text": "а пять",
+      "exists": true,
+      "bytes": 5276,
+      "sha256": "83742d12ddcbe8b372b173b02707e5670b5d1b7ac6b8f6e01b31ea3f1cf1eecb",
+      "duration": 0.773708,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.7737083333333333,
+      "peak_dbfs": -4.26,
+      "rms_dbfs": -22.52,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "squares/a6.mp3",
+      "text": "а шесть",
+      "exists": true,
+      "bytes": 5420,
+      "sha256": "159015e9e046065eb8fb5b489bb842a95cbda2d66a126948916ddc7e415bbd74",
+      "duration": 0.8125,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8125,
+      "peak_dbfs": -5.09,
+      "rms_dbfs": -22.8,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "squares/a7.mp3",
+      "text": "а семь",
+      "exists": true,
+      "bytes": 5276,
+      "sha256": "37d0761a43c82e7a7966a9d8fc36ac58c482ba994cad420e34f7f91c6960656b",
+      "duration": 0.777875,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.777875,
+      "peak_dbfs": -4.58,
+      "rms_dbfs": -21.12,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    },
+    {
+      "file": "squares/a8.mp3",
+      "text": "а восемь",
+      "exists": true,
+      "bytes": 5564,
+      "sha256": "3edac5b0c89867769258764ee80a67519eafaefda5992e83634912b8c02a8c68",
+      "duration": 0.824042,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8240416666666667,
+      "peak_dbfs": -4.09,
+      "rms_dbfs": -20.09,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "squares/b1.mp3",
+      "text": "бэ один",
+      "exists": true,
+      "bytes": 6860,
+      "sha256": "d268dc8dd7f34b15a2bc741547d60945de1439d18db5b59f1db79f343143d423",
+      "duration": 1.033958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.0339583333333333,
+      "peak_dbfs": -4.51,
+      "rms_dbfs": -20.72,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "squares/b2.mp3",
+      "text": "бэ два",
+      "exists": true,
+      "bytes": 5996,
+      "sha256": "ef0c7d054a12f2f871757e4f924803d598d2e78ce3b0c6333541efe557a8dd96",
+      "duration": 0.902833,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9028333333333334,
+      "peak_dbfs": -4.99,
+      "rms_dbfs": -21.31,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "squares/b3.mp3",
+      "text": "бэ три",
+      "exists": true,
+      "bytes": 5996,
+      "sha256": "0388d192d11ff90cdecdf4493214fff8a4e1ace31d05d6be651896faa33ea729",
+      "duration": 0.902792,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9027916666666667,
+      "peak_dbfs": -4.75,
+      "rms_dbfs": -21.17,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "squares/b4.mp3",
+      "text": "бэ четыре",
+      "exists": true,
+      "bytes": 7292,
+      "sha256": "d19872300f226c5356e75c5dae36ee8f61a8d7d55108f0c97bd16b37ce0a5f68",
+      "duration": 1.111917,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.1119166666666667,
+      "peak_dbfs": -5.3,
+      "rms_dbfs": -20.69,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.192
+    },
+    {
+      "file": "squares/b5.mp3",
+      "text": "бэ пять",
+      "exists": true,
+      "bytes": 6140,
+      "sha256": "68f2378a5c1b86de48a2f0d49df2e90333918e49b893297ba79bf45a63de0992",
+      "duration": 0.924458,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9244583333333334,
+      "peak_dbfs": -5.57,
+      "rms_dbfs": -22.14,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "squares/b6.mp3",
+      "text": "бэ шесть",
+      "exists": true,
+      "bytes": 6572,
+      "sha256": "f6944be31f12cd735de4c807424069f0ae3e148cff258551aba3d91824ef07b7",
+      "duration": 1.005792,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.0057916666666666,
+      "peak_dbfs": -5.65,
+      "rms_dbfs": -22.32,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.186
+    },
+    {
+      "file": "squares/b7.mp3",
+      "text": "бэ семь",
+      "exists": true,
+      "bytes": 6284,
+      "sha256": "c40baa7ad976c5b2b1a0f5d2b87cdad3ed433fd6f4b50fb66591a6c26cea0cf2",
+      "duration": 0.942875,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.942875,
+      "peak_dbfs": -5.84,
+      "rms_dbfs": -20.75,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "squares/b8.mp3",
+      "text": "бэ восемь",
+      "exists": true,
+      "bytes": 6716,
+      "sha256": "d60a09bbb97b5004987b922702f656759acee1faaf57c8d6629e4d9828fb7b69",
+      "duration": 1.025875,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.025875,
+      "peak_dbfs": -5.31,
+      "rms_dbfs": -20.43,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "squares/c1.mp3",
+      "text": "цэ один",
+      "exists": true,
+      "bytes": 6716,
+      "sha256": "fa2af0a9e05c2e002fdd7e412fff2dd3522ffae031b3f3bff15fd3b78c001234",
+      "duration": 1.014625,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.014625,
+      "peak_dbfs": -5.11,
+      "rms_dbfs": -20.35,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "squares/c2.mp3",
+      "text": "цэ два",
+      "exists": true,
+      "bytes": 5708,
+      "sha256": "88841f10e573b6a923bfcec2b886448ac1af985512e2900337dab7a600e074c5",
+      "duration": 0.860833,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8608333333333333,
+      "peak_dbfs": -3.59,
+      "rms_dbfs": -19.93,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.19,
+      "trailing_quiet_seconds": 0.191
+    },
+    {
+      "file": "squares/c3.mp3",
+      "text": "цэ три",
+      "exists": true,
+      "bytes": 5852,
+      "sha256": "43f81a119e26fb471d1537efcd6440a6ebda5beba2aa0a8e99cd0a3e973ce260",
+      "duration": 0.866833,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8668333333333333,
+      "peak_dbfs": -5.19,
+      "rms_dbfs": -19.87,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.197
+    },
+    {
+      "file": "squares/c4.mp3",
+      "text": "цэ четыре",
+      "exists": true,
+      "bytes": 7004,
+      "sha256": "11fcd0f677fdb5e070b28f92c84f41c41b30c74f6f5b01b18d5fc527c39e14c3",
+      "duration": 1.064833,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.0648333333333333,
+      "peak_dbfs": -4.38,
+      "rms_dbfs": -20.03,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "squares/c5.mp3",
+      "text": "цэ пять",
+      "exists": true,
+      "bytes": 5852,
+      "sha256": "06b2ebe05f8639f8d2b158c753440edff1fad83f64ec53ae4c4db46eb7d0b8b5",
+      "duration": 0.875458,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8754583333333333,
+      "peak_dbfs": -2.41,
+      "rms_dbfs": -20.9,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "squares/c6.mp3",
+      "text": "цэ шесть",
+      "exists": true,
+      "bytes": 6572,
+      "sha256": "2fecf51ad27a011f3f4938a5db6d2f0b61589aa3e1b05640286e0d37c8e906c5",
+      "duration": 0.989042,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9890416666666667,
+      "peak_dbfs": -5.25,
+      "rms_dbfs": -20.98,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.19,
+      "trailing_quiet_seconds": 0.189
+    },
+    {
+      "file": "squares/c7.mp3",
+      "text": "цэ семь",
+      "exists": true,
+      "bytes": 6140,
+      "sha256": "1655d3d2b56b0d067cebb9d11562ec197a1d505b49e15bdf82c803f65e09fd37",
+      "duration": 0.934292,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9342916666666666,
+      "peak_dbfs": -5.32,
+      "rms_dbfs": -20.01,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "squares/c8.mp3",
+      "text": "цэ восемь",
+      "exists": true,
+      "bytes": 6572,
+      "sha256": "c83b34d82aacb238f9d8ca539df530f5a6cd0e415af58064e1ef31806c049f9b",
+      "duration": 0.995542,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9955416666666667,
+      "peak_dbfs": -5.48,
+      "rms_dbfs": -20.04,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.19,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "squares/d1.mp3",
+      "text": "дэ один",
+      "exists": true,
+      "bytes": 6572,
+      "sha256": "95f203ab0d348262bb50a514d988dea14952e3a0c09cf1078f88e6a7fa8ac7b7",
+      "duration": 0.985958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9859583333333334,
+      "peak_dbfs": -4.3,
+      "rms_dbfs": -19.71,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "squares/d2.mp3",
+      "text": "дэ два",
+      "exists": true,
+      "bytes": 5852,
+      "sha256": "ee923ca3900c7e80f27ed49b846334f977d6939692c76af1bff2d48721b850d4",
+      "duration": 0.883458,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8834583333333333,
+      "peak_dbfs": -5.02,
+      "rms_dbfs": -21.23,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "squares/d3.mp3",
+      "text": "дэ три",
+      "exists": true,
+      "bytes": 5996,
+      "sha256": "58d99f0908071d9398215083e59b8b83aa50b47667c7c48f241021fe4c4bd5c4",
+      "duration": 0.890167,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8901666666666667,
+      "peak_dbfs": -5.31,
+      "rms_dbfs": -21.41,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.19
+    },
+    {
+      "file": "squares/d4.mp3",
+      "text": "дэ четыре",
+      "exists": true,
+      "bytes": 7148,
+      "sha256": "ee67c4230a1d43f0456ee64cce94a6012bea1859e2b97210b80fe83c4937dc90",
+      "duration": 1.082958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.0829583333333332,
+      "peak_dbfs": -5.37,
+      "rms_dbfs": -20.52,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "squares/d5.mp3",
+      "text": "дэ пять",
+      "exists": true,
+      "bytes": 5852,
+      "sha256": "9ca7eddab916c5361b9ebbdc230c5f698d76273fbc5eee6163d6f61da98d0895",
+      "duration": 0.865958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8659583333333334,
+      "peak_dbfs": -5.43,
+      "rms_dbfs": -22.04,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "squares/d6.mp3",
+      "text": "дэ шесть",
+      "exists": true,
+      "bytes": 6572,
+      "sha256": "886287b867ac6e85ff1aa6ad556b5c1826e3422965d57b1f6c3f7aba7eef79b1",
+      "duration": 0.99125,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.99125,
+      "peak_dbfs": -4.9,
+      "rms_dbfs": -21.67,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.191
+    },
+    {
+      "file": "squares/d7.mp3",
+      "text": "дэ семь",
+      "exists": true,
+      "bytes": 6140,
+      "sha256": "0920c622d57993ec69a77bde1af8186ff000c3739d258a3820400b2b5139aa6d",
+      "duration": 0.918833,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9188333333333333,
+      "peak_dbfs": -4.81,
+      "rms_dbfs": -20.4,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "squares/d8.mp3",
+      "text": "дэ восемь",
+      "exists": true,
+      "bytes": 6572,
+      "sha256": "756c17f91e3b875d553bc0ef2dab1a7e7ede25c989c4ed26beb003a476fa857b",
+      "duration": 1.003375,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.003375,
+      "peak_dbfs": -5.39,
+      "rms_dbfs": -20.36,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "squares/e1.mp3",
+      "text": "е один",
+      "exists": true,
+      "bytes": 6716,
+      "sha256": "de3ad5e4ba8da11bb07e5b85dc307e4ec08a3603632fed56c63dbc234ea8fdc5",
+      "duration": 1.015708,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.0157083333333334,
+      "peak_dbfs": -4.51,
+      "rms_dbfs": -19.99,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "squares/e2.mp3",
+      "text": "е два",
+      "exists": true,
+      "bytes": 5852,
+      "sha256": "01b601ef2767e07a5545644d66131d6a4976d3b12fe13cb0403a60f0e9aff74e",
+      "duration": 0.867375,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.867375,
+      "peak_dbfs": -5.18,
+      "rms_dbfs": -20.52,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.197
+    },
+    {
+      "file": "squares/e3.mp3",
+      "text": "е три",
+      "exists": true,
+      "bytes": 6284,
+      "sha256": "90d83e39af1dfcff4cbde39487b778ff0c12fe1bcbdb69925adb05a00b861554",
+      "duration": 0.939792,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9397916666666667,
+      "peak_dbfs": -4.86,
+      "rms_dbfs": -20.8,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "squares/e4.mp3",
+      "text": "е четыре",
+      "exists": true,
+      "bytes": 7292,
+      "sha256": "7388d5053e0ee21261ed573d0b9fc7e4dcf4bf4f91dcedab3e520d114dfa713e",
+      "duration": 1.109292,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.1092916666666666,
+      "peak_dbfs": -5.54,
+      "rms_dbfs": -20.45,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "squares/e5.mp3",
+      "text": "е пять",
+      "exists": true,
+      "bytes": 6140,
+      "sha256": "22f81cd4d5f917252fb6bd139e135160288b179c1d8c60ee005e1d7fafe64cfc",
+      "duration": 0.914,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.914,
+      "peak_dbfs": -5.26,
+      "rms_dbfs": -21.8,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "squares/e6.mp3",
+      "text": "е шесть",
+      "exists": true,
+      "bytes": 6716,
+      "sha256": "6e61ee1a85d4bac1617e2b81c50ffbb563dba4ba8db4e2497755b6fa2d469235",
+      "duration": 1.009958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.0099583333333333,
+      "peak_dbfs": -5.21,
+      "rms_dbfs": -21.49,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.19
+    },
+    {
+      "file": "squares/e7.mp3",
+      "text": "е семь",
+      "exists": true,
+      "bytes": 6284,
+      "sha256": "8b5dd2b68f9ac5d91ba4d3d4936ceac28bb869b4ae50959dd0e1c427f53a127a",
+      "duration": 0.939667,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9396666666666667,
+      "peak_dbfs": -5.64,
+      "rms_dbfs": -20.11,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "squares/e8.mp3",
+      "text": "е восемь",
+      "exists": true,
+      "bytes": 6860,
+      "sha256": "f1fc43e32d4adf1f22c0af118bdce94c3b3a24ba0a5cecaeb4d803bdbf61215c",
+      "duration": 1.035333,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.0353333333333334,
+      "peak_dbfs": -4.88,
+      "rms_dbfs": -19.92,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "squares/f1.mp3",
+      "text": "эф один",
+      "exists": true,
+      "bytes": 5996,
+      "sha256": "582ea6d9740741bc413994a56ba5d8bbd8c8af62ef30ff5764f533de63afc07e",
+      "duration": 0.90625,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.90625,
+      "peak_dbfs": -4.64,
+      "rms_dbfs": -21.48,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "squares/f2.mp3",
+      "text": "эф два",
+      "exists": true,
+      "bytes": 5852,
+      "sha256": "89e3a92ddd6fff3cf91b7e51a2469bfe631f34ada333ae424b611d654a20db7d",
+      "duration": 0.866458,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8664583333333333,
+      "peak_dbfs": -4.97,
+      "rms_dbfs": -22.31,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "squares/f3.mp3",
+      "text": "эф три",
+      "exists": true,
+      "bytes": 5852,
+      "sha256": "9268d7a5f1706649deb558431431c891e0dd4dbbc9f125b9568c4f9b3b391105",
+      "duration": 0.880083,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8800833333333333,
+      "peak_dbfs": -4.15,
+      "rms_dbfs": -22.15,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "squares/f4.mp3",
+      "text": "эф четыре",
+      "exists": true,
+      "bytes": 6860,
+      "sha256": "6ed43c0569dc5d9a3e3489fbf11ab6649c772af2e246a944b722c9f52a99cb9d",
+      "duration": 1.043458,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.0434583333333334,
+      "peak_dbfs": -4.56,
+      "rms_dbfs": -21.09,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "squares/f5.mp3",
+      "text": "эф пять",
+      "exists": true,
+      "bytes": 5996,
+      "sha256": "e40ebdf23b3e9a55fc75386c27bd8eb1147c62d5a7618ff0086eca952bcda935",
+      "duration": 0.89125,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.89125,
+      "peak_dbfs": -4.69,
+      "rms_dbfs": -22.26,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.191
+    },
+    {
+      "file": "squares/f6.mp3",
+      "text": "эф шесть",
+      "exists": true,
+      "bytes": 5996,
+      "sha256": "166060ed6d6a61a16126cb7cb00cc8fcb691396997c284c1c9fdc287ffe9de4e",
+      "duration": 0.90675,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.90675,
+      "peak_dbfs": -4.22,
+      "rms_dbfs": -21.99,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.187
+    },
+    {
+      "file": "squares/f7.mp3",
+      "text": "эф семь",
+      "exists": true,
+      "bytes": 5996,
+      "sha256": "3278473273654b6ac64743c7d09adb1765e4ed334d6357db55dbba6558551adf",
+      "duration": 0.891333,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8913333333333333,
+      "peak_dbfs": -4.27,
+      "rms_dbfs": -20.46,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.19,
+      "trailing_quiet_seconds": 0.191
+    },
+    {
+      "file": "squares/f8.mp3",
+      "text": "эф восемь",
+      "exists": true,
+      "bytes": 6860,
+      "sha256": "8d6451367a4a26ed89988a53dbe5a25fe5a6201b9d7b8dd3e4f7e4e603e5db58",
+      "duration": 1.033958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.0339583333333333,
+      "peak_dbfs": -4.54,
+      "rms_dbfs": -21.43,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.184
+    },
+    {
+      "file": "squares/g1.mp3",
+      "text": "жэ один",
+      "exists": true,
+      "bytes": 6428,
+      "sha256": "5b24093362bf18bb542b10973bd9faee483d52a02584c5a752725d2a9e3e70da",
+      "duration": 0.980667,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9806666666666667,
+      "peak_dbfs": -5.3,
+      "rms_dbfs": -20.35,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.191
+    },
+    {
+      "file": "squares/g2.mp3",
+      "text": "жэ два",
+      "exists": true,
+      "bytes": 5852,
+      "sha256": "31b89d6b2f12bd79894d93b2655a84c0e73eff482cc710d2961306321978460a",
+      "duration": 0.869458,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.8694583333333333,
+      "peak_dbfs": -4.9,
+      "rms_dbfs": -20.67,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "squares/g3.mp3",
+      "text": "жэ три",
+      "exists": true,
+      "bytes": 6140,
+      "sha256": "bcddeabe6e8c691ba001457bb409e34f5d2a4ade892432d6f70f4468f74a618b",
+      "duration": 0.924,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.924,
+      "peak_dbfs": -5.41,
+      "rms_dbfs": -21.23,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.194
+    },
+    {
+      "file": "squares/g4.mp3",
+      "text": "жэ четыре",
+      "exists": true,
+      "bytes": 7292,
+      "sha256": "a5de3f358c2a477e6f6d777a0e8cc3baf1144301fbf08b78404b107e01f8f55d",
+      "duration": 1.108583,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.1085833333333333,
+      "peak_dbfs": -5.76,
+      "rms_dbfs": -20.8,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.199
+    },
+    {
+      "file": "squares/g5.mp3",
+      "text": "жэ пять",
+      "exists": true,
+      "bytes": 6140,
+      "sha256": "c17c39e5ae7a5cd792f391e5db3ada25dcdc703496af2ec6816136ab0ae47e12",
+      "duration": 0.913958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9139583333333333,
+      "peak_dbfs": -5.66,
+      "rms_dbfs": -22.12,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.204
+    },
+    {
+      "file": "squares/g6.mp3",
+      "text": "жэ шесть",
+      "exists": true,
+      "bytes": 6716,
+      "sha256": "18e7d4a55ac69945f122ca03551144fe9ddf87f72e419ce4bc877c878d2b0cd1",
+      "duration": 1.016708,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.0167083333333333,
+      "peak_dbfs": -6.36,
+      "rms_dbfs": -22.45,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.177
+    },
+    {
+      "file": "squares/g7.mp3",
+      "text": "жэ семь",
+      "exists": true,
+      "bytes": 6140,
+      "sha256": "85e95613e8965730090080cee81203950aeea2eeac04d86bab8cc15e0e3a9e9e",
+      "duration": 0.922542,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9225416666666667,
+      "peak_dbfs": -6.18,
+      "rms_dbfs": -21.0,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "squares/g8.mp3",
+      "text": "жэ восемь",
+      "exists": true,
+      "bytes": 6572,
+      "sha256": "8c8e0f8b105ad133c0310c2425479d7fef6319973f09f0838381149ce4978231",
+      "duration": 0.992958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9929583333333334,
+      "peak_dbfs": -6.32,
+      "rms_dbfs": -20.01,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.193
+    },
+    {
+      "file": "squares/h1.mp3",
+      "text": "аш один",
+      "exists": true,
+      "bytes": 6284,
+      "sha256": "4a86b989da71126a76c034f5fd2564b83f881664d8d96735d9e7638d640a4f51",
+      "duration": 0.945708,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9457083333333334,
+      "peak_dbfs": -4.0,
+      "rms_dbfs": -21.6,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.19,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "squares/h2.mp3",
+      "text": "аш два",
+      "exists": true,
+      "bytes": 6140,
+      "sha256": "afe19d28e0e22729b5fe202f2e545663627726da3655f0f93a79f99d2be4fedd",
+      "duration": 0.93,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.93,
+      "peak_dbfs": -3.36,
+      "rms_dbfs": -21.69,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.2
+    },
+    {
+      "file": "squares/h3.mp3",
+      "text": "аш три",
+      "exists": true,
+      "bytes": 6140,
+      "sha256": "0857e2a061aefe5ee79ae6ebe9132a73cfed73419f889d8d172127a210341df4",
+      "duration": 0.9285,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9285,
+      "peak_dbfs": -3.85,
+      "rms_dbfs": -21.75,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.189
+    },
+    {
+      "file": "squares/h4.mp3",
+      "text": "аш четыре",
+      "exists": true,
+      "bytes": 7292,
+      "sha256": "b9dd3eea6e0cb4ebddbc4d236bfa22d6a762886b10bca2397a177f94023655af",
+      "duration": 1.105958,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.1059583333333334,
+      "peak_dbfs": -4.1,
+      "rms_dbfs": -21.56,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.196
+    },
+    {
+      "file": "squares/h5.mp3",
+      "text": "аш пять",
+      "exists": true,
+      "bytes": 5996,
+      "sha256": "c4a62c6f2607333bfc406bcedf04219d40e04fc1013c07359a9d344515517bb6",
+      "duration": 0.905042,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9050416666666666,
+      "peak_dbfs": -4.57,
+      "rms_dbfs": -22.7,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.19,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "squares/h6.mp3",
+      "text": "аш шесть",
+      "exists": true,
+      "bytes": 6428,
+      "sha256": "57ebad79c69ef903ed7659140f5dc3f31a46abddfa7a3ea749b0a2a9be686fd4",
+      "duration": 0.974708,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9747083333333333,
+      "peak_dbfs": -4.2,
+      "rms_dbfs": -22.15,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.185
+    },
+    {
+      "file": "squares/h7.mp3",
+      "text": "аш семь",
+      "exists": true,
+      "bytes": 5996,
+      "sha256": "e642bb6431cd82cda2f21a30e1cce18753c0dcbcde0a80c9666d445c4240509d",
+      "duration": 0.905458,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 0.9054583333333334,
+      "peak_dbfs": -4.6,
+      "rms_dbfs": -21.13,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.195
+    },
+    {
+      "file": "squares/h8.mp3",
+      "text": "аш восемь",
+      "exists": true,
+      "bytes": 6860,
+      "sha256": "cc9aaaa873345049cf4609f04bdf5c1ed822f7a8bc6ef37346cc92c3e4fbb81b",
+      "duration": 1.048,
+      "streams": [
+        {
+          "codec_name": "mp3",
+          "sample_rate": "24000",
+          "channels": 1,
+          "bit_rate": "48000"
+        }
+      ],
+      "decode_ok": true,
+      "decoded_duration": 1.048,
+      "peak_dbfs": -4.05,
+      "rms_dbfs": -21.08,
+      "near_fullscale_samples": 0,
+      "contains_sound": true,
+      "leading_quiet_seconds": 0.2,
+      "trailing_quiet_seconds": 0.198
+    }
+  ]
+}
