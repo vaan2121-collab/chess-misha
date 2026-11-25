@@ -312,12 +312,15 @@ window.PracticeScreen = (function () {
   function awardSessionXp() {
     const rewardKey = 'practice:' + mode.id + ':xp-awarded';
     if (!Store.get(rewardKey, false)) { Progress.addXP(3); Store.set(rewardKey, true); }
+    // Тренировочная игра — это повторяемая практика: звезда выдаётся за каждое
+    // полное прохождение, а опыт остаётся одноразовой наградой за режим.
+    Progress.addStars(1);
   }
 
   function completeSession() {
     if (completed) return;
     completed = true; phase = 'done'; board.setInteractive(false); setButtons();
-    // Опыт выдаётся один раз за режим на этом устройстве; звёзд и медалей практика не даёт.
+    // Опыт выдаётся один раз за режим, звезда — за каждое полное прохождение.
     awardSessionXp();
     say(task.takeaway, 'happy');
     showResult('Все задания пройдены!', task.takeaway, true);

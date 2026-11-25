@@ -42,6 +42,8 @@ body {
   font-family: var(--font);
   color: var(--text);
   background:
+    linear-gradient(rgba(20, 52, 92, .10), rgba(20, 52, 92, .10)),
+    url("../assets/backgrounds/block-world-battle.png") center center / cover no-repeat fixed,
     linear-gradient(to bottom, transparent 0 calc(100% - 56px), var(--grass) calc(100% - 56px) calc(100% - 44px), var(--dirt) calc(100% - 44px)),
     linear-gradient(to bottom, var(--sky-top), var(--sky-bottom));
   background-attachment: fixed;
@@ -290,6 +292,11 @@ main {
   border: 6px solid var(--outline);
   box-shadow: 0 0 0 6px var(--board-frame, var(--dirt)), 0 0 0 10px var(--outline), 0 14px 0 10px rgba(0,0,0,.25);
   container-type: size;
+  background-image: var(--board-skin-image, none);
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  padding: var(--board-skin-padding, 0);
 }
 /* запасной вариант для старых браузеров без container queries */
 .board { font-size: 7vmin; }
@@ -305,6 +312,8 @@ main {
 }
 .sq.light { background-color: var(--sq-light); }
 .sq.dark  { background-color: var(--sq-dark); }
+html[data-board-skin]:not([data-board-skin="classic"]) .sq.light { background-color: rgba(255,255,255,.10); }
+html[data-board-skin]:not([data-board-skin="classic"]) .sq.dark { background-color: rgba(0,0,0,.10); }
 
 /* координаты мелко, в углах */
 .sq[data-rank]:not([data-rank=""])::before,
@@ -634,7 +643,7 @@ main {
   box-shadow: inset 4px 4px 0 rgba(255,255,255,.3), inset -4px -4px 0 rgba(0,0,0,.3);
 }
 .opp-name { font-size: clamp(17px, 3.4vw, 22px); text-align: center; line-height: 1.1; }
-/* сложность: 5 «делений» */
+/* сложность: 10 «делений» */
 .opp-level { display: flex; gap: 3px; }
 .opp-level i {
   width: 14px;
@@ -989,6 +998,37 @@ main {
 .theme-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
 @media (min-width: 640px) { .theme-grid { grid-template-columns: repeat(3, 1fr); } }
 .theme-grid[hidden] { display: none; }
+.max-grid { display: flex; flex-direction: column; gap: 12px; }
+.max-grid[hidden] { display: none; }
+.max-note {
+  padding: 12px 14px;
+  background: rgba(255, 246, 196, .94);
+  color: #3a2a10;
+  border: 4px solid var(--outline);
+  font-size: 17px;
+  font-weight: 800;
+  text-align: center;
+}
+.max-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px;
+  background: rgba(0, 0, 0, .38);
+  border: 4px solid var(--outline);
+}
+.max-card-icon { width: 52px; font-size: 34px; text-align: center; flex: none; }
+.max-card-info { display: flex; flex-direction: column; gap: 3px; flex: 1; min-width: 0; text-shadow: 2px 2px 0 rgba(0,0,0,.45); }
+.max-card-info b { font-size: 20px; }
+.max-card-info small { font-size: 14px; opacity: .9; }
+.max-card-link { display: inline-flex; align-items: center; gap: 6px; padding: 8px 10px; font-size: 15px; white-space: nowrap; text-decoration: none; }
+@media (max-width: 480px) {
+  .max-card { gap: 7px; padding: 7px; }
+  .max-card-icon { width: 38px; font-size: 27px; }
+  .max-card-info b { font-size: 16px; }
+  .max-card-info small { font-size: 12px; }
+  .max-card-link { padding: 6px 7px; font-size: 13px; border-width: 3px; }
+}
 .theme-card {
   display: flex;
   flex-direction: column;
@@ -1010,6 +1050,20 @@ main {
   height: 96px;
   border: 6px solid;
   box-shadow: 0 0 0 3px var(--outline);
+}
+.theme-preview.skin-preview {
+  display: block;
+  background-position: center;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+.theme-test-note {
+  padding: 8px 12px;
+  background: rgba(255, 246, 196, .92);
+  color: #3a2a10;
+  border: 4px solid var(--outline);
+  font-weight: 800;
+  text-align: center;
 }
 .theme-card.locked .theme-preview { filter: saturate(0.6) brightness(0.85); }
 .theme-name { font-size: 17px; font-weight: 800; text-shadow: 2px 2px 0 rgba(0,0,0,.45); }

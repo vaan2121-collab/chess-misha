@@ -1,11 +1,17 @@
-// Соперники в «Игре с роботом». Картинки и фразы — в assets/opponents/<id>/
-// (список файлов — в assets/opponents/КАКИЕ-ФАЙЛЫ-НУЖНЫ.md).
+// Соперники в «Игре с роботом». Картинки и фразы — в assets/opponents/<id>/.
+// Уровни 6–10 сильнее Человека-паука, но остаются локальными ботами,
+// чтобы ребёнок мог победить их тренировкой и подсказками.
 window.OPPONENTS = [
   { id: 'lenya',     name: 'Лёня Макароня', level: 1, color: '#5fa83a', emoji: '🧒' },
   { id: 'vladus',    name: 'Владус',       level: 2, color: '#2f5bd3', emoji: '🎮' },
   { id: 'nero',      name: 'Неро',         level: 3, color: '#3d7fc9', emoji: '⚔️' },
   { id: 'dante',     name: 'Данте',        level: 4, color: '#c62828', emoji: '🗡️' },
-  { id: 'spiderman', name: 'Человек-паук', level: 5, color: '#b71c1c', emoji: '🕷️' }
+  { id: 'spiderman', name: 'Человек-паук', level: 5, color: '#b71c1c', emoji: '🕷️' },
+  { id: 'baldi',     name: 'Балди',         level: 6, color: '#d18b22', emoji: '📏' },
+  { id: 'sonic',     name: 'Соник',         level: 7, color: '#1769c2', emoji: '💨' },
+  { id: 'creeper',   name: 'Крипер',        level: 8, color: '#3a9b45', emoji: '💥' },
+  { id: 'mario',     name: 'Марио',         level: 9, color: '#e53935', emoji: '🍄' },
+  { id: 'mundus',    name: 'Мундус',        level: 10, color: '#344c80', emoji: '⚡' }
 ];
 
 // Лица: если картинки нет — берём следующую в цепочке.

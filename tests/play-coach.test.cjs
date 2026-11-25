@@ -84,26 +84,15 @@ function mistake() {
   play.enter('lenya');
   play.current().game.load(fen);
   assert.ok(board.makeMove('e1', 'e2'));
-  assert.equal(play.current().review.phase, 'question');
+  assert.equal(play.current().review, null);
   assert.equal(board.interactive, false);
-  assert.equal(play.current().thinking, false);
+  assert.equal(play.current().thinking, true);
 }
 
-mistake();
-get('play-coach-show').click();
-assert.equal(play.current().review.phase, 'replay');
-assert.equal(play.current().game.get('e2').color, 'b');
-assert.equal(play.current().review.source.get('e2').color, 'w');
-get('play-coach-retry').click();
-assert.equal(play.current().game.fen(), fen);
-assert.equal(play.current().game.history().length, 0);
-assert.equal(play.current().review, null);
-assert.equal(board.interactive, true);
 assert.equal(context.Progress.winsOver('lenya'), 0);
-console.log('PASS demonstration uses a copy; replay restores history without rewarding a win');
+console.log('PASS games against characters are not intercepted by the coach');
 
 mistake();
-get('play-coach-continue').click();
 assert.equal(play.current().game.turn(), 'b');
 assert.equal(play.current().review, null);
 assert.equal(play.current().thinking, true);

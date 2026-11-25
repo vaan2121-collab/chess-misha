@@ -68,7 +68,9 @@ window.PlayScreen = (function () {
   }
 
   function offerCoach(move) {
-    if (!coachEnabled || coachCount >= 2 || !window.PracticeLogic) return false;
+    // В партиях против персонажей ребёнок играет сам. Тренер остаётся только
+    // в коде для совместимости со старыми сохранениями и не перехватывает ход.
+    if (opp.id !== 'duo' || !coachEnabled || coachCount >= 2 || !window.PracticeLogic) return false;
     const reply = PracticeLogic.threat(game, move.to);
     if (!reply) return false;
     coachCount++;
@@ -138,6 +140,11 @@ window.PlayScreen = (function () {
   }, true);
 
   const folder = (o) => 'assets/opponents/' + o.id + '/';
+  const levelHtml = (level) => {
+    const max = 10;
+    return '<i class="on"></i>'.repeat(Math.min(level, max)) +
+      '<i></i>'.repeat(Math.max(0, max - level));
+  };
 
   // ---------- Картинки соперников ----------
   // Проверяем, какие лица нарисованы, и запоминаем.
@@ -179,7 +186,7 @@ window.PlayScreen = (function () {
       card.innerHTML =
         '<span class="opp-avatar">' + avatarHtml(o) + '</span>' +
         '<span class="opp-name">' + o.name + '</span>' +
-        (o.level ? '<span class="opp-level">' + '<i class="on"></i>'.repeat(o.level) + '<i></i>'.repeat(5 - o.level) + '</span>' : '') +
+        (o.level ? '<span class="opp-level" aria-label="Сложность ' + o.level + ' из 10">' + levelHtml(o.level) + '</span>' : '') +
         (medal ? '<span class="medal small ' + medal.tier + '"><b>' + Progress.winsOver(o.id) + '</b></span>' : '');
       card.addEventListener('click', () => {
         Sound.play('click');
@@ -235,7 +242,7 @@ window.PlayScreen = (function () {
     token++;
     closeCoach();
     coachCount = 0;
-    coachToggle.hidden = opp.id === 'duo';
+    coachToggle.hidden = true;
     thinking = false;
     game = new Chess();
     overlay.hidden = true;
@@ -253,8 +260,7 @@ window.PlayScreen = (function () {
 
     gameView.classList.toggle('duo', opp.id === 'duo');
     $('#opp-name').textContent = opp.name;
-    $('#opp-level').innerHTML = opp.level
-      ? '<i class="on"></i>'.repeat(opp.level) + '<i></i>'.repeat(5 - opp.level) : '';
+    $('#opp-level').innerHTML = opp.level ? levelHtml(opp.level) : '';
     const my = token;
     preloadFaces(opp).then(() => { if (my === token) setFace('normal'); });
     setFace('normal');
@@ -326,17 +332,20 @@ window.PlayScreen = (function () {
     } else if (kidWon) {
       setFace('lose');
       bubble('😭');
-      const before = medalFor(Progress.winsOver(opp.id));
+      const winsBefore = Progress.winsOver(opp.id);
+      const before = medalFor(winsBefore);
       Progress.addWin(opp.id);
       Progress.addXP(20 * opp.level); // Лёня — 20, Человек-паук — 100
+      Progress.addStars(opp.level);
       const wins = Progress.winsOver(opp.id);
       const now = medalFor(wins);
       const isNew = now && (!before || before.tier !== now.tier);
       icon = '';
       title = isNew ? now.name + ' медаль!' : 'Победа!';
+      const starNote = ' · +' + opp.level + ' звёзд';
       medalHtml = '<div class="medal big ' + now.tier + (isNew ? ' new' : '') + '">' +
         '<span class="medal-face">' + avatarHtml(opp, 'lose') + '</span></div>' +
-        '<div class="medal-note">Побед над соперником: ' + wins + nextMedalNote(wins) + '</div>';
+        '<div class="medal-note">Побед над соперником: ' + wins + nextMedalNote(wins) + starNote + '</div>';
       // первая победа над соперником открывает его секретную наклейку
       const secret = Stickers.unlockSecretFor(opp.id);
       if (secret) {

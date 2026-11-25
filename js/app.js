@@ -2,7 +2,7 @@
 // Экраны переключаются через адрес (#menu, #play ...), поэтому кнопка
 // «Назад» на телефоне/планшете возвращает в меню, а не закрывает приложение.
 (function () {
-  const SCREENS = ['menu', 'puzzles', 'play', 'gifts', 'parents', 'train', 'practice'];
+  const SCREENS = ['menu', 'play', 'gifts', 'parents', 'train', 'practice'];
   const $ = (sel) => document.querySelector(sel);
 
   // --- Навигация ---
@@ -18,7 +18,7 @@
       return;
     }
     let [name, param] = (hash || '').split('/');
-    if (name === 'learn' || (name === 'puzzles' && !param)) {
+    if (name === 'learn' || name === 'puzzles') {
       history.replaceState(null, '', location.pathname + location.search + '#train');
       hash = 'train';
       name = 'train';
@@ -29,7 +29,6 @@
     if (current.name === 'play' && name !== 'play' && window.PlayScreen && PlayScreen.leave) PlayScreen.leave();
     const nextParam = param || '';
     if (current.name === 'train' && (name !== 'train' || nextParam !== current.param) && window.TrainScreen) TrainScreen.leave();
-    if (current.name === 'puzzles' && (name !== 'puzzles' || nextParam !== current.param) && window.PuzzlesScreen) PuzzlesScreen.leave();
     current = { name, param: nextParam };
     document.querySelectorAll('.screen').forEach((s) => {
       s.hidden = s.id !== 'screen-' + name;
@@ -37,7 +36,6 @@
     $('#btn-back').hidden = name === 'menu';
     if (name === 'menu' || name === 'gifts') Sound.stopVoice();
     if (name === 'play') PlayScreen.enter(current.param);
-    if (name === 'puzzles') PuzzlesScreen.enter(current.param);
     if (name === 'gifts') GiftsScreen.enter();
     if (name === 'parents') ParentsScreen.enter();
     if (name === 'train') TrainScreen.enter(current.param);
@@ -57,10 +55,6 @@
   // «Назад» поднимается на уровень выше: из упражнения — к карте тренировки.
   $('#btn-back').addEventListener('click', () => {
     Sound.play('click');
-    if (current.name === 'puzzles') {
-      location.hash = 'train';
-      return;
-    }
     // из уровня тренировки — на его остров
     if (current.name === 'train' && current.param) {
       const m = TRAIN.modules.find((x) => (x.levels || []).some((l) => l.id === current.param));

@@ -8,9 +8,23 @@ window.THEMES = [
   { id: 'end',    name: 'Энд',      icon: '🐉', price: 40, light: '#f1efc0', dark: '#a77ab8', frame: '#3d2a4a' }
 ];
 
+THEMES.push(
+  { id: 'green-hill', name: 'Зелёные холмы', icon: 'GH', price: 30, light: '#77d52c', dark: '#8a431d', frame: '#8b572f', image: 'assets/boards/reference/green-hill.png', skinPad: '22% 15% 14%' },
+  { id: 'block-world', name: 'Блочный мир', icon: 'BW', price: 30, light: '#a7e84a', dark: '#62666d', frame: '#4b2d1c', image: 'assets/boards/reference/block-world.png', skinPad: '21%' },
+  { id: 'pixel-castle', name: 'Кирпичный замок', icon: 'PC', price: 30, light: '#ffe0a8', dark: '#63bd3f', frame: '#9b4a17', image: 'assets/boards/reference/pixel-castle.png', skinPad: '22% 15% 14%' },
+  { id: 'ice-castle', name: 'Ледяной замок', icon: 'ICE', price: 30, light: '#f4fbff', dark: '#8bd0f0', frame: '#6f9fc8', image: 'assets/boards/original/ice-castle.png', skinPad: '12%' },
+  { id: 'volcanic-fortress', name: 'Огненная крепость', icon: 'VF', price: 30, light: '#ffd27a', dark: '#8d2c26', frame: '#4a1d1a', image: 'assets/boards/original/volcanic-fortress.png', skinPad: '15% 10% 10%' },
+  { id: 'cosmic-station', name: 'Космическая станция', icon: 'CS', price: 30, light: '#22e8f4', dark: '#101b72', frame: '#7549b8', image: 'assets/boards/original/cosmic-station.png', skinPad: '13% 10% 10%' }
+);
+
 window.Themes = (function () {
   const owned = () => Object.assign({ grass: true }, Store.get('themes', {}));
-  const current = () => Store.get('theme', 'grass');
+  const previewMode = () => new URLSearchParams(location.search).get('boards') === 'test';
+  const available = (id) => !!owned()[id] || previewMode();
+  const current = () => {
+    const id = Store.get('theme', 'grass');
+    return THEMES.some((x) => x.id === id) && available(id) ? id : 'grass';
+  };
 
   function apply(id) {
     const t = THEMES.find((x) => x.id === id) || THEMES[0];
@@ -18,17 +32,34 @@ window.Themes = (function () {
     root.setProperty('--sq-light', t.light);
     root.setProperty('--sq-dark', t.dark);
     root.setProperty('--board-frame', t.frame);
+    // Темы используют только поле 8×8: большие фоновые картинки намеренно
+    // не показываем, чтобы доска оставалась крупной на телефоне.
+    root.setProperty('--board-skin-image', 'none');
+    root.setProperty('--board-skin-padding', '0');
+    if (document.documentElement.dataset) document.documentElement.dataset.boardSkin = 'classic';
+    if (!document.querySelectorAll) return;
+    document.querySelectorAll('.board').forEach((board) => {
+      board.style.backgroundImage = '';
+      board.style.backgroundPosition = '';
+      board.style.backgroundSize = '';
+      board.style.padding = '';
+      board.querySelectorAll('.sq').forEach((sq) => {
+        sq.style.backgroundColor = '';
+      });
+    });
   }
 
   function choose(id) {
+    if (!THEMES.some((x) => x.id === id) || !available(id)) return false;
     Store.set('theme', id);
     apply(id);
+    return true;
   }
 
   // Купить за звёзды. Возвращает true, если получилось.
   function buy(id) {
     const t = THEMES.find((x) => x.id === id);
-    if (!t || owned()[id] || Progress.stars < t.price) return false;
+    if (!t || available(id) || Progress.stars < t.price) return false;
     Progress.addStars(-t.price);
     Store.set('themes', Object.assign(Store.get('themes', {}), { [id]: true }));
     choose(id);
@@ -36,7 +67,7 @@ window.Themes = (function () {
   }
 
   apply(current());
-  return { owned, current, choose, buy, apply };
+  return { owned, current, choose, buy, apply, previewMode, available };
 })();
 
 // Наборы фигур. Покупаются за ⭐ в «Моих подарках», вкладка «Фигуры».

@@ -1,9 +1,10 @@
-// «Мозги» соперников. Уровень 1–5:
+// «Мозги» соперников. Уровень 1–10:
 //   1 — ходит почти наугад, иногда ест что попало
 //   2 — жадный: съедает самую дорогую фигуру, которую видит, не думая о последствиях
 //   3 — смотрит на 2 полухода вперёд, но часто ошибается (большой «шум»)
 //   4 — смотрит на 2 полухода, ошибается редко
 //   5 — думает до 3 полуходов (сколько успеет за отведённое время), почти не ошибается
+//   6–10 — усиленные профили: глубже считают, но всё ещё работают локально.
 window.ChessAI = (function () {
   const VALUE = { p: 100, n: 320, b: 330, r: 500, q: 900, k: 0 };
   const CENTER = [0, 1, 2, 3, 3, 2, 1, 0];
@@ -107,11 +108,20 @@ window.ChessAI = (function () {
     if (level === 3) return bestAtDepth(g, 2, 150);
     if (level === 4) return bestAtDepth(g, 2, 40);
 
-    // уровень 5: углубляемся, пока хватает времени
-    const deadline = Date.now() + 1500;
-    let best = bestAtDepth(g, 2, 15);
+    // уровни 5–10: углубляемся, пока хватает времени. Пауза ограничена,
+    // чтобы сильный соперник не превращал детскую партию в ожидание.
+    const profile = {
+      5: { ms: 1500, noise: 15, depth: 3 },
+      6: { ms: 1800, noise: 10, depth: 3 },
+      7: { ms: 2200, noise: 7, depth: 3 },
+      8: { ms: 2600, noise: 4, depth: 4 },
+      9: { ms: 3000, noise: 2, depth: 4 },
+      10: { ms: 3500, noise: 0, depth: 4 }
+    }[level] || { ms: 1500, noise: 15, depth: 3 };
+    const deadline = Date.now() + profile.ms;
+    let best = bestAtDepth(g, 2, profile.noise);
     try {
-      best = bestAtDepth(g, 3, 15, deadline) || best;
+      best = bestAtDepth(g, profile.depth, profile.noise, deadline) || best;
     } catch (e) { /* не успели — берём результат глубины 2 */ }
     return best;
   }

@@ -38,11 +38,22 @@ window.Stickers = (function () {
   return { src, has, give, unlockSecretFor };
 })();
 
+// Ссылки на наборы MAX: изображения не копируем в игру — ребёнок открывает
+// страницу набора и добавляет его прямо в свой мессенджер.
+window.MAX_STICKER_PACKS = [
+  { id: 'crafter', name: 'Крафтер', icon: '🧱', url: 'https://max.ru/stickerset/350aPtjPswgUop6PvA7-avp_-9OQZTZtqBcl87BQhsA' },
+  { id: 'dmc', name: 'Devil May Cry', icon: '⚔️', url: 'https://max.ru/stickerset/nk3S1xx3-yvN_t9wQPvxgEhYeMYkAtSINgS3i1NC9iU' },
+  { id: 'chess', name: 'Шахматист', icon: '♟️', url: 'https://max.ru/stickerset/5MDA-tn5_rFhcXeMWtYfSownHTyQKhYwZrnC-weON3g' },
+  { id: 'liceist', name: 'Лицеист', icon: '🎒', url: 'https://max.ru/stickerset/3RZli5b1h8_lBmTdzrHe_j4QcdfMgRpMw5CIBuq-wWw' },
+  { id: 'ice-cream-misha', name: 'Мороженка Миша', icon: '🍦', url: 'https://max.ru/stickerset/VHohpInhz3Xz2w0yAP47iCmtGCYTRvhZQycqrcD7D1o' }
+];
+
 window.GiftsScreen = (function () {
   const $ = (sel) => document.querySelector(sel);
   const V = CONFIG.voices;
   const grid = $('#sticker-grid');
   const shelf = $('#medal-shelf');
+  const maxGrid = $('#max-grid');
   const modal = $('#sticker-modal');
   let tab = 'stickers';
   let current = null;
@@ -178,11 +189,26 @@ window.GiftsScreen = (function () {
     grid.hidden = t !== 'stickers';
     shelf.hidden = t !== 'medals';
     $('#theme-grid').hidden = t !== 'themes';
+    maxGrid.hidden = t !== 'max';
     $('#piece-grid').hidden = t !== 'pieces';
     if (t === 'stickers') renderStickers();
     else if (t === 'medals') renderMedals();
+    else if (t === 'max') renderMaxPacks();
     else if (t === 'pieces') renderPieceSets();
-    else renderThemes();
+    else renderBoardThemes();
+  }
+
+  function renderMaxPacks() {
+    maxGrid.innerHTML = '<div class="max-note">Открой набор, чтобы добавить его в свой мессенджер MAX.</div>';
+    for (const pack of MAX_STICKER_PACKS) {
+      const card = document.createElement('div');
+      card.className = 'max-card';
+      card.innerHTML =
+        '<span class="max-card-icon">' + pack.icon + '</span>' +
+        '<span class="max-card-info"><b>' + pack.name + '</b><small>Стикеры для MAX</small></span>' +
+        '<a class="block-btn ctrl-btn lapis max-card-link" href="' + pack.url + '" target="_blank" rel="noopener">Открыть<span>↗</span></a>';
+      maxGrid.appendChild(card);
+    }
   }
 
   // ---------- Темы доски ----------
@@ -208,6 +234,39 @@ window.GiftsScreen = (function () {
         else if (Themes.buy(t.id)) { Sound.play('win'); FX.confetti(100); }
         else { Sound.play('error'); card.classList.add('shake'); setTimeout(() => card.classList.remove('shake'), 500); return; }
         renderThemes();
+      });
+      box.appendChild(card);
+    }
+  }
+
+  function renderBoardThemes() {
+    const box = $('#theme-grid');
+    box.innerHTML = '';
+    const owned = Themes.owned(), cur = Themes.current(), preview = Themes.previewMode();
+    if (preview) {
+      const note = document.createElement('div');
+      note.className = 'theme-test-note';
+      note.textContent = 'Режим проверки: все доски доступны бесплатно и не списывают звёзды.';
+      box.appendChild(note);
+    }
+    for (const t of THEMES) {
+      const card = document.createElement('button');
+      const canUse = owned[t.id] || preview;
+      card.className = 'theme-card' + (t.id === cur ? ' current' : '') + (canUse ? '' : ' locked');
+      let cells = '';
+      for (let i = 0; i < 16; i++) cells += '<i style="background:' + ((i + Math.floor(i / 4)) % 2 ? t.dark : t.light) + '"></i>';
+      const previewStyle = ' style="border-color:' + t.frame + '"';
+      const label = t.id === cur ? 'Выбрана' : canUse ? 'Выбрать' : '<span class="star-icon"></span>' + t.price;
+      card.innerHTML =
+        '<span class="theme-preview"' + previewStyle + '>' + cells + '</span>' +
+        '<span class="theme-name">' + t.icon + ' ' + t.name + '</span>' +
+        '<span class="theme-btn">' + label + '</span>';
+      card.addEventListener('click', () => {
+        if (t.id === cur) return;
+        if (canUse) { Sound.play('click'); Themes.choose(t.id); }
+        else if (Themes.buy(t.id)) { Sound.play('win'); FX.confetti(100); }
+        else { Sound.play('error'); card.classList.add('shake'); setTimeout(() => card.classList.remove('shake'), 500); return; }
+        renderBoardThemes();
       });
       box.appendChild(card);
     }

@@ -7,7 +7,7 @@
   <title>Шахматы Миши</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@600;800&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/style.css?v=202611180001">
+  <link rel="stylesheet" href="css/style.css?v=202611250006">
 </head>
 <body>
   <!-- Верхняя панель: назад + звук -->
@@ -28,7 +28,7 @@
       <div id="goal-bar" class="goal-bar" hidden></div>
       <nav class="menu">
         <button class="block-btn menu-btn diamond menu-wide" data-go="train">
-          <span class="menu-icon">🎯</span><span class="menu-label">Тренировка</span>
+          <span class="menu-icon">🎯</span><span class="menu-label">Уроки с тренером</span>
         </button>
         <button class="block-btn menu-btn gold menu-wide" data-go="practice">
           <span class="menu-icon">♟️</span><span class="menu-label">Тренировочные игры</span>
@@ -51,8 +51,6 @@
         </div>
         <h2 class="train-section-heading">Уроки с тренером</h2>
         <div id="train-map" class="island-grid"></div>
-        <h2 class="train-section-heading train-puzzles-heading">Задачки</h2>
-        <div id="puzzle-list" class="world-grid"></div>
       </div>
 
       <!-- остров: список уровней -->
@@ -140,36 +138,6 @@
       </div>
     </section>
 
-    <!-- Упражнение из раздела задачек -->
-    <section id="screen-puzzles" class="screen" hidden>
-      <div id="puzzle-view" class="play-layout" hidden>
-        <div id="puzzle-head" class="lesson-head">
-          <div class="lesson-title">
-            <span id="puzzle-goal" class="goal-text"></span>
-            <div id="puzzle-chest" class="chest-bar"></div>
-          </div>
-          <span id="puzzle-icons" class="puzzle-icons"></span>
-        </div>
-        <div class="board-wrap"><div id="puzzle-board"></div></div>
-        <div class="controls">
-          <button id="btn-puzzle-listen" class="block-btn ctrl-btn lapis"><span>🔊</span>Слушать</button>
-          <button id="btn-puzzle-hint" class="block-btn ctrl-btn gold"><span>💡</span>Подсказка</button>
-        </div>
-      </div>
-
-      <div id="puzzle-win" class="overlay" hidden>
-        <div class="panel">
-          <div class="go-icon">🏆</div>
-          <div id="puzzle-win-title" class="go-title">Молодец!</div>
-          <div id="win-chest" class="chest-bar big"></div>
-          <div id="puzzle-win-reward" class="reward">Сундучок полный! +1 <span class="star-icon"></span></div>
-          <div class="panel-buttons">
-            <button id="btn-puzzle-list" class="block-btn ctrl-btn stone"><span>▦</span>Разделы</button>
-            <button id="btn-puzzle-next" class="block-btn ctrl-btn grass"><span>➜</span>Дальше</button>
-          </div>
-        </div>
-      </div>
-    </section>
     <!-- Короткие тренировочные игры -->
     <section id="screen-practice" class="screen" hidden>
       <div id="practice-list" class="practice-list"></div>
@@ -278,10 +246,12 @@
           <button class="gift-tab block-btn gold active" data-tab="stickers"><span>🖼️</span>Наклейки <small id="sticker-count"></small></button>
           <button class="gift-tab block-btn stone" data-tab="medals"><span>🏅</span>Медали <small id="medal-count"></small></button>
           <button class="gift-tab block-btn stone" data-tab="themes"><span>🎨</span>Доски</button>
+          <button class="gift-tab block-btn stone" data-tab="max"><span>MAX</span>Стикеры</button>
           <button class="gift-tab block-btn stone" data-tab="pieces"><span>♞</span>Фигуры</button>
         </div>
         <div id="sticker-grid" class="sticker-grid"></div>
         <div id="theme-grid" class="theme-grid" hidden></div>
+        <div id="max-grid" class="max-grid" hidden></div>
         <div id="piece-grid" class="theme-grid" hidden></div>
         <div id="medal-shelf" class="medal-shelf" hidden></div>
       </div>
@@ -329,19 +299,16 @@
 
   <script src="vendor/chess.min.js?v=202610250215"></script>
   <script src="js/config.js?v=202610250215"></script>
-  <script src="js/storage.js?v=202610250215"></script>
-  <script src="js/themes.js?v=202611180001"></script>
+  <script src="js/storage.js?v=202611250001"></script>
+  <script src="js/themes.js?v=202611250003"></script>
   <script src="js/audio.js?v=202610250215"></script>
   <script src="js/capture-fx.js?v=202610250215"></script>
   <script src="js/board.js?v=202610250215"></script>
   <script src="js/fx.js?v=202610250215"></script>
-  <script src="js/puzzle-gen.js?v=202610250215"></script>
-  <script src="js/puzzles-data.js?v=202610250215"></script>
-  <script src="js/puzzles.js?v=202611180001"></script>
-  <script src="js/ai.js?v=202610250215"></script>
-  <script src="js/opponents.js?v=202610250215"></script>
-  <script src="js/play.js?v=202611180001"></script>
-  <script src="js/stickers.js?v=202610250215"></script>
+  <script src="js/ai.js?v=202611230001"></script>
+  <script src="js/opponents.js?v=202611230002"></script>
+  <script src="js/play.js?v=202611250001"></script>
+  <script src="js/stickers.js?v=202611250007"></script>
   <script src="js/train-gen.js?v=202610250215"></script>
   <script src="js/train-data.js?v=202610250215"></script>
   <script src="js/train.js?v=202611180001"></script>
@@ -351,7 +318,7 @@
   <script src="js/practice-traps.js?v=202611190001"></script>
   <script src="js/practice-logic.js?v=202611190002"></script>
   <script src="js/practice-voice.js?v=202611180001"></script>
-  <script src="js/practice.js?v=202611190002"></script>
-  <script src="js/app.js?v=202611180001"></script>
+  <script src="js/practice.js?v=202611250002"></script>
+  <script src="js/app.js?v=202611250001"></script>
 </body>
 </html>

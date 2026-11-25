@@ -563,7 +563,6 @@ window.TrainScreen = (function () {
     doneBox.hidden = true;
     if (!param) {
       renderMap();
-      PuzzlesScreen.renderList();
       const box = $('#map-coach');
       saySystem(box, 'hello', 'talk');
     } else if (isIsland) {

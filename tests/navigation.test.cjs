@@ -81,13 +81,9 @@ const context = vm.createContext({
 });
 context.window = context;
 vm.runInContext(fs.readFileSync(path.join(root, 'vendor/chess.min.js'), 'utf8'), context);
-vm.runInContext(fs.readFileSync(path.join(root, 'js/puzzles.js'), 'utf8'), context, { filename: 'js/puzzles.js' });
 let trainEnterCalls = 0;
 context.TrainScreen = {
-  enter(param) {
-    trainEnterCalls++;
-    if (!param) context.PuzzlesScreen.renderList();
-  },
+  enter() { trainEnterCalls++; },
   leave() {}
 };
 vm.runInContext(fs.readFileSync(path.join(root, 'js/app.js'), 'utf8'), context, { filename: 'js/app.js' });
@@ -96,33 +92,14 @@ const navigate = (hash) => {
   location.hash = '#' + hash;
   listeners.hashchange();
 };
-const list = get('#puzzle-list');
 assert.equal(trainEnterCalls, 1);
-assert.equal(list.hidden, false);
-assert.equal(list.children.length, 7, 'training map starts with all seven puzzle worlds');
-
-navigate('puzzles/eat');
-assert.equal(get('#screen-puzzles').hidden, false);
-assert.equal(list.hidden, true, 'world list hides while an exercise is open');
-assert.ok(context.PuzzlesScreen.current().puzzle, 'the selected world starts a real exercise');
-
-get('#btn-back').click();
-assert.equal(location.hash, 'train');
-navigate('train');
-assert.equal(get('#screen-train').hidden, false);
-assert.equal(get('#screen-puzzles').hidden, true);
-assert.equal(list.hidden, false, 'returning from an exercise restores the world list');
-assert.equal(list.children.length, 7);
-assert.equal(context.PuzzlesScreen.current().puzzle, null, 'leaving discards the old exercise');
-console.log('PASS #train → #puzzles/eat → #train restores the seven visible puzzle worlds');
 
 for (const oldLink of ['puzzles', 'learn', 'learn/r']) {
   navigate(oldLink);
   assert.equal(location.hash, '#train');
   assert.equal(get('#screen-train').hidden, false);
-  assert.equal(list.hidden, false);
 }
-console.log('PASS legacy puzzle and piece lesson links lead to the combined training map');
+console.log('PASS legacy puzzle and piece lesson links lead to the training map');
 
 context.TRAIN.modules = [{ id: 'm1', levels: [{ id: '1_1' }] }];
 navigate('train/1_1');
