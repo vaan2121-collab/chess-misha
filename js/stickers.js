@@ -41,11 +41,11 @@ window.Stickers = (function () {
 // Ссылки на наборы MAX: изображения не копируем в игру — ребёнок открывает
 // страницу набора и добавляет его прямо в свой мессенджер.
 window.MAX_STICKER_PACKS = [
-  { id: 'crafter', name: 'Крафтер', icon: '🧱', url: 'https://max.ru/stickerset/350aPtjPswgUop6PvA7-avp_-9OQZTZtqBcl87BQhsA' },
-  { id: 'dmc', name: 'Devil May Cry', icon: '⚔️', url: 'https://max.ru/stickerset/nk3S1xx3-yvN_t9wQPvxgEhYeMYkAtSINgS3i1NC9iU' },
-  { id: 'chess', name: 'Шахматист', icon: '♟️', url: 'https://max.ru/stickerset/5MDA-tn5_rFhcXeMWtYfSownHTyQKhYwZrnC-weON3g' },
-  { id: 'liceist', name: 'Лицеист', icon: '🎒', url: 'https://max.ru/stickerset/3RZli5b1h8_lBmTdzrHe_j4QcdfMgRpMw5CIBuq-wWw' },
-  { id: 'ice-cream-misha', name: 'Мороженка Миша', icon: '🍦', url: 'https://max.ru/stickerset/VHohpInhz3Xz2w0yAP47iCmtGCYTRvhZQycqrcD7D1o' }
+  { id: 'crafter', name: 'Крафтер', icon: '🧱', price: 80, url: 'https://max.ru/stickerset/350aPtjPswgUop6PvA7-avp_-9OQZTZtqBcl87BQhsA' },
+  { id: 'dmc', name: 'Devil May Cry', icon: '⚔️', price: 80, url: 'https://max.ru/stickerset/nk3S1xx3-yvN_t9wQPvxgEhYeMYkAtSINgS3i1NC9iU' },
+  { id: 'chess', name: 'Шахматист', icon: '♟️', price: 80, url: 'https://max.ru/stickerset/5MDA-tn5_rFhcXeMWtYfSownHTyQKhYwZrnC-weON3g' },
+  { id: 'liceist', name: 'Лицеист', icon: '🎒', price: 80, url: 'https://max.ru/stickerset/3RZli5b1h8_lBmTdzrHe_j4QcdfMgRpMw5CIBuq-wWw' },
+  { id: 'ice-cream-misha', name: 'Мороженка Миша', icon: '🍦', price: 80, url: 'https://max.ru/stickerset/VHohpInhz3Xz2w0yAP47iCmtGCYTRvhZQycqrcD7D1o' }
 ];
 
 window.GiftsScreen = (function () {
@@ -54,6 +54,7 @@ window.GiftsScreen = (function () {
   const grid = $('#sticker-grid');
   const shelf = $('#medal-shelf');
   const maxGrid = $('#max-grid');
+  const maxOwned = () => Store.get('maxStickerPacks', {});
   const modal = $('#sticker-modal');
   let tab = 'stickers';
   let current = null;
@@ -199,14 +200,34 @@ window.GiftsScreen = (function () {
   }
 
   function renderMaxPacks() {
-    maxGrid.innerHTML = '<div class="max-note">Открой набор, чтобы добавить его в свой мессенджер MAX.</div>';
+    maxGrid.innerHTML = '<div class="max-note">Каждый набор стоит <span class="star-icon"></span> 80. После открытия добавь его в MAX.</div>';
+    const owned = maxOwned();
     for (const pack of MAX_STICKER_PACKS) {
       const card = document.createElement('div');
       card.className = 'max-card';
+      const isOwned = !!owned[pack.id];
       card.innerHTML =
         '<span class="max-card-icon">' + pack.icon + '</span>' +
         '<span class="max-card-info"><b>' + pack.name + '</b><small>Стикеры для MAX</small></span>' +
-        '<a class="block-btn ctrl-btn lapis max-card-link" href="' + pack.url + '" target="_blank" rel="noopener">Открыть<span>↗</span></a>';
+        (isOwned
+          ? '<a class="block-btn ctrl-btn lapis max-card-link" href="' + pack.url + '" target="_blank" rel="noopener">Добавить<span>↗</span></a>'
+          : '<button class="block-btn ctrl-btn gold max-card-link max-buy"><span class="star-icon"></span>80</button>');
+      if (!isOwned) {
+        const buy = card.querySelector('.max-buy');
+        buy.addEventListener('click', () => {
+          if (Progress.stars < pack.price) {
+            Sound.play('error');
+            card.classList.add('shake');
+            setTimeout(() => card.classList.remove('shake'), 500);
+            return;
+          }
+          Progress.addStars(-pack.price);
+          Store.set('maxStickerPacks', Object.assign(maxOwned(), { [pack.id]: true }));
+          Sound.play('win');
+          FX.confetti(100);
+          renderMaxPacks();
+        });
+      }
       maxGrid.appendChild(card);
     }
   }
