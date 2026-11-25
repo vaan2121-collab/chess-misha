@@ -1356,6 +1356,16 @@ html[data-board-skin]:not([data-board-skin="classic"]) .sq.dark { background-col
   .level-btn { padding: 10px 12px; font-size: 17px; }
 }
 
+/* На обычном телефоне показываем соперников в три компактные колонки,
+   чтобы ребёнок быстрее добирался до нужного персонажа. */
+@media (min-width: 360px) and (max-width: 500px) and (orientation: portrait) {
+  .opp-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; width: 100%; }
+  .opp-card { gap: 4px; padding: 7px 3px; }
+  .opp-avatar { width: 60px; height: 60px; border-width: 3px; }
+  .opp-name { font-size: 14px; }
+  .opp-level { gap: 1px; transform: scale(.82); transform-origin: top center; margin-bottom: -3px; }
+}
+
 /* ===== Тренировочные игры ===== */
 #screen-menu { justify-content: safe center; }
 #screen-menu > * { flex-shrink: 0; }
@@ -1450,6 +1460,11 @@ html[data-board-skin]:not([data-board-skin="classic"]) .sq.dark { background-col
   .menu-icon { font-size: 26px; }
   .rank-bar, .goal-bar { padding: 2px 6px; }
   .rank-badge { width: 28px; height: 28px; }
+  .opp-avatar { width: 54px; height: 54px; border-width: 3px; }
+  .opp-card { padding: 6px 2px; gap: 3px; }
+  .opp-name { font-size: 13px; }
+  .opp-face { width: 40px; height: 40px; }
+  .opp-title { font-size: 14px; }
 }
 
 /* ===== Выбор фигуры при превращении пешки ===== */

@@ -148,9 +148,11 @@ window.PlayScreen = (function () {
 
   // ---------- Картинки соперников ----------
   // Проверяем, какие лица нарисованы, и запоминаем.
-  function preloadFaces(o) {
+  function preloadFaces(o, states) {
     const all = new Set();
-    Object.values(OPPONENT_FACES).forEach((chain) => chain.forEach((f) => all.add(f)));
+    (states || Object.keys(OPPONENT_FACES)).forEach((state) => {
+      (OPPONENT_FACES[state] || []).forEach((f) => all.add(f));
+    });
     return Promise.all(Array.from(all).map((f) => new Promise((res) => {
       const key = o.id + '/' + f;
       if (key in faceCache) return res();
@@ -195,7 +197,8 @@ window.PlayScreen = (function () {
       listView.appendChild(card);
     }
     // картинки могли догрузиться — перерисуем один раз
-    Promise.all(OPPONENTS.map(preloadFaces)).then(() => {
+    // В списке нужен только обычный портрет. Все реакции подгружаем после выбора.
+    Promise.all(OPPONENTS.map((o) => preloadFaces(o, ['normal']))).then(() => {
       if (!listView.hidden) listView.querySelectorAll('.opp-card').forEach((card, i) => {
         const o = OPPONENTS[i];
         if (o) card.querySelector('.opp-avatar').innerHTML = avatarHtml(o);
