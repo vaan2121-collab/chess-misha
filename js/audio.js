@@ -147,6 +147,20 @@ window.Sound = (function () {
   const voiceEl = new Audio();
   voiceEl.volume = CONFIG.voiceVolume;
   let queue = [];
+  const voicePreloads = {};
+
+  // Небольшие стартовые реплики можно подгрузить заранее, пока открывается партия.
+  // Это не запускает звук и не нарушает запрет автоплея браузера.
+  function preloadVoice(paths) {
+    (paths || []).forEach((path) => {
+      if (!path || voicePreloads[path]) return;
+      const a = new Audio();
+      a.preload = 'auto';
+      a.src = encodeURI(path + '.mp3');
+      a.load();
+      voicePreloads[path] = a;
+    });
+  }
 
   function restoreMusic() { music.volume = CONFIG.musicVolume; }
 
@@ -189,6 +203,7 @@ window.Sound = (function () {
     nextTrack,
     play,
     voice,
+    preloadVoice,
     stopVoice,
     get musicOn() { return musicOn; },
     get sfxOn() { return sfxOn; }

@@ -265,6 +265,9 @@ window.PlayScreen = (function () {
     $('#opp-name').textContent = opp.name;
     $('#opp-level').innerHTML = opp.level ? levelHtml(opp.level) : '';
     const my = token;
+    if (opp.id !== 'duo' && Sound.preloadVoice) {
+      Sound.preloadVoice(OPPONENT_LINES.hello.map((n) => folder(opp) + n));
+    }
     preloadFaces(opp).then(() => { if (my === token) setFace('normal'); });
     setFace('normal');
     updateStatus();
